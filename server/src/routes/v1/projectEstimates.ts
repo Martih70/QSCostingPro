@@ -575,11 +575,8 @@ router.get('/:projectId/estimates/export-pdf', verifyAuth, (req: Request, res: R
     if (project.start_date) {
       doc.text(`Start Date: ${new Date(project.start_date).toLocaleDateString('en-GB')}`);
     }
-    if (project.project_address) {
-      doc.text(`Address: ${project.project_address}`);
-    }
-    if (project.floor_area_m2) {
-      doc.text(`Floor Area: ${project.floor_area_m2.toLocaleString('en-GB')} m²`);
+    if (project.location) {
+      doc.text(`Location: ${project.location}`);
     }
     doc.moveDown();
 
@@ -606,7 +603,7 @@ router.get('/:projectId/estimates/export-pdf', verifyAuth, (req: Request, res: R
 
       // Line items in category
       doc.fontSize(10).font('Helvetica').fillColor('black');
-      category.line_items.forEach((item, idx) => {
+      category.line_items.forEach((item) => {
         const totalText = `£${item.line_total.toLocaleString('en-GB', {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
