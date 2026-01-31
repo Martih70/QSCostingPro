@@ -146,3 +146,53 @@ export interface UpdateContractorRequest extends Partial<CreateContractorRequest
 export interface AuthenticatedRequest {
   user?: JWTPayload;
 }
+
+// Estimate Template Types
+export interface EstimateTemplate {
+  id: number;
+  user_id: number;
+  name: string;
+  description?: string;
+  template_type: 'quick' | 'standard' | 'complex';
+  is_public: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TemplateLineItem {
+  id: number;
+  template_id: number;
+  sequence_order: number;
+  cost_item_id?: number;
+  custom_description?: string;
+  custom_unit_rate?: number;
+  custom_unit?: string;
+  category_id?: number;
+  quantity?: number;
+  unit_cost_override?: number;
+  notes?: string;
+  created_at: string;
+}
+
+export interface EstimateTemplateWithItems extends EstimateTemplate {
+  line_items: TemplateLineItem[];
+}
+
+export interface CreateTemplateRequest {
+  name: string;
+  description?: string;
+  template_type?: 'quick' | 'standard' | 'complex';
+  is_public?: boolean;
+  line_items: Array<{
+    cost_item_id?: number;
+    custom_description?: string;
+    custom_unit_rate?: number;
+    custom_unit?: string;
+    category_id?: number;
+    quantity?: number;
+    unit_cost_override?: number;
+    notes?: string;
+  }>;
+}
+
+export interface UpdateTemplateRequest extends Partial<CreateTemplateRequest> {}

@@ -14,13 +14,18 @@ interface ProjectWithEstimates {
     subtotal: number
     contingency_amount: number
     contingency_percentage: number
+    categories?: Array<{
+      category_name: string
+      subtotal: number
+      [key: string]: any
+    }>
   }
 }
 
 /**
- * Calculate the total portfolio value (sum of active project estimates)
+ * Calculate the total project value (sum of active project estimates)
  */
-export function calculatePortfolioValue(projects: ProjectWithEstimates[]): number {
+export function calculateTotalProjectValue(projects: ProjectWithEstimates[]): number {
   return projects
     .filter((p) => p.status !== 'completed')
     .reduce((sum, project) => {
@@ -150,4 +155,133 @@ export function getProjectsByStatus(
     rejected: projects.filter((p) => p.estimate_status === 'rejected').length,
     completed: projects.filter((p) => p.status === 'completed').length,
   }
+}
+
+/**
+ * Calculate budget variance: total budget vs total estimate
+ * Returns variance metrics for project view
+ */
+export interface BudgetVarianceResult {
+  totalBudget: number
+  totalEstimate: number
+  variance: number
+  variancePercentage: number
+  projectsOverBudget: number
+  projectsUnderBudget: number
+}
+
+export function calculateBudgetVariance(projects: ProjectWithEstimates[]): BudgetVarianceResult {
+  const projectsWithBoth = projects.filter((p) => p.budget_cost && p.estimate_totals?.grand_total)
+
+  const totalBudget = projectsWithBoth.reduce((sum, p) => sum + (p.budget_cost || 0), 0)
+  const totalEstimate = projectsWithBoth.reduce((sum, p) => sum + (p.estimate_totals?.grand_total || 0), 0)
+
+  const variance = totalEstimate - totalBudget
+  const variancePercentage = totalBudget > 0 ? Math.round((variance / totalBudget) * 1000) / 10 : 0
+
+  const overBudget = projectsWithBoth.filter((p) => (p.estimate_totals?.grand_total || 0) > (p.budget_cost || 0))
+    .length
+  const underBudget = projectsWithBoth.filter((p) => (p.estimate_totals?.grand_total || 0) < (p.budget_cost || 0))
+    .length
+
+  return {
+    totalBudget,
+    totalEstimate,
+    variance,
+    variancePercentage,
+    projectsOverBudget: overBudget,
+    projectsUnderBudget: underBudget,
+  }
+}
+
+/**
+ * Get category cost distribution across all projects
+ * Aggregates estimate_totals.categories[] across projects
+ */
+export interface CategoryCost {
+  category_name: string
+  total_cost: number
+  project_count: number
+  percentage: number
+  avg_cost_per_project: number
+}
+
+export function getCategoryCostDistribution(projects: ProjectWithEstimates[]): CategoryCost[] {
+  const categoryMap: Record<string, { total_cost: number; project_count: number }> = {}
+  let totalCost = 0
+
+  projects.forEach((project) => {
+    const categories = project.estimate_totals?.categories || []
+
+    categories.forEach((cat) => {
+      if (!categoryMap[cat.category_name]) {
+        categoryMap[cat.category_name] = { total_cost: 0, project_count: 0 }
+      }
+      categoryMap[cat.category_name].total_cost += cat.subtotal || 0
+      categoryMap[cat.category_name].project_count += 1
+      totalCost += cat.total || 0
+    })
+  })
+
+  const result: CategoryCost[] = Object.entries(categoryMap).map(([name, data]) => ({
+    category_name: name,
+    total_cost: data.total_cost,
+    project_count: data.project_count,
+    percentage: totalCost > 0 ? Math.round((data.total_cost / totalCost) * 1000) / 10 : 0,
+    avg_cost_per_project: Math.round((data.total_cost / data.project_count) * 100) / 100,
+  }))
+
+  return result.sort((a, b) => b.total_cost - a.total_cost)
+}
+
+/**
+ * Get project budget comparison for top projects
+ * Shows variance per project, sorted by estimate value
+ */
+export interface ProjectBudgetComparison {
+  project_id: number
+  project_name: string
+  budget: number
+  estimate: number
+  variance: number
+  variancePercentage: number
+  isOverBudget: boolean
+}
+
+export function getProjectBudgetComparison(
+  projects: ProjectWithEstimates[],
+  limit = 5
+): ProjectBudgetComparison[] {
+  const withBudgets = projects
+    .filter((p) => p.budget_cost && p.estimate_totals?.grand_total)
+    .map((p) => ({
+      project_id: p.id,
+      project_name: (p as any).name || `Project ${p.id}`,
+      budget: p.budget_cost || 0,
+      estimate: p.estimate_totals?.grand_total || 0,
+      variance: (p.estimate_totals?.grand_total || 0) - (p.budget_cost || 0),
+      variancePercentage:
+        (p.budget_cost || 0) > 0
+          ? Math.round(
+              (((p.estimate_totals?.grand_total || 0) - (p.budget_cost || 0)) / (p.budget_cost || 0)) * 1000
+            ) / 10
+          : 0,
+      isOverBudget: (p.estimate_totals?.grand_total || 0) > (p.budget_cost || 0),
+    }))
+    .sort((a, b) => b.estimate - a.estimate)
+    .slice(0, limit)
+
+  return withBudgets
+}
+
+/**
+ * Get top cost drivers (categories by total cost)
+ * Returns top N categories sorted by total cost
+ */
+export function calculateTopCostDrivers(
+  projects: ProjectWithEstimates[],
+  limit = 3
+): CategoryCost[] {
+  const distribution = getCategoryCostDistribution(projects)
+  return distribution.slice(0, limit)
 }

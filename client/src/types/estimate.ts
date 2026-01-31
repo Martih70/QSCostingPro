@@ -1,7 +1,7 @@
 export interface ProjectEstimate {
   id: number
   project_id: number
-  cost_item_id: number
+  cost_item_id?: number | null
   quantity: number
   unit_cost_override?: number
   notes?: string
@@ -10,13 +10,23 @@ export interface ProjectEstimate {
   created_at: string
   version_number: number
   is_active: boolean
+  // Custom item fields
+  custom_description?: string
+  custom_unit_rate?: number
+  custom_unit?: string
+  category_id?: number
 }
 
 export interface CreateEstimateRequest {
-  cost_item_id: number
+  cost_item_id?: number
   quantity: number
   unit_cost_override?: number
   notes?: string
+  // Custom item fields
+  custom_description?: string
+  custom_unit_rate?: number
+  custom_unit?: string
+  category_id?: number
 }
 
 export interface LineItemCalculation {

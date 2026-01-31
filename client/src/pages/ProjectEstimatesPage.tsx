@@ -2,7 +2,17 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useProjectsStore } from '../stores/projectsStore'
 import { useEstimatesStore } from '../stores/estimatesStore'
+import { useEstimateTemplatesStore } from '../stores/estimateTemplatesStore'
+import { costItemsAPI, unitsAPI } from '../services/api'
 import BackButton from '../components/ui/BackButton'
+import UnifiedAddLineItemModal from '../components/modals/UnifiedAddLineItemModal'
+import LineItemsTable from '../components/estimates/LineItemsTable'
+import ExportPDFButton from '../components/estimates/ExportPDFButton'
+import SaveAsTemplateDialog from '../components/estimates/SaveAsTemplateDialog'
+import TemplateLibraryModal from '../components/estimates/TemplateLibraryModal'
+import { useToast } from '../components/ui/ToastContainer'
+import { handleApiError, logError } from '../utils/errorHandler'
+import type { EstimateTemplate } from '../types/estimateTemplate'
 
 interface CostItem {
   id: number
@@ -17,24 +27,40 @@ interface CostItem {
   category?: { name: string }
 }
 
+interface Unit {
+  id: number
+  code: string
+  name: string
+}
+
+interface Category {
+  id: number
+  code: string
+  name: string
+}
+
 export default function ProjectEstimatesPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const toast = useToast()
   const projectId = Number(id)
 
   const { currentProject, fetchProjectById, isLoading: projectLoading } = useProjectsStore()
   const { estimates, estimateTotals, isLoading: estimatesLoading, error, fetchEstimates, addEstimate, updateEstimate, deleteEstimate } = useEstimatesStore()
+  const { saveTemplate, applyTemplate } = useEstimateTemplatesStore()
 
+  const [showAddModal, setShowAddModal] = useState(false)
+  const [showSaveTemplateDialog, setShowSaveTemplateDialog] = useState(false)
+  const [showTemplateLibrary, setShowTemplateLibrary] = useState(false)
   const [costItems, setCostItems] = useState<CostItem[]>([])
+  const [units, setUnits] = useState<Unit[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
   const [costItemsLoading, setCostItemsLoading] = useState(false)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedItemId, setSelectedItemId] = useState<number | null>(null)
-  const [quantity, setQuantity] = useState('1')
-  const [costOverride, setCostOverride] = useState('')
-  const [notes, setNotes] = useState('')
   const [editingId, setEditingId] = useState<number | null>(null)
   const [editQuantity, setEditQuantity] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [dismissedError, setDismissedError] = useState(false)
+  const [templateLoading, setTemplateLoading] = useState(false)
 
   // Fetch project and estimates
   useEffect(() => {
@@ -42,6 +68,8 @@ export default function ProjectEstimatesPage() {
       fetchProjectById(projectId)
       fetchEstimates(projectId)
       fetchCostItems()
+      fetchUnits()
+      fetchCategories()
     }
   }, [projectId, fetchProjectById, fetchEstimates])
 
@@ -49,13 +77,8 @@ export default function ProjectEstimatesPage() {
   const fetchCostItems = async () => {
     setCostItemsLoading(true)
     try {
-      const response = await fetch('http://localhost:3000/api/v1/cost-items', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      })
-      const data = await response.json()
-      setCostItems(data.data || [])
+      const response = await costItemsAPI.getAll()
+      setCostItems(response.data.data || [])
     } catch (err) {
       console.error('Failed to fetch cost items:', err)
     } finally {
@@ -63,30 +86,66 @@ export default function ProjectEstimatesPage() {
     }
   }
 
-  // Filter cost items by search
-  const filteredItems = costItems.filter((item) =>
-    item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.code.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  // Fetch units from backend
+  const fetchUnits = async () => {
+    try {
+      const response = await unitsAPI.getAll()
+      setUnits(response.data.data || [])
+    } catch (err) {
+      console.error('Failed to fetch units:', err)
+    }
+  }
 
-  const handleAddEstimate = async () => {
-    if (!selectedItemId || !quantity) return
+  // Fetch categories from backend
+  const fetchCategories = async () => {
+    try {
+      const response = await costItemsAPI.getCategories()
+      setCategories(response.data.data || [])
+    } catch (err) {
+      console.error('Failed to fetch categories:', err)
+    }
+  }
 
+  const handleAddFromLibrary = async (data: {
+    cost_item_id: number
+    quantity: number
+    unit_cost_override?: number
+    notes?: string
+  }) => {
     try {
       setSubmitting(true)
       await addEstimate(projectId, {
-        cost_item_id: selectedItemId,
-        quantity: parseFloat(quantity),
-        unit_cost_override: costOverride ? parseFloat(costOverride) : undefined,
-        notes: notes || undefined,
+        cost_item_id: data.cost_item_id,
+        quantity: data.quantity,
+        unit_cost_override: data.unit_cost_override,
+        notes: data.notes,
       })
-      // Reset form
-      setSelectedItemId(null)
-      setQuantity('1')
-      setCostOverride('')
-      setNotes('')
+      setShowAddModal(false)
+    } finally {
       setSubmitting(false)
-    } catch (error) {
+    }
+  }
+
+  const handleAddCustom = async (data: {
+    custom_description: string
+    quantity: number
+    custom_unit: string
+    custom_unit_rate: number
+    category_id: number
+    notes?: string
+  }) => {
+    try {
+      setSubmitting(true)
+      await addEstimate(projectId, {
+        custom_description: data.custom_description,
+        quantity: data.quantity,
+        custom_unit: data.custom_unit,
+        custom_unit_rate: data.custom_unit_rate,
+        category_id: data.category_id,
+        notes: data.notes,
+      })
+      setShowAddModal(false)
+    } finally {
       setSubmitting(false)
     }
   }
@@ -97,10 +156,13 @@ export default function ProjectEstimatesPage() {
       await updateEstimate(projectId, estimateId, {
         quantity: parseFloat(editQuantity),
       })
+      toast.success('Quantity updated successfully')
       setEditingId(null)
       setEditQuantity('')
       setSubmitting(false)
     } catch (error) {
+      logError(error, 'UpdateEstimate')
+      toast.error(handleApiError(error))
       setSubmitting(false)
     }
   }
@@ -110,10 +172,69 @@ export default function ProjectEstimatesPage() {
       try {
         setSubmitting(true)
         await deleteEstimate(projectId, estimateId)
+        toast.success('Item removed successfully')
         setSubmitting(false)
       } catch (error) {
+        logError(error, 'DeleteEstimate')
+        toast.error(handleApiError(error))
         setSubmitting(false)
       }
+    }
+  }
+
+  const handleSaveAsTemplate = async (
+    name: string,
+    description: string,
+    templateType: string,
+    isPublic: boolean
+  ) => {
+    try {
+      setTemplateLoading(true)
+
+      // Build line items from current estimates
+      const lineItems = estimates.map((est) => ({
+        cost_item_id: est.cost_item_id || undefined,
+        custom_description: est.custom_description || undefined,
+        custom_unit_rate: est.custom_unit_rate || undefined,
+        custom_unit: est.custom_unit || undefined,
+        category_id: est.category_id || undefined,
+        quantity: est.quantity,
+        unit_cost_override: est.unit_cost_override || undefined,
+        notes: est.notes || undefined,
+      }))
+
+      await saveTemplate({
+        name,
+        description,
+        template_type: templateType as 'quick' | 'standard' | 'complex',
+        is_public: isPublic,
+        line_items: lineItems,
+      })
+
+      toast.success('Template saved successfully')
+      setShowSaveTemplateDialog(false)
+    } catch (error) {
+      logError(error, 'SaveTemplate')
+      toast.error('Failed to save template')
+    } finally {
+      setTemplateLoading(false)
+    }
+  }
+
+  const handleLoadTemplate = async (template: EstimateTemplate) => {
+    try {
+      setTemplateLoading(true)
+
+      // Fetch template with line items
+      await applyTemplate(template.id, projectId)
+
+      // User will see the template and add items with quantities
+      toast.success(`Template "${template.name}" loaded. Add quantities to create estimates.`)
+    } catch (error) {
+      logError(error, 'LoadTemplate')
+      toast.error('Failed to load template')
+    } finally {
+      setTemplateLoading(false)
     }
   }
 
@@ -136,251 +257,126 @@ export default function ProjectEstimatesPage() {
       <BackButton />
 
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-khc-primary">Add Estimates</h1>
-        <p className="text-gray-600 mt-2">{currentProject.name}</p>
+      <div className="flex justify-between items-start">
+        <div>
+          <h1 className="text-3xl font-bold text-khc-primary">Build Estimate</h1>
+          <p className="text-gray-600 mt-2">{currentProject.name}</p>
+        </div>
+        <div className="flex gap-2 flex-wrap justify-end">
+          <button
+            onClick={() => setShowTemplateLibrary(true)}
+            className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg flex items-center gap-2 text-sm"
+            title="Load a saved estimate template"
+          >
+            📚 Load Template
+          </button>
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="px-4 py-2 bg-khc-primary hover:bg-khc-secondary text-white rounded-lg flex items-center gap-2"
+          >
+            ➕ Add Line Item
+          </button>
+          {estimates.length > 0 && (
+            <>
+              <button
+                onClick={() => setShowSaveTemplateDialog(true)}
+                className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg flex items-center gap-2 text-sm"
+                title="Save current estimate as template"
+              >
+                💾 Save Template
+              </button>
+              <ExportPDFButton
+                projectId={projectId}
+                projectName={currentProject.name}
+                isDisabled={estimates.length === 0}
+              />
+            </>
+          )}
+        </div>
       </div>
 
-      {error && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
-          {error}
+      {error && !dismissedError && (
+        <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 flex justify-between items-center">
+          <span>{error}</span>
+          <button
+            onClick={() => setDismissedError(true)}
+            className="text-red-600 hover:text-red-800 font-bold"
+          >
+            ✕
+          </button>
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Panel: Cost Items Browser */}
-        <div className="lg:col-span-1">
-          <div className="bg-white rounded-lg shadow overflow-hidden">
-            <div className="px-6 py-4 bg-gray-50 border-b">
-              <h2 className="font-semibold text-gray-700">Available Cost Items</h2>
+      {/* Unified Add Line Item Modal */}
+      <UnifiedAddLineItemModal
+        isOpen={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        onAddFromLibrary={handleAddFromLibrary}
+        onAddCustom={handleAddCustom}
+        costItems={costItems}
+        categories={categories}
+        units={units}
+        isSubmitting={submitting}
+        costItemsLoading={costItemsLoading}
+      />
+
+      {/* Save as Template Dialog */}
+      <SaveAsTemplateDialog
+        isOpen={showSaveTemplateDialog}
+        onClose={() => setShowSaveTemplateDialog(false)}
+        onSave={handleSaveAsTemplate}
+        isLoading={templateLoading}
+      />
+
+      {/* Template Library Modal */}
+      <TemplateLibraryModal
+        isOpen={showTemplateLibrary}
+        onClose={() => setShowTemplateLibrary(false)}
+        onSelectTemplate={handleLoadTemplate}
+        showShared={true}
+      />
+
+      {/* Line Items Section */}
+      <LineItemsTable
+        categories={estimatesByCategory}
+        onUpdateQuantity={handleUpdateEstimate}
+        onDeleteItem={handleDeleteEstimate}
+        isLoading={estimatesLoading}
+        isEmpty={estimates.length === 0}
+      />
+
+
+      {/* Totals Summary */}
+      {estimateTotals && (
+        <div className="bg-khc-light rounded-lg p-6 border border-khc-primary">
+          <h3 className="font-bold text-lg text-khc-primary mb-4">Estimate Summary</h3>
+          <div className="space-y-3">
+            <div className="flex justify-between text-gray-700">
+              <span>Subtotal:</span>
+              <span className="font-semibold">
+                £{estimateTotals.subtotal.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
+              </span>
             </div>
-
-            <div className="p-4 border-b">
-              <input
-                type="text"
-                placeholder="Search cost items..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-khc-primary text-sm"
-              />
+            <div className="flex justify-between text-gray-700">
+              <span>Contingency ({estimateTotals.contingency_percentage}%):</span>
+              <span className="font-semibold">
+                £{estimateTotals.contingency_amount.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
+              </span>
             </div>
-
-            <div className="divide-y max-h-96 overflow-y-auto">
-              {costItemsLoading ? (
-                <div className="p-4 text-center text-gray-600">Loading items...</div>
-              ) : filteredItems.length === 0 ? (
-                <div className="p-4 text-center text-gray-600">No items found</div>
-              ) : (
-                filteredItems.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => setSelectedItemId(item.id)}
-                    className={`w-full text-left p-4 transition ${
-                      selectedItemId === item.id ? 'bg-khc-light border-l-4 border-khc-primary' : 'hover:bg-gray-50'
-                    }`}
-                  >
-                    <p className="font-semibold text-sm text-gray-900">{item.description}</p>
-                    <p className="text-xs text-gray-600 mt-1">£{item.material_cost} / {item.unit?.code || 'unit'}</p>
-                  </button>
-                ))
-              )}
+            <div className="flex justify-between border-t border-khc-primary pt-3">
+              <span className="font-bold text-khc-primary">Grand Total:</span>
+              <span className="font-bold text-khc-primary text-lg">
+                £{estimateTotals.grand_total.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
+              </span>
             </div>
-          </div>
-        </div>
-
-        {/* Right Panel: Add Estimate & Current Estimates */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Add Estimate Form */}
-          {selectedItemId && (
-            <div className="bg-white rounded-lg shadow p-6">
-              <h3 className="font-bold text-lg mb-4 text-khc-primary">Add to Estimate</h3>
-              {costItems.find((i) => i.id === selectedItemId) && (
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-sm font-semibold text-gray-700 mb-1">
-                      {costItems.find((i) => i.id === selectedItemId)?.description}
-                    </p>
-                    <p className="text-xs text-gray-600">
-                      Material: £{costItems.find((i) => i.id === selectedItemId)?.material_cost}
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Quantity *</label>
-                      <input
-                        type="number"
-                        value={quantity}
-                        onChange={(e) => setQuantity(e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-khc-primary"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Cost Override</label>
-                      <input
-                        type="number"
-                        value={costOverride}
-                        onChange={(e) => setCostOverride(e.target.value)}
-                        placeholder="Optional"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-khc-primary"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
-                    <textarea
-                      value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
-                      placeholder="Optional notes"
-                      rows={2}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-khc-primary"
-                    />
-                  </div>
-
-                  <div className="flex gap-2 pt-4">
-                    <button
-                      onClick={() => setSelectedItemId(null)}
-                      className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      onClick={handleAddEstimate}
-                      disabled={submitting || !quantity}
-                      className="flex-1 px-4 py-2 bg-khc-primary hover:bg-khc-secondary text-white rounded-lg disabled:bg-gray-400"
-                    >
-                      {submitting ? 'Adding...' : 'Add Item'}
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Current Estimates */}
-          <div className="bg-white rounded-lg shadow overflow-hidden">
-            <div className="px-6 py-4 bg-gray-50 border-b">
-              <h3 className="font-semibold text-gray-700">Current Estimate Items ({estimates.length})</h3>
-            </div>
-
-            {estimatesLoading ? (
-              <div className="p-6 text-center text-gray-600">Loading estimates...</div>
-            ) : estimates.length === 0 ? (
-              <div className="p-6 text-center text-gray-600">No items added yet. Select an item and add quantity to begin.</div>
-            ) : (
-              <div className="divide-y">
-                {estimatesByCategory.map((category) => (
-                  <div key={category.category_id}>
-                    <div className="px-6 py-3 bg-khc-light border-b">
-                      <p className="font-semibold text-khc-primary">{category.category_name}</p>
-                    </div>
-                    {category.line_items.map((item) => {
-                      const estimate = estimates.find((e) => e.id === item.estimate_id)
-                      return (
-                        <div key={item.estimate_id} className="px-6 py-4 border-b hover:bg-gray-50">
-                          <div className="space-y-2">
-                            <div className="flex justify-between items-start">
-                              <div>
-                                <p className="font-semibold text-sm text-gray-900">{item.description}</p>
-                                <p className="text-xs text-gray-600">{item.unit_code}</p>
-                              </div>
-                              <div className="text-right">
-                                <p className="font-bold text-khc-primary">
-                                  £{item.line_total.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
-                                </p>
-                              </div>
-                            </div>
-
-                            {editingId === item.estimate_id ? (
-                              <div className="flex gap-2 items-end">
-                                <div className="flex-1">
-                                  <input
-                                    type="number"
-                                    value={editQuantity}
-                                    onChange={(e) => setEditQuantity(e.target.value)}
-                                    className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
-                                  />
-                                </div>
-                                <button
-                                  onClick={() => handleUpdateEstimate(item.estimate_id)}
-                                  disabled={submitting}
-                                  className="px-3 py-1 bg-khc-primary text-white text-sm rounded disabled:bg-gray-400"
-                                >
-                                  Save
-                                </button>
-                                <button
-                                  onClick={() => setEditingId(null)}
-                                  className="px-3 py-1 border border-gray-300 text-sm rounded hover:bg-gray-100"
-                                >
-                                  Cancel
-                                </button>
-                              </div>
-                            ) : (
-                              <div className="flex justify-between text-sm text-gray-600">
-                                <span>Qty: {item.quantity}</span>
-                                <div className="space-x-2">
-                                  <button
-                                    onClick={() => {
-                                      setEditingId(item.estimate_id)
-                                      setEditQuantity(item.quantity.toString())
-                                    }}
-                                    className="text-khc-primary hover:underline text-xs"
-                                  >
-                                    Edit
-                                  </button>
-                                  <button
-                                    onClick={() => handleDeleteEstimate(item.estimate_id)}
-                                    disabled={submitting}
-                                    className="text-red-600 hover:underline text-xs disabled:text-gray-400"
-                                  >
-                                    Delete
-                                  </button>
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                ))}
+            {estimateTotals.cost_per_m2 && (
+              <div className="text-sm text-gray-600 text-right pt-2">
+                £{estimateTotals.cost_per_m2.toLocaleString('en-GB', { maximumFractionDigits: 2 })} per m²
               </div>
             )}
           </div>
-
-          {/* Totals */}
-          {estimateTotals && (
-            <div className="bg-khc-light rounded-lg p-6">
-              <div className="space-y-3">
-                <div className="flex justify-between text-gray-700">
-                  <span>Subtotal:</span>
-                  <span className="font-semibold">
-                    £{estimateTotals.subtotal.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
-                  </span>
-                </div>
-                <div className="flex justify-between text-gray-700">
-                  <span>Contingency ({estimateTotals.contingency_percentage}%):</span>
-                  <span className="font-semibold">
-                    £{estimateTotals.contingency_amount.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
-                  </span>
-                </div>
-                <div className="flex justify-between border-t border-khc-primary pt-3">
-                  <span className="font-bold text-khc-primary">Grand Total:</span>
-                  <span className="font-bold text-khc-primary text-lg">
-                    £{estimateTotals.grand_total.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
-                  </span>
-                </div>
-                {estimateTotals.cost_per_m2 && (
-                  <div className="text-sm text-gray-600 text-right pt-2">
-                    £{estimateTotals.cost_per_m2.toLocaleString('en-GB', { maximumFractionDigits: 2 })} per m²
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
         </div>
-      </div>
+      )}
     </div>
   )
 }

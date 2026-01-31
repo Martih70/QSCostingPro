@@ -15,6 +15,7 @@ import costItemsRoutes from './routes/v1/costItems.js';
 import unitsRoutes from './routes/v1/units.js';
 import projectsRoutes from './routes/v1/projects.js';
 import projectEstimatesRoutes from './routes/v1/projectEstimates.js';
+import estimateTemplatesRoutes from './routes/v1/estimateTemplates.js';
 import bcisRoutes from './routes/v1/bcis.js';
 import logger from './utils/logger.js';
 
@@ -75,6 +76,7 @@ app.use('/api/v1/cost-items', costItemsRoutes);
 app.use('/api/v1/units', unitsRoutes);
 app.use('/api/v1/projects', projectsRoutes);
 app.use('/api/v1/projects', projectEstimatesRoutes);
+app.use('/api/v1/estimate-templates', estimateTemplatesRoutes);
 app.use('/api/v1/bcis', bcisRoutes);
 
 // 404 handler

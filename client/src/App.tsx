@@ -19,7 +19,6 @@ import CostItemsPage from './pages/CostItemsPage'
 import ReportingPage from './pages/ReportingPage'
 import CostAnalysisPage from './pages/CostAnalysisPage'
 import ProjectActualsPage from './pages/ProjectActualsPage'
-import CostDataUploaderPage from './pages/CostDataUploaderPage'
 import ProjectCostTotalPage from './pages/ProjectCostTotalPage'
 import UserManagementPage from './pages/UserManagementPage'
 import ClientsPage from './pages/ClientsPage'
@@ -73,7 +72,6 @@ function App() {
           <Route path="/projects/:id/cost-total" element={<ProjectCostTotalPage />} />
           <Route path="/cost-items" element={<CostItemsPage />} />
           <Route path="/cost-analysis" element={<CostAnalysisPage />} />
-          <Route path="/cost-uploader" element={<CostDataUploaderPage />} />
           <Route path="/personal-database" element={<PersonalCostDatabaseUploaderPage />} />
           <Route path="/internal-rates" element={<InternalRatesBuilderPage />} />
           <Route path="/cost-assembly" element={<ProjectCostAssemblyPage />} />

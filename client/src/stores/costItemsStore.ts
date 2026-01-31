@@ -78,7 +78,7 @@ export const useCostItemsStore = create<CostItemsState>((set, get) => ({
     set({ isLoading: true, error: null })
     try {
       const response = await costItemsAPI.getCategories()
-      set({ categories: response.data, isLoading: false })
+      set({ categories: response.data.data || response.data, isLoading: false })
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to fetch categories'
       set({ error: errorMessage, isLoading: false })
@@ -92,7 +92,7 @@ export const useCostItemsStore = create<CostItemsState>((set, get) => ({
       const response = categoryId
         ? await costItemsAPI.getSubElementsByCategory(categoryId)
         : await costItemsAPI.getSubElements()
-      set({ subElements: response.data, isLoading: false })
+      set({ subElements: response.data.data || response.data, isLoading: false })
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to fetch sub-elements'
       set({ error: errorMessage, isLoading: false })
@@ -104,7 +104,7 @@ export const useCostItemsStore = create<CostItemsState>((set, get) => ({
     set({ isLoading: true, error: null })
     try {
       const response = await costItemsAPI.getCostItems(filters)
-      set({ costItems: response.data, isLoading: false })
+      set({ costItems: response.data.data || response.data, isLoading: false })
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to fetch cost items'
       set({ error: errorMessage, isLoading: false })
@@ -116,7 +116,7 @@ export const useCostItemsStore = create<CostItemsState>((set, get) => ({
     set({ isLoading: true, error: null })
     try {
       const response = await costItemsAPI.getUnits()
-      set({ units: response.data, isLoading: false })
+      set({ units: response.data.data || response.data, isLoading: false })
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to fetch units'
       set({ error: errorMessage, isLoading: false })
@@ -128,9 +128,9 @@ export const useCostItemsStore = create<CostItemsState>((set, get) => ({
     try {
       const response = await costItemsAPI.createCategory(data)
       set((state) => ({
-        categories: [...state.categories, response.data],
+        categories: [...state.categories, response.data.data || response.data],
       }))
-      return response.data
+      return response.data.data || response.data
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to create category'
       set({ error: errorMessage })
@@ -143,9 +143,9 @@ export const useCostItemsStore = create<CostItemsState>((set, get) => ({
     try {
       const response = await costItemsAPI.updateCategory(id, data)
       set((state) => ({
-        categories: state.categories.map((cat) => (cat.id === id ? response.data : cat)),
+        categories: state.categories.map((cat) => (cat.id === id ? (response.data.data || response.data) : cat)),
       }))
-      return response.data
+      return response.data.data || response.data
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to update category'
       set({ error: errorMessage })
@@ -172,9 +172,9 @@ export const useCostItemsStore = create<CostItemsState>((set, get) => ({
     try {
       const response = await costItemsAPI.createSubElement(data)
       set((state) => ({
-        subElements: [...state.subElements, response.data],
+        subElements: [...state.subElements, response.data.data || response.data],
       }))
-      return response.data
+      return response.data.data || response.data
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to create sub-element'
       set({ error: errorMessage })
@@ -187,9 +187,9 @@ export const useCostItemsStore = create<CostItemsState>((set, get) => ({
     try {
       const response = await costItemsAPI.updateSubElement(id, data)
       set((state) => ({
-        subElements: state.subElements.map((se) => (se.id === id ? response.data : se)),
+        subElements: state.subElements.map((se) => (se.id === id ? (response.data.data || response.data) : se)),
       }))
-      return response.data
+      return response.data.data || response.data
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to update sub-element'
       set({ error: errorMessage })
@@ -216,9 +216,9 @@ export const useCostItemsStore = create<CostItemsState>((set, get) => ({
     try {
       const response = await costItemsAPI.createCostItem(data)
       set((state) => ({
-        costItems: [...state.costItems, response.data],
+        costItems: [...state.costItems, response.data.data || response.data],
       }))
-      return response.data
+      return response.data.data || response.data
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to create cost item'
       set({ error: errorMessage })
@@ -231,9 +231,9 @@ export const useCostItemsStore = create<CostItemsState>((set, get) => ({
     try {
       const response = await costItemsAPI.updateCostItem(id, data)
       set((state) => ({
-        costItems: state.costItems.map((item) => (item.id === id ? response.data : item)),
+        costItems: state.costItems.map((item) => (item.id === id ? (response.data.data || response.data) : item)),
       }))
-      return response.data
+      return response.data.data || response.data
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to update cost item'
       set({ error: errorMessage })

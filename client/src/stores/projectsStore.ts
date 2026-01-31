@@ -20,6 +20,7 @@ interface ProjectsState {
   createProject: (data: CreateProjectRequest) => Promise<Project>
   updateProject: (id: number, data: UpdateProjectRequest) => Promise<Project>
   deleteProject: (id: number) => Promise<void>
+  duplicateProject: (id: number, name: string, includeEstimates: boolean, copyStatus: boolean) => Promise<Project>
   submitEstimate: (id: number) => Promise<void>
   approveEstimate: (id: number, notes?: string) => Promise<void>
   rejectEstimate: (id: number, reason?: string) => Promise<void>
@@ -107,6 +108,27 @@ export const useProjectsStore = create<ProjectsState>((set, get) => ({
       }))
     } catch (error: any) {
       const message = error.response?.data?.error || 'Failed to delete project'
+      set({ error: message, isLoading: false })
+      throw error
+    }
+  },
+
+  duplicateProject: async (id: number, name: string, includeEstimates: boolean, copyStatus: boolean) => {
+    set({ isLoading: true, error: null })
+    try {
+      const response = await projectsAPI.duplicate(id, {
+        name,
+        include_estimates: includeEstimates,
+        copy_status: copyStatus,
+      })
+      const newProject = response.data.data
+      set((state) => ({
+        projects: [newProject, ...state.projects],
+        isLoading: false,
+      }))
+      return newProject
+    } catch (error: any) {
+      const message = error.response?.data?.error || 'Failed to duplicate project'
       set({ error: message, isLoading: false })
       throw error
     }

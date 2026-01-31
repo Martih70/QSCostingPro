@@ -321,32 +321,41 @@ export const projectEstimatesRepository = {
 
   create: (data: {
     project_id: number;
-    cost_item_id: number;
+    cost_item_id?: number;
     quantity: number;
     unit_cost_override?: number;
     notes?: string;
     line_total?: number;
     created_by: number;
+    custom_description?: string;
+    custom_unit_rate?: number;
+    custom_unit?: string;
+    category_id?: number;
   }): ProjectEstimate => {
     try {
       const db = getDatabase();
       const stmt = db.prepare(`
         INSERT INTO project_estimates (
           project_id, cost_item_id, quantity, unit_cost_override,
-          notes, line_total, created_by, version_number, is_active
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+          notes, line_total, created_by, version_number, is_active,
+          custom_description, custom_unit_rate, custom_unit, category_id
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `);
 
       const result = stmt.run(
         data.project_id,
-        data.cost_item_id,
+        data.cost_item_id || null,
         data.quantity,
         data.unit_cost_override || null,
         data.notes || null,
         data.line_total || null,
         data.created_by,
         1,
-        1
+        1,
+        data.custom_description || null,
+        data.custom_unit_rate || null,
+        data.custom_unit || null,
+        data.category_id || null
       );
 
       const created = projectEstimatesRepository.getById(result.lastInsertRowid as number);

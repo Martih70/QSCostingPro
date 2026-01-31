@@ -2,12 +2,24 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useProjectsStore } from '../stores/projectsStore'
+import { useBulkSelection } from '../hooks/useBulkSelection'
+import BulkOperationsToolbar from '../components/projects/BulkOperationsToolbar'
+import DuplicateProjectDialog, { DuplicateOptions } from '../components/projects/DuplicateProjectDialog'
+import { useToast } from '../components/ui/ToastContainer'
+import { handleApiError, logError } from '../utils/errorHandler'
 
 export default function ProjectsListPage() {
   const navigate = useNavigate()
-  const { user, isQuantitySurveyor, isAdmin } = useAuth()
-  const { projects, isLoading, error, fetchProjects, deleteProject } = useProjectsStore()
+  const toast = useToast()
+  const { user, isEstimator, isAdmin } = useAuth()
+  const { projects, isLoading, error, fetchProjects, deleteProject, updateProject, duplicateProject } = useProjectsStore()
   const [filters, setFilters] = useState({ status: '', estimateStatus: '', progress: '', search: '' })
+  const [bulkLoading, setBulkLoading] = useState(false)
+  const [duplicateLoading, setDuplicateLoading] = useState(false)
+  const [showDuplicateDialog, setShowDuplicateDialog] = useState(false)
+  const [duplicateProjectId, setDuplicateProjectId] = useState<number | null>(null)
+  const [duplicateProjectName, setDuplicateProjectName] = useState('')
+  const bulkSelection = useBulkSelection(projects)
 
   useEffect(() => {
     fetchProjects()
@@ -27,20 +39,113 @@ export default function ProjectsListPage() {
       try {
         await deleteProject(id)
       } catch (error) {
-        // Error is handled by store
+        logError(error, 'DeleteProject')
       }
+    }
+  }
+
+  const handleBulkDelete = async () => {
+    const selectedProjects = bulkSelection.getSelectedItems()
+    const confirmMsg = `Delete ${selectedProjects.length} project${selectedProjects.length !== 1 ? 's' : ''}? This cannot be undone.`
+
+    if (window.confirm(confirmMsg)) {
+      try {
+        setBulkLoading(true)
+        let successCount = 0
+        let errorCount = 0
+
+        for (const project of selectedProjects) {
+          try {
+            await deleteProject(project.id)
+            successCount++
+          } catch (error) {
+            errorCount++
+            logError(error, `BulkDelete-${project.id}`)
+          }
+        }
+
+        bulkSelection.clearSelection()
+        toast.success(`Deleted ${successCount} project${successCount !== 1 ? 's' : ''}`)
+        if (errorCount > 0) {
+          toast.error(`Failed to delete ${errorCount} project${errorCount !== 1 ? 's' : ''}`)
+        }
+      } finally {
+        setBulkLoading(false)
+      }
+    }
+  }
+
+  const handleBulkStatusChange = async (newStatus: 'draft' | 'in_progress' | 'completed') => {
+    const selectedProjects = bulkSelection.getSelectedItems()
+
+    try {
+      setBulkLoading(true)
+      let successCount = 0
+
+      for (const project of selectedProjects) {
+        try {
+          await updateProject(project.id, { status: newStatus })
+          successCount++
+        } catch (error) {
+          logError(error, `BulkStatusChange-${project.id}`)
+        }
+      }
+
+      bulkSelection.clearSelection()
+      await fetchProjects()
+      toast.success(`Updated ${successCount} project${successCount !== 1 ? 's' : ''}`)
+    } finally {
+      setBulkLoading(false)
+    }
+  }
+
+  const handleOpenDuplicateDialog = (id: number, name: string) => {
+    setDuplicateProjectId(id)
+    setDuplicateProjectName(name)
+    setShowDuplicateDialog(true)
+  }
+
+  const handleDuplicateProject = async (options: DuplicateOptions) => {
+    if (!duplicateProjectId) return
+
+    try {
+      setDuplicateLoading(true)
+      await duplicateProject(duplicateProjectId, options.name, options.includeEstimates, options.copyStatus)
+      await fetchProjects()
+      toast.success(`Project duplicated successfully`)
+      setShowDuplicateDialog(false)
+    } catch (error) {
+      logError(error, `DuplicateProject-${duplicateProjectId}`)
+      toast.error('Failed to duplicate project')
+    } finally {
+      setDuplicateLoading(false)
     }
   }
 
   return (
     <div className="space-y-6">
+      {/* Bulk Operations Toolbar */}
+      {bulkSelection.selectedCount > 0 && (
+        <BulkOperationsToolbar
+          selectedCount={bulkSelection.selectedCount}
+          totalCount={projects.length}
+          isAllSelected={bulkSelection.isAllSelected}
+          isPartiallySelected={bulkSelection.isPartiallySelected}
+          onSelectAll={bulkSelection.selectAll}
+          onDeselectAll={bulkSelection.deselectAll}
+          onBulkDelete={handleBulkDelete}
+          onBulkStatusChange={handleBulkStatusChange}
+          isLoading={bulkLoading}
+        />
+      )}
+
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-khc-primary">Projects</h1>
           <p className="text-gray-600 mt-2">Manage your estimation projects</p>
         </div>
-        {(isAdmin || isQuantitySurveyor) && (
+        {(isAdmin || isEstimator) && (
           <Link
             to="/projects/new"
             className="bg-khc-primary hover:bg-khc-secondary text-white font-medium py-2 px-4 rounded-lg transition"
@@ -133,6 +238,17 @@ export default function ProjectsListPage() {
             <table className="w-full">
               <thead className="bg-gray-50 border-b">
                 <tr>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 w-12">
+                    <input
+                      type="checkbox"
+                      checked={bulkSelection.isAllSelected}
+                      ref={(el) => {
+                        if (el) el.indeterminate = bulkSelection.isPartiallySelected
+                      }}
+                      onChange={bulkSelection.toggleAll}
+                      className="w-5 h-5 rounded border-2 border-khc-primary cursor-pointer"
+                    />
+                  </th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Name</th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Location</th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Progress</th>
@@ -144,7 +260,20 @@ export default function ProjectsListPage() {
               </thead>
               <tbody className="divide-y">
                 {filtered.map((project) => (
-                  <tr key={project.id} className="hover:bg-gray-50 transition">
+                  <tr
+                    key={project.id}
+                    className={`hover:bg-gray-50 transition ${
+                      bulkSelection.isSelected(project.id) ? 'bg-khc-light' : ''
+                    }`}
+                  >
+                    <td className="px-6 py-4 w-12">
+                      <input
+                        type="checkbox"
+                        checked={bulkSelection.isSelected(project.id)}
+                        onChange={() => bulkSelection.toggleSelection(project.id)}
+                        className="w-5 h-5 rounded border-2 border-khc-primary cursor-pointer"
+                      />
+                    </td>
                     <td className="px-6 py-4">
                       <Link
                         to={`/projects/${project.id}`}
@@ -193,7 +322,7 @@ export default function ProjectsListPage() {
                       >
                         View
                       </Link>
-                      {(isAdmin || (user?.id === project.created_by && isQuantitySurveyor)) && (
+                      {(isAdmin || (user?.id === project.created_by && isEstimator)) && (
                         <>
                           <Link
                             to={`/projects/${project.id}/edit`}
@@ -201,6 +330,12 @@ export default function ProjectsListPage() {
                           >
                             Edit
                           </Link>
+                          <button
+                            onClick={() => handleOpenDuplicateDialog(project.id, project.name)}
+                            className="text-purple-600 hover:text-purple-700 text-sm font-medium"
+                          >
+                            Duplicate
+                          </button>
                           {isAdmin && (
                             <button
                               onClick={() => handleDelete(project.id)}
@@ -223,6 +358,15 @@ export default function ProjectsListPage() {
       <p className="text-sm text-gray-600 text-center">
         Showing {filtered.length} of {projects.length} projects
       </p>
+
+      {/* Duplicate Dialog */}
+      <DuplicateProjectDialog
+        isOpen={showDuplicateDialog}
+        onClose={() => setShowDuplicateDialog(false)}
+        onDuplicate={handleDuplicateProject}
+        projectName={duplicateProjectName}
+        isLoading={duplicateLoading}
+      />
     </div>
   )
 }

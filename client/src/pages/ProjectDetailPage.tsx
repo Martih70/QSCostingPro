@@ -3,12 +3,18 @@ import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useProjectsStore } from '../stores/projectsStore'
 import { useEstimatesStore } from '../stores/estimatesStore'
+import { useRecentlyViewed } from '../hooks/useRecentlyViewed'
 import BackButton from '../components/ui/BackButton'
+import ExportPDFButton from '../components/estimates/ExportPDFButton'
+import { useToast } from '../components/ui/ToastContainer'
+import { handleApiError, logError } from '../utils/errorHandler'
 
 export default function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { user, isAdmin } = useAuth()
+  const toast = useToast()
+  const { addRecent } = useRecentlyViewed()
   const projectId = Number(id)
 
   const { currentProject, isLoading: projectLoading, error: projectError, fetchProjectById } = useProjectsStore()
@@ -30,6 +36,13 @@ export default function ProjectDetailPage() {
     }
   }, [projectId, fetchProjectById, fetchEstimateSummary, clearEstimates])
 
+  // Track recently viewed project
+  useEffect(() => {
+    if (currentProject?.name) {
+      addRecent(projectId, currentProject.name)
+    }
+  }, [projectId, currentProject?.name, addRecent])
+
   const { submitEstimate, approveEstimate, rejectEstimate } = useProjectsStore()
 
   const handleSubmitEstimate = async () => {
@@ -40,8 +53,11 @@ export default function ProjectDetailPage() {
       // Refresh project and estimate
       await fetchProjectById(projectId)
       await fetchEstimateSummary(projectId)
+      toast.success('Estimate submitted for approval')
       setSubmitting(false)
     } catch (error) {
+      logError(error, 'SubmitEstimate')
+      toast.error(handleApiError(error))
       setSubmitting(false)
     }
   }
@@ -53,10 +69,13 @@ export default function ProjectDetailPage() {
       await approveEstimate(projectId, approvalNotes)
       await fetchProjectById(projectId)
       await fetchEstimateSummary(projectId)
+      toast.success('Estimate approved successfully')
       setShowApprovalModal(false)
       setApprovalNotes('')
       setSubmitting(false)
     } catch (error) {
+      logError(error, 'ApproveEstimate')
+      toast.error(handleApiError(error))
       setSubmitting(false)
     }
   }
@@ -68,10 +87,13 @@ export default function ProjectDetailPage() {
       await rejectEstimate(projectId, rejectionReason)
       await fetchProjectById(projectId)
       await fetchEstimateSummary(projectId)
+      toast.success('Estimate rejected')
       setShowRejectionModal(false)
       setRejectionReason('')
       setSubmitting(false)
     } catch (error) {
+      logError(error, 'RejectEstimate')
+      toast.error(handleApiError(error))
       setSubmitting(false)
     }
   }
@@ -110,6 +132,12 @@ export default function ProjectDetailPage() {
           <p className="text-gray-600 mt-2">{currentProject.project_address || currentProject.description || 'No address provided'}</p>
         </div>
         <div className="flex gap-2">
+          {estimateTotals && estimateTotals.grand_total > 0 && (
+            <ExportPDFButton
+              projectId={projectId}
+              projectName={currentProject.name}
+            />
+          )}
           {canEdit && (
             <Link
               to={`/projects/${projectId}/edit`}

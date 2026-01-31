@@ -1,0 +1,831 @@
+2026-01-30 18:29:15:2915 info: Starting KHConstruct server...
+2026-01-30 18:29:15:2915 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-30 18:29:15:2915 info: Database initialized
+2026-01-30 18:29:15:2915 info: Running migration: 001_initial_schema.sql
+2026-01-30 18:29:15:2915 info: ✓ Migration completed: 001_initial_schema.sql
+2026-01-30 18:29:15:2915 info: Running migration: 002_add_multi_tenant_fields.sql
+2026-01-30 18:29:15:2915 info: ✓ Migration completed: 002_add_multi_tenant_fields.sql
+2026-01-30 18:29:15:2915 info: Running migration: 003_qscosting_pro_refactor.sql
+2026-01-30 18:29:15:2915 info: ✓ Migration completed: 003_qscosting_pro_refactor.sql
+2026-01-30 18:29:15:2915 info: Running migration: 004_update_projects_schema.sql
+2026-01-30 18:29:15:2915 info: ✓ Migration completed: 004_update_projects_schema.sql
+2026-01-30 18:29:15:2915 info: Running migration: 005_add_project_address_contractor.sql
+2026-01-30 18:29:15:2915 info: ✓ Migration completed: 005_add_project_address_contractor.sql
+2026-01-30 18:29:15:2915 info: Running migration: 006_make_location_nullable.sql
+2026-01-30 18:29:15:2915 info: ✓ Migration completed: 006_make_location_nullable.sql
+2026-01-30 18:29:15:2915 info: Running migration: 007_add_spons_database_type.sql
+2026-01-30 18:29:15:2915 info: ✓ Migration completed: 007_add_spons_database_type.sql
+2026-01-30 18:29:15:2915 info: All migrations completed successfully
+2026-01-30 18:29:15:2915 info: Database migrations completed
+2026-01-30 18:29:15:2915 info: Starting database seeding...
+2026-01-30 18:29:16:2916 info: ✓ Seeded 4 units
+2026-01-30 18:29:16:2916 info: ✓ Seeded 7 cost categories
+2026-01-30 18:29:16:2916 info: ✓ Seeded 13 sub-elements
+2026-01-30 18:29:16:2916 info: ✓ Seeded 13 witness cost items
+2026-01-30 18:29:16:2916 info: ✓ Seeded 12 Standard UK cost items
+2026-01-30 18:29:16:2916 info: ✓ Seeded 11 BCIS Elements
+2026-01-30 18:29:16:2916 info: ✓ Seeded 26 BCIS Sub-Elements
+2026-01-30 18:29:16:2916 info: ✓ Seeded 39 BCIS Cost Items
+2026-01-30 18:29:16:2916 info: ✓ BCIS Database seeding completed successfully
+2026-01-30 18:29:16:2916 info: ✓ Seeded 84 Spons detailed cost items
+2026-01-30 18:29:16:2916 info: ✓ Seeded admin user (username: admin, password: admin123456)
+2026-01-30 18:29:16:2916 info: ✓ Database seeding completed
+2026-01-30 18:29:16:2916 info: Database seeding completed
+2026-01-30 18:29:16:2916 info: ✓ Server running on http://localhost:3000
+2026-01-30 18:29:16:2916 info: Environment: development
+2026-01-30 18:29:16:2916 info: Frontend URL: http://localhost:5173
+2026-01-30 18:29:16:2916 info: Press Ctrl+C to stop
+2026-01-30 18:31:01:311 error: Login failed: Error: Invalid username or password
+2026-01-30 18:31:01:311 warn: Login failed: Invalid username or password
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:31:01:311 error: Token refresh failed: Error: User not found or inactive
+2026-01-30 18:31:01:311 warn: Token refresh failed: User not found or inactive
+2026-01-30 18:33:00:330 info: User registered: MatiH (ID: 2)
+2026-01-30 18:33:00:330 info: New user registered: MatiH
+2026-01-30 18:33:01:331 info: User logged in: MatiH
+2026-01-30 18:33:01:331 info: User logged in: MatiH
+2026-01-30 18:33:53:3353 info: User logged out: ID 2
+2026-01-30 18:33:53:3353 info: User logged out: MatiH
+2026-01-30 18:34:20:3420 info: User logged in: admin
+2026-01-30 18:34:20:3420 info: User logged in: admin
+2026-01-30 19:48:21:4821 warn: Invalid token for GET /
+2026-01-30 19:48:21:4821 warn: Invalid token for GET /
+2026-01-30 19:48:21:4821 warn: Invalid token for GET /
+2026-01-30 19:48:22:4822 info: Token refreshed for user: admin
+2026-01-30 19:48:22:4822 info: Token refreshed
+2026-01-30 19:48:22:4822 info: Token refreshed for user: admin
+2026-01-30 19:48:22:4822 info: Token refreshed
+2026-01-30 19:48:22:4822 info: Token refreshed for user: admin
+2026-01-30 19:48:22:4822 info: Token refreshed
+2026-01-30 20:08:46:846 warn: Invalid token for GET /
+2026-01-30 20:08:46:846 warn: Invalid token for GET /
+2026-01-30 20:08:46:846 info: Token refreshed for user: admin
+2026-01-30 20:08:46:846 info: Token refreshed
+2026-01-30 20:08:46:846 info: Token refreshed for user: admin
+2026-01-30 20:08:46:846 info: Token refreshed
+2026-01-30 20:17:27:1727 info: User logged in: admin
+2026-01-30 20:17:27:1727 info: User logged in: admin
+2026-01-30 20:58:18:5818 info: Database connection closed
+2026-01-30 20:58:19:5819 info: Starting KHConstruct server...
+2026-01-30 20:58:19:5819 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-30 20:58:19:5819 info: Database initialized
+2026-01-30 20:58:19:5819 info: All migrations completed successfully
+2026-01-30 20:58:19:5819 info: Database migrations completed
+2026-01-30 20:58:19:5819 info: Starting database seeding...
+2026-01-30 20:58:19:5819 info: ✓ Standard UK costs already seeded
+2026-01-30 20:58:19:5819 info: ✓ BCIS database already seeded
+2026-01-30 20:58:19:5819 info: ✓ Spons database already seeded
+2026-01-30 20:58:19:5819 info: ✓ Database seeding completed
+2026-01-30 20:58:19:5819 info: Database seeding completed
+2026-01-30 20:58:19:5819 info: ✓ Server running on http://localhost:3000
+2026-01-30 20:58:19:5819 info: Environment: development
+2026-01-30 20:58:19:5819 info: Frontend URL: http://localhost:5173
+2026-01-30 20:58:19:5819 info: Press Ctrl+C to stop
+2026-01-30 20:58:25:5825 info: Database connection closed
+2026-01-30 20:58:25:5825 info: Starting KHConstruct server...
+2026-01-30 20:58:25:5825 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-30 20:58:25:5825 info: Database initialized
+2026-01-30 20:58:25:5825 info: All migrations completed successfully
+2026-01-30 20:58:25:5825 info: Database migrations completed
+2026-01-30 20:58:25:5825 info: Starting database seeding...
+2026-01-30 20:58:25:5825 info: ✓ Standard UK costs already seeded
+2026-01-30 20:58:25:5825 info: ✓ BCIS database already seeded
+2026-01-30 20:58:25:5825 info: ✓ Spons database already seeded
+2026-01-30 20:58:25:5825 info: ✓ Database seeding completed
+2026-01-30 20:58:25:5825 info: Database seeding completed
+2026-01-30 20:58:25:5825 info: ✓ Server running on http://localhost:3000
+2026-01-30 20:58:25:5825 info: Environment: development
+2026-01-30 20:58:25:5825 info: Frontend URL: http://localhost:5173
+2026-01-30 20:58:25:5825 info: Press Ctrl+C to stop
+2026-01-30 20:58:27:5827 info: Database connection closed
+2026-01-30 20:58:27:5827 info: Starting KHConstruct server...
+2026-01-30 20:58:27:5827 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-30 20:58:27:5827 info: Database initialized
+2026-01-30 20:58:27:5827 info: All migrations completed successfully
+2026-01-30 20:58:27:5827 info: Database migrations completed
+2026-01-30 20:58:27:5827 info: Starting database seeding...
+2026-01-30 20:58:27:5827 info: ✓ Standard UK costs already seeded
+2026-01-30 20:58:27:5827 info: ✓ BCIS database already seeded
+2026-01-30 20:58:27:5827 info: ✓ Spons database already seeded
+2026-01-30 20:58:27:5827 info: ✓ Database seeding completed
+2026-01-30 20:58:27:5827 info: Database seeding completed
+2026-01-30 20:58:27:5827 info: ✓ Server running on http://localhost:3000
+2026-01-30 20:58:27:5827 info: Environment: development
+2026-01-30 20:58:27:5827 info: Frontend URL: http://localhost:5173
+2026-01-30 20:58:27:5827 info: Press Ctrl+C to stop
+2026-01-30 20:59:21:5921 info: Database connection closed
+2026-01-30 20:59:21:5921 info: Starting KHConstruct server...
+2026-01-30 20:59:21:5921 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-30 20:59:21:5921 info: Database initialized
+2026-01-30 20:59:21:5921 info: Running migration: 008_add_custom_line_items.sql
+2026-01-30 20:59:21:5921 info: ✓ Migration completed: 008_add_custom_line_items.sql
+2026-01-30 20:59:21:5921 info: All migrations completed successfully
+2026-01-30 20:59:21:5921 info: Database migrations completed
+2026-01-30 20:59:21:5921 info: Starting database seeding...
+2026-01-30 20:59:21:5921 info: ✓ Standard UK costs already seeded
+2026-01-30 20:59:21:5921 info: ✓ BCIS database already seeded
+2026-01-30 20:59:21:5921 info: ✓ Spons database already seeded
+2026-01-30 20:59:21:5921 info: ✓ Database seeding completed
+2026-01-30 20:59:21:5921 info: Database seeding completed
+2026-01-30 20:59:21:5921 info: ✓ Server running on http://localhost:3000
+2026-01-30 20:59:21:5921 info: Environment: development
+2026-01-30 20:59:21:5921 info: Frontend URL: http://localhost:5173
+2026-01-30 20:59:21:5921 info: Press Ctrl+C to stop
+2026-01-30 21:00:48:048 warn: Invalid token for GET /
+2026-01-30 21:00:48:048 warn: Invalid token for GET /
+2026-01-30 21:00:48:048 info: Token refreshed for user: admin
+2026-01-30 21:00:48:048 info: Token refreshed
+2026-01-30 21:00:48:048 info: Token refreshed for user: admin
+2026-01-30 21:00:48:048 info: Token refreshed
+2026-01-30 21:01:08:18 info: Database connection closed
+2026-01-30 21:01:08:18 info: Starting KHConstruct server...
+2026-01-30 21:01:08:18 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-30 21:01:08:18 info: Database initialized
+2026-01-30 21:01:08:18 info: All migrations completed successfully
+2026-01-30 21:01:08:18 info: Database migrations completed
+2026-01-30 21:01:08:18 info: Starting database seeding...
+2026-01-30 21:01:08:18 info: ✓ Standard UK costs already seeded
+2026-01-30 21:01:08:18 info: ✓ BCIS database already seeded
+2026-01-30 21:01:08:18 info: ✓ Spons database already seeded
+2026-01-30 21:01:08:18 info: ✓ Database seeding completed
+2026-01-30 21:01:08:18 info: Database seeding completed
+2026-01-30 21:01:08:18 info: ✓ Server running on http://localhost:3000
+2026-01-30 21:01:08:18 info: Environment: development
+2026-01-30 21:01:08:18 info: Frontend URL: http://localhost:5173
+2026-01-30 21:01:08:18 info: Press Ctrl+C to stop
+2026-01-30 21:01:22:122 info: Database connection closed
+2026-01-30 21:01:22:122 info: Starting KHConstruct server...
+2026-01-30 21:01:22:122 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-30 21:01:22:122 info: Database initialized
+2026-01-30 21:01:22:122 info: All migrations completed successfully
+2026-01-30 21:01:22:122 info: Database migrations completed
+2026-01-30 21:01:22:122 info: Starting database seeding...
+2026-01-30 21:01:22:122 info: ✓ Standard UK costs already seeded
+2026-01-30 21:01:22:122 info: ✓ BCIS database already seeded
+2026-01-30 21:01:22:122 info: ✓ Spons database already seeded
+2026-01-30 21:01:22:122 info: ✓ Database seeding completed
+2026-01-30 21:01:22:122 info: Database seeding completed
+2026-01-30 21:01:22:122 info: ✓ Server running on http://localhost:3000
+2026-01-30 21:01:22:122 info: Environment: development
+2026-01-30 21:01:22:122 info: Frontend URL: http://localhost:5173
+2026-01-30 21:01:22:122 info: Press Ctrl+C to stop
+2026-01-30 21:02:05:25 info: Database connection closed
+2026-01-30 21:02:05:25 info: Starting KHConstruct server...
+2026-01-30 21:02:05:25 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-30 21:02:05:25 info: Database initialized
+2026-01-30 21:02:05:25 info: All migrations completed successfully
+2026-01-30 21:02:05:25 info: Database migrations completed
+2026-01-30 21:02:05:25 info: Starting database seeding...
+2026-01-30 21:02:05:25 info: ✓ Standard UK costs already seeded
+2026-01-30 21:02:05:25 info: ✓ BCIS database already seeded
+2026-01-30 21:02:05:25 info: ✓ Spons database already seeded
+2026-01-30 21:02:05:25 info: ✓ Database seeding completed
+2026-01-30 21:02:05:25 info: Database seeding completed
+2026-01-30 21:02:05:25 info: ✓ Server running on http://localhost:3000
+2026-01-30 21:02:05:25 info: Environment: development
+2026-01-30 21:02:05:25 info: Frontend URL: http://localhost:5173
+2026-01-30 21:02:05:25 info: Press Ctrl+C to stop
+2026-01-30 21:02:14:214 info: Database connection closed
+2026-01-30 21:02:14:214 info: Starting KHConstruct server...
+2026-01-30 21:02:14:214 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-30 21:02:14:214 info: Database initialized
+2026-01-30 21:02:14:214 info: All migrations completed successfully
+2026-01-30 21:02:14:214 info: Database migrations completed
+2026-01-30 21:02:14:214 info: Starting database seeding...
+2026-01-30 21:02:14:214 info: ✓ Standard UK costs already seeded
+2026-01-30 21:02:14:214 info: ✓ BCIS database already seeded
+2026-01-30 21:02:14:214 info: ✓ Spons database already seeded
+2026-01-30 21:02:14:214 info: ✓ Database seeding completed
+2026-01-30 21:02:14:214 info: Database seeding completed
+2026-01-30 21:02:14:214 info: ✓ Server running on http://localhost:3000
+2026-01-30 21:02:14:214 info: Environment: development
+2026-01-30 21:02:14:214 info: Frontend URL: http://localhost:5173
+2026-01-30 21:02:14:214 info: Press Ctrl+C to stop
+2026-01-30 21:11:04:114 info: Database connection closed
+2026-01-30 21:11:14:1114 info: Starting KHConstruct server...
+2026-01-30 21:11:14:1114 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-30 21:11:14:1114 info: Database initialized
+2026-01-30 21:11:14:1114 info: All migrations completed successfully
+2026-01-30 21:11:14:1114 info: Database migrations completed
+2026-01-30 21:11:14:1114 info: Starting database seeding...
+2026-01-30 21:11:14:1114 info: ✓ Standard UK costs already seeded
+2026-01-30 21:11:14:1114 info: ✓ BCIS database already seeded
+2026-01-30 21:11:14:1114 info: ✓ Spons database already seeded
+2026-01-30 21:11:14:1114 info: ✓ Database seeding completed
+2026-01-30 21:11:14:1114 info: Database seeding completed
+2026-01-30 21:11:14:1114 info: ✓ Server running on http://localhost:3000
+2026-01-30 21:11:14:1114 info: Environment: development
+2026-01-30 21:11:14:1114 info: Frontend URL: http://localhost:5173
+2026-01-30 21:11:14:1114 info: Press Ctrl+C to stop
+2026-01-30 21:13:01:131 info: User logged in: admin
+2026-01-30 21:13:01:131 info: User logged in: admin
+2026-01-30 21:19:24:1924 info: User logged in: admin
+2026-01-30 21:19:24:1924 info: User logged in: admin
+2026-01-30 21:21:36:2136 warn: Validation error: [
+  {
+    "validation": "url",
+    "code": "invalid_string",
+    "message": "Invalid url",
+    "path": [
+      "website"
+    ]
+  }
+]
+2026-01-30 21:23:30:2330 info: Client created: Smiths Bros (ID: 1) for user 1
+2026-01-30 21:23:30:2330 info: Client created: Smiths Bros by user admin
+2026-01-30 21:25:44:2544 info: Contractor created: Johnson Brothers (ID: 1) for user 1
+2026-01-30 21:25:44:2544 info: Contractor created: Johnson Brothers by user admin
+2026-01-30 21:26:52:2652 info: Project created: Shop Reno (ID: 1) by user admin
+2026-01-30 21:29:08:298 info: Estimate added to project 1: Excavate: n/e 1.00m deep x1 by user admin
+2026-01-30 21:35:18:3518 warn: Invalid token for POST /1/estimates
+2026-01-30 21:35:18:3518 info: Token refreshed for user: admin
+2026-01-30 21:35:18:3518 info: Token refreshed
+2026-01-30 21:35:18:3518 info: Estimate added to project 1: cost_item_id 1 x1 by user admin
+2026-01-30 21:38:51:3851 info: Starting KHConstruct server...
+2026-01-30 21:38:51:3851 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-30 21:38:51:3851 info: Database initialized
+2026-01-30 21:38:51:3851 info: All migrations completed successfully
+2026-01-30 21:38:51:3851 info: Database migrations completed
+2026-01-30 21:38:51:3851 info: Starting database seeding...
+2026-01-30 21:38:51:3851 info: ✓ Standard UK costs already seeded
+2026-01-30 21:38:51:3851 info: ✓ BCIS database already seeded
+2026-01-30 21:38:51:3851 info: ✓ Spons database already seeded
+2026-01-30 21:38:51:3851 info: ✓ Database seeding completed
+2026-01-30 21:38:51:3851 info: Database seeding completed
+2026-01-30 21:38:51:3851 info: ✓ Server running on http://localhost:3000
+2026-01-30 21:38:51:3851 info: Environment: development
+2026-01-30 21:38:51:3851 info: Frontend URL: http://localhost:5173
+2026-01-30 21:38:51:3851 info: Press Ctrl+C to stop
+2026-01-30 21:40:24:4024 info: User logged in: admin
+2026-01-30 21:40:24:4024 info: User logged in: admin
+2026-01-31 10:42:38:4238 info: Starting KHConstruct server...
+2026-01-31 10:42:38:4238 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-31 10:42:38:4238 info: Database initialized
+2026-01-31 10:42:38:4238 info: All migrations completed successfully
+2026-01-31 10:42:38:4238 info: Database migrations completed
+2026-01-31 10:42:38:4238 info: Starting database seeding...
+2026-01-31 10:42:38:4238 info: ✓ Standard UK costs already seeded
+2026-01-31 10:42:38:4238 info: ✓ BCIS database already seeded
+2026-01-31 10:42:38:4238 info: ✓ Spons database already seeded
+2026-01-31 10:42:38:4238 info: ✓ Database seeding completed
+2026-01-31 10:42:38:4238 info: Database seeding completed
+2026-01-31 10:42:38:4238 info: ✓ Server running on http://localhost:3000
+2026-01-31 10:42:38:4238 info: Environment: development
+2026-01-31 10:42:38:4238 info: Frontend URL: http://localhost:5173
+2026-01-31 10:42:38:4238 info: Press Ctrl+C to stop
+2026-01-31 10:50:05:505 info: Database connection closed
+2026-01-31 10:50:06:506 info: Starting KHConstruct server...
+2026-01-31 10:50:06:506 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-31 10:50:06:506 info: Database initialized
+2026-01-31 10:50:06:506 info: All migrations completed successfully
+2026-01-31 10:50:06:506 info: Database migrations completed
+2026-01-31 10:50:06:506 info: Starting database seeding...
+2026-01-31 10:50:06:506 info: ✓ Standard UK costs already seeded
+2026-01-31 10:50:06:506 info: ✓ BCIS database already seeded
+2026-01-31 10:50:06:506 info: ✓ Spons database already seeded
+2026-01-31 10:50:06:506 info: ✓ Database seeding completed
+2026-01-31 10:50:06:506 info: Database seeding completed
+2026-01-31 10:50:06:506 info: ✓ Server running on http://localhost:3000
+2026-01-31 10:50:06:506 info: Environment: development
+2026-01-31 10:50:06:506 info: Frontend URL: http://localhost:5173
+2026-01-31 10:50:06:506 info: Press Ctrl+C to stop
+2026-01-31 10:52:40:5240 info: User logged in: admin
+2026-01-31 10:52:40:5240 info: User logged in: admin
+2026-01-31 10:59:23:5923 info: User logged in: admin
+2026-01-31 10:59:23:5923 info: User logged in: admin
+2026-01-31 11:01:24:124 info: User logged in: admin
+2026-01-31 11:01:24:124 info: User logged in: admin
+2026-01-31 11:22:45:2245 warn: Invalid token for GET /
+2026-01-31 11:22:45:2245 warn: Invalid token for GET /
+2026-01-31 11:22:45:2245 info: Token refreshed for user: admin
+2026-01-31 11:22:45:2245 info: Token refreshed
+2026-01-31 11:22:45:2245 info: Token refreshed for user: admin
+2026-01-31 11:22:45:2245 info: Token refreshed
+2026-01-31 11:40:02:402 info: User logged in: admin
+2026-01-31 11:40:02:402 info: User logged in: admin
+2026-01-31 11:41:41:4141 info: User logged in: admin
+2026-01-31 11:41:41:4141 info: User logged in: admin
+2026-01-31 11:44:09:449 info: User logged in: admin
+2026-01-31 11:44:09:449 info: User logged in: admin
+2026-01-31 11:50:09:509 info: User logged in: admin
+2026-01-31 11:50:09:509 info: User logged in: admin
+2026-01-31 11:50:23:5023 info: User logged in: admin
+2026-01-31 11:50:23:5023 info: User logged in: admin
+2026-01-31 11:57:50:5750 info: User logged in: admin
+2026-01-31 11:57:50:5750 info: User logged in: admin
+2026-01-31 12:20:54:2054 warn: Invalid token for GET /
+2026-01-31 12:20:54:2054 warn: Invalid token for GET /
+2026-01-31 12:20:55:2055 info: Token refreshed for user: admin
+2026-01-31 12:20:55:2055 info: Token refreshed
+2026-01-31 12:20:55:2055 info: Token refreshed for user: admin
+2026-01-31 12:20:55:2055 info: Token refreshed
+2026-01-31 12:26:15:2615 info: Database connection closed
+2026-01-31 12:26:16:2616 info: Starting KHConstruct server...
+2026-01-31 12:26:16:2616 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-31 12:26:16:2616 info: Database initialized
+2026-01-31 12:26:16:2616 info: Running migration: 009_add_estimate_templates.sql
+2026-01-31 12:26:16:2616 info: ✓ Migration completed: 009_add_estimate_templates.sql
+2026-01-31 12:26:16:2616 info: All migrations completed successfully
+2026-01-31 12:26:16:2616 info: Database migrations completed
+2026-01-31 12:26:16:2616 info: Starting database seeding...
+2026-01-31 12:26:16:2616 info: ✓ Standard UK costs already seeded
+2026-01-31 12:26:16:2616 info: ✓ BCIS database already seeded
+2026-01-31 12:26:16:2616 info: ✓ Spons database already seeded
+2026-01-31 12:26:16:2616 info: ✓ Database seeding completed
+2026-01-31 12:26:16:2616 info: Database seeding completed
+2026-01-31 12:26:16:2616 info: ✓ Server running on http://localhost:3000
+2026-01-31 12:26:16:2616 info: Environment: development
+2026-01-31 12:26:16:2616 info: Frontend URL: http://localhost:5173
+2026-01-31 12:26:16:2616 info: Press Ctrl+C to stop
+2026-01-31 12:26:18:2618 info: Database connection closed
+2026-01-31 12:52:14:5214 info: Starting KHConstruct server...
+2026-01-31 12:52:14:5214 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-31 12:52:14:5214 info: Database initialized
+2026-01-31 12:52:14:5214 info: All migrations completed successfully
+2026-01-31 12:52:14:5214 info: Database migrations completed
+2026-01-31 12:52:14:5214 info: Starting database seeding...
+2026-01-31 12:52:14:5214 info: ✓ Standard UK costs already seeded
+2026-01-31 12:52:14:5214 info: ✓ BCIS database already seeded
+2026-01-31 12:52:14:5214 info: ✓ Spons database already seeded
+2026-01-31 12:52:14:5214 info: ✓ Database seeding completed
+2026-01-31 12:52:14:5214 info: Database seeding completed
+2026-01-31 12:52:14:5214 info: ✓ Server running on http://localhost:3000
+2026-01-31 12:52:14:5214 info: Environment: development
+2026-01-31 12:52:14:5214 info: Frontend URL: http://localhost:5173
+2026-01-31 12:52:14:5214 info: Press Ctrl+C to stop
+2026-01-31 12:52:17:5217 info: Database connection closed
+2026-01-31 12:52:17:5217 info: Starting KHConstruct server...
+2026-01-31 12:52:17:5217 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-31 12:52:17:5217 info: Database initialized
+2026-01-31 12:52:17:5217 info: All migrations completed successfully
+2026-01-31 12:52:17:5217 info: Database migrations completed
+2026-01-31 12:52:17:5217 info: Starting database seeding...
+2026-01-31 12:52:17:5217 info: ✓ Standard UK costs already seeded
+2026-01-31 12:52:17:5217 info: ✓ BCIS database already seeded
+2026-01-31 12:52:17:5217 info: ✓ Spons database already seeded
+2026-01-31 12:52:17:5217 info: ✓ Database seeding completed
+2026-01-31 12:52:17:5217 info: Database seeding completed
+2026-01-31 12:52:17:5217 info: ✓ Server running on http://localhost:3000
+2026-01-31 12:52:17:5217 info: Environment: development
+2026-01-31 12:52:17:5217 info: Frontend URL: http://localhost:5173
+2026-01-31 12:52:17:5217 info: Press Ctrl+C to stop
+2026-01-31 12:55:38:5538 info: Starting KHConstruct server...
+2026-01-31 12:55:38:5538 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-31 12:55:38:5538 info: Database initialized
+2026-01-31 12:55:38:5538 info: All migrations completed successfully
+2026-01-31 12:55:38:5538 info: Database migrations completed
+2026-01-31 12:55:38:5538 info: Starting database seeding...
+2026-01-31 12:55:38:5538 info: ✓ Standard UK costs already seeded
+2026-01-31 12:55:38:5538 info: ✓ BCIS database already seeded
+2026-01-31 12:55:38:5538 info: ✓ Spons database already seeded
+2026-01-31 12:55:38:5538 info: ✓ Database seeding completed
+2026-01-31 12:55:38:5538 info: Database seeding completed
+2026-01-31 12:55:38:5538 info: ✓ Server running on http://localhost:3000
+2026-01-31 12:55:38:5538 info: Environment: development
+2026-01-31 12:55:38:5538 info: Frontend URL: http://localhost:5173
+2026-01-31 12:55:38:5538 info: Press Ctrl+C to stop
+2026-01-31 12:56:03:563 info: User logged in: admin
+2026-01-31 12:56:03:563 info: User logged in: admin
+2026-01-31 13:00:20:020 info: User logged in: admin
+2026-01-31 13:00:20:020 info: User logged in: admin
+2026-01-31 13:06:13:613 info: Project updated: Shop Reno (ID: 1) by user admin
+2026-01-31 13:06:45:645 error: Error calculating category totals for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:45:645 error: Error calculating project total for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:45:645 warn: Could not calculate estimate for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:45:645 error: Error calculating category totals for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:45:645 error: Error calculating project total for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:45:645 error: Error calculating estimate summary: no such column: estimate_id
+2026-01-31 13:06:45:645 error: Error calculating category totals for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:45:645 error: Error calculating project total for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:45:645 warn: Could not calculate estimate for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:45:645 error: Error calculating category totals for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:45:645 error: Error calculating project total for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:45:645 error: Error calculating estimate summary: no such column: estimate_id
+2026-01-31 13:06:51:651 error: Error calculating category totals for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:51:651 error: Error calculating project total for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:51:651 warn: Could not calculate estimate for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:51:651 error: Error calculating category totals for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:51:651 error: Error calculating project total for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:51:651 warn: Could not calculate estimate for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:53:653 error: Error calculating category totals for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:53:653 error: Error calculating project total for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:53:653 warn: Could not calculate estimate for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:53:653 error: Error calculating category totals for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:53:653 error: Error calculating project total for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:53:653 warn: Could not calculate estimate for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:53:653 error: Error calculating category totals for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:53:653 error: Error calculating project total for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:53:653 error: Error calculating estimate summary: no such column: estimate_id
+2026-01-31 13:06:53:653 error: Error calculating category totals for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:53:653 error: Error calculating project total for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:06:53:653 error: Error calculating estimate summary: no such column: estimate_id
+2026-01-31 13:07:07:77 info: Estimate submitted for project: Shop Reno by user admin
+2026-01-31 13:07:07:77 error: Error calculating category totals for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:07:07:77 error: Error calculating project total for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:07:07:77 warn: Could not calculate estimate for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:07:07:77 error: Error calculating category totals for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:07:07:77 error: Error calculating project total for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:07:07:77 error: Error calculating estimate summary: no such column: estimate_id
+2026-01-31 13:07:27:727 info: Estimate approved for project: Shop Reno by user admin
+2026-01-31 13:07:27:727 error: Error calculating category totals for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:07:27:727 error: Error calculating project total for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:07:27:727 warn: Could not calculate estimate for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:07:27:727 error: Error calculating category totals for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:07:27:727 error: Error calculating project total for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:07:27:727 error: Error calculating estimate summary: no such column: estimate_id
+2026-01-31 13:07:30:730 info: Estimate approved for project: Shop Reno by user admin
+2026-01-31 13:07:30:730 error: Error calculating category totals for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:07:30:730 error: Error calculating project total for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:07:30:730 warn: Could not calculate estimate for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:07:30:730 error: Error calculating category totals for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:07:30:730 error: Error calculating project total for project 1: SqliteError: no such column: estimate_id
+2026-01-31 13:07:30:730 error: Error calculating estimate summary: no such column: estimate_id
+2026-01-31 13:07:50:750 info: User logged in: admin
+2026-01-31 13:07:50:750 info: User logged in: admin
+2026-01-31 13:09:44:944 info: Database connection closed
+2026-01-31 13:09:45:945 info: Starting KHConstruct server...
+2026-01-31 13:09:45:945 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-31 13:09:45:945 info: Database initialized
+2026-01-31 13:09:45:945 info: All migrations completed successfully
+2026-01-31 13:09:45:945 info: Database migrations completed
+2026-01-31 13:09:45:945 info: Starting database seeding...
+2026-01-31 13:09:45:945 info: ✓ Standard UK costs already seeded
+2026-01-31 13:09:45:945 info: ✓ BCIS database already seeded
+2026-01-31 13:09:45:945 info: ✓ Spons database already seeded
+2026-01-31 13:09:45:945 info: ✓ Database seeding completed
+2026-01-31 13:09:45:945 info: Database seeding completed
+2026-01-31 13:09:45:945 info: ✓ Server running on http://localhost:3000
+2026-01-31 13:09:45:945 info: Environment: development
+2026-01-31 13:09:45:945 info: Frontend URL: http://localhost:5173
+2026-01-31 13:09:45:945 info: Press Ctrl+C to stop
+2026-01-31 13:11:43:1143 info: User logged in: admin
+2026-01-31 13:11:43:1143 info: User logged in: admin
+2026-01-31 13:14:38:1438 info: User logged in: admin
+2026-01-31 13:14:38:1438 info: User logged in: admin
+2026-01-31 13:15:39:1539 info: User logged in: admin
+2026-01-31 13:15:39:1539 info: User logged in: admin
+2026-01-31 13:18:57:1857 info: Database connection closed
+2026-01-31 13:18:58:1858 info: Starting KHConstruct server...
+2026-01-31 13:18:58:1858 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-31 13:18:58:1858 info: Database initialized
+2026-01-31 13:18:58:1858 info: All migrations completed successfully
+2026-01-31 13:18:58:1858 info: Database migrations completed
+2026-01-31 13:18:58:1858 info: Starting database seeding...
+2026-01-31 13:18:58:1858 info: ✓ Standard UK costs already seeded
+2026-01-31 13:18:58:1858 info: ✓ BCIS database already seeded
+2026-01-31 13:18:58:1858 info: ✓ Spons database already seeded
+2026-01-31 13:18:58:1858 info: ✓ Database seeding completed
+2026-01-31 13:18:58:1858 info: Database seeding completed
+2026-01-31 13:18:58:1858 info: ✓ Server running on http://localhost:3000
+2026-01-31 13:18:58:1858 info: Environment: development
+2026-01-31 13:18:58:1858 info: Frontend URL: http://localhost:5173
+2026-01-31 13:18:58:1858 info: Press Ctrl+C to stop
+2026-01-31 13:21:14:2114 info: User logged in: admin
+2026-01-31 13:21:14:2114 info: User logged in: admin
+2026-01-31 13:21:59:2159 error: Error fetching templates: RangeError: Too many parameter values were provided
+2026-01-31 13:21:59:2159 error: Error fetching templates: Too many parameter values were provided
+2026-01-31 13:23:30:2330 info: Database connection closed
+2026-01-31 13:23:31:2331 info: Starting KHConstruct server...
+2026-01-31 13:23:31:2331 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-31 13:23:31:2331 info: Database initialized
+2026-01-31 13:23:31:2331 info: All migrations completed successfully
+2026-01-31 13:23:31:2331 info: Database migrations completed
+2026-01-31 13:23:31:2331 info: Starting database seeding...
+2026-01-31 13:23:31:2331 info: ✓ Standard UK costs already seeded
+2026-01-31 13:23:31:2331 info: ✓ BCIS database already seeded
+2026-01-31 13:23:31:2331 info: ✓ Spons database already seeded
+2026-01-31 13:23:31:2331 info: ✓ Database seeding completed
+2026-01-31 13:23:31:2331 info: Database seeding completed
+2026-01-31 13:23:31:2331 info: ✓ Server running on http://localhost:3000
+2026-01-31 13:23:31:2331 info: Environment: development
+2026-01-31 13:23:31:2331 info: Frontend URL: http://localhost:5173
+2026-01-31 13:23:31:2331 info: Press Ctrl+C to stop
+2026-01-31 13:25:03:253 info: Database connection closed
+2026-01-31 13:25:03:253 info: Starting KHConstruct server...
+2026-01-31 13:25:03:253 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-31 13:25:03:253 info: Database initialized
+2026-01-31 13:25:03:253 info: All migrations completed successfully
+2026-01-31 13:25:03:253 info: Database migrations completed
+2026-01-31 13:25:03:253 info: Starting database seeding...
+2026-01-31 13:25:03:253 info: ✓ Standard UK costs already seeded
+2026-01-31 13:25:03:253 info: ✓ BCIS database already seeded
+2026-01-31 13:25:03:253 info: ✓ Spons database already seeded
+2026-01-31 13:25:03:253 info: ✓ Database seeding completed
+2026-01-31 13:25:03:253 info: Database seeding completed
+2026-01-31 13:25:03:253 info: ✓ Server running on http://localhost:3000
+2026-01-31 13:25:03:253 info: Environment: development
+2026-01-31 13:25:03:253 info: Frontend URL: http://localhost:5173
+2026-01-31 13:25:03:253 info: Press Ctrl+C to stop
+2026-01-31 13:25:12:2512 info: Database connection closed
+2026-01-31 13:25:14:2514 info: Starting KHConstruct server...
+2026-01-31 13:25:14:2514 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-31 13:25:14:2514 info: Database initialized
+2026-01-31 13:25:14:2514 info: All migrations completed successfully
+2026-01-31 13:25:14:2514 info: Database migrations completed
+2026-01-31 13:25:14:2514 info: Starting database seeding...
+2026-01-31 13:25:14:2514 info: ✓ Standard UK costs already seeded
+2026-01-31 13:25:14:2514 info: ✓ BCIS database already seeded
+2026-01-31 13:25:14:2514 info: ✓ Spons database already seeded
+2026-01-31 13:25:14:2514 info: ✓ Database seeding completed
+2026-01-31 13:25:14:2514 info: Database seeding completed
+2026-01-31 13:25:14:2514 info: ✓ Server running on http://localhost:3000
+2026-01-31 13:25:14:2514 info: Environment: development
+2026-01-31 13:25:14:2514 info: Frontend URL: http://localhost:5173
+2026-01-31 13:25:14:2514 info: Press Ctrl+C to stop
+2026-01-31 13:31:47:3147 info: User logged in: admin
+2026-01-31 13:31:47:3147 info: User logged in: admin
+2026-01-31 13:33:36:3336 info: Database connection closed
+2026-01-31 13:33:36:3336 info: Starting KHConstruct server...
+2026-01-31 13:33:36:3336 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-31 13:33:36:3336 info: Database initialized
+2026-01-31 13:33:36:3336 info: All migrations completed successfully
+2026-01-31 13:33:36:3336 info: Database migrations completed
+2026-01-31 13:33:36:3336 info: Starting database seeding...
+2026-01-31 13:33:36:3336 info: ✓ Standard UK costs already seeded
+2026-01-31 13:33:36:3336 info: ✓ BCIS database already seeded
+2026-01-31 13:33:36:3336 info: ✓ Spons database already seeded
+2026-01-31 13:33:36:3336 info: ✓ Database seeding completed
+2026-01-31 13:33:36:3336 info: Database seeding completed
+2026-01-31 13:33:36:3336 info: ✓ Server running on http://localhost:3000
+2026-01-31 13:33:36:3336 info: Environment: development
+2026-01-31 13:33:36:3336 info: Frontend URL: http://localhost:5173
+2026-01-31 13:33:36:3336 info: Press Ctrl+C to stop
+2026-01-31 13:33:45:3345 info: Database connection closed
+2026-01-31 13:33:45:3345 info: Starting KHConstruct server...
+2026-01-31 13:33:45:3345 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-31 13:33:45:3345 info: Database initialized
+2026-01-31 13:33:45:3345 info: All migrations completed successfully
+2026-01-31 13:33:45:3345 info: Database migrations completed
+2026-01-31 13:33:45:3345 info: Starting database seeding...
+2026-01-31 13:33:45:3345 info: ✓ Standard UK costs already seeded
+2026-01-31 13:33:45:3345 info: ✓ BCIS database already seeded
+2026-01-31 13:33:45:3345 info: ✓ Spons database already seeded
+2026-01-31 13:33:45:3345 info: ✓ Database seeding completed
+2026-01-31 13:33:45:3345 info: Database seeding completed
+2026-01-31 13:33:45:3345 info: ✓ Server running on http://localhost:3000
+2026-01-31 13:33:45:3345 info: Environment: development
+2026-01-31 13:33:45:3345 info: Frontend URL: http://localhost:5173
+2026-01-31 13:33:45:3345 info: Press Ctrl+C to stop
+2026-01-31 13:33:52:3352 info: Database connection closed
+2026-01-31 13:33:52:3352 info: Starting KHConstruct server...
+2026-01-31 13:33:52:3352 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-31 13:33:52:3352 info: Database initialized
+2026-01-31 13:33:52:3352 info: All migrations completed successfully
+2026-01-31 13:33:52:3352 info: Database migrations completed
+2026-01-31 13:33:52:3352 info: Starting database seeding...
+2026-01-31 13:33:52:3352 info: ✓ Standard UK costs already seeded
+2026-01-31 13:33:52:3352 info: ✓ BCIS database already seeded
+2026-01-31 13:33:52:3352 info: ✓ Spons database already seeded
+2026-01-31 13:33:52:3352 info: ✓ Database seeding completed
+2026-01-31 13:33:52:3352 info: Database seeding completed
+2026-01-31 13:33:52:3352 info: ✓ Server running on http://localhost:3000
+2026-01-31 13:33:52:3352 info: Environment: development
+2026-01-31 13:33:52:3352 info: Frontend URL: http://localhost:5173
+2026-01-31 13:33:52:3352 info: Press Ctrl+C to stop
+2026-01-31 13:37:03:373 info: Database connection closed
+2026-01-31 13:37:06:376 info: Starting KHConstruct server...
+2026-01-31 13:37:06:376 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-31 13:37:06:376 info: Database initialized
+2026-01-31 13:37:06:376 info: All migrations completed successfully
+2026-01-31 13:37:06:376 info: Database migrations completed
+2026-01-31 13:37:06:376 info: Starting database seeding...
+2026-01-31 13:37:06:376 info: ✓ Standard UK costs already seeded
+2026-01-31 13:37:06:376 info: ✓ BCIS database already seeded
+2026-01-31 13:37:06:376 info: ✓ Spons database already seeded
+2026-01-31 13:37:06:376 info: ✓ Database seeding completed
+2026-01-31 13:37:06:376 info: Database seeding completed
+2026-01-31 13:37:06:376 info: ✓ Server running on http://localhost:3000
+2026-01-31 13:37:06:376 info: Environment: development
+2026-01-31 13:37:06:376 info: Frontend URL: http://localhost:5173
+2026-01-31 13:37:06:376 info: Press Ctrl+C to stop
+2026-01-31 13:55:46:5546 info: User logged in: admin
+2026-01-31 13:55:46:5546 info: User logged in: admin
+2026-01-31 13:56:32:5632 info: User logged in: admin
+2026-01-31 13:56:32:5632 info: User logged in: admin
+2026-01-31 13:57:17:5717 info: User logged in: admin
+2026-01-31 13:57:17:5717 info: User logged in: admin
+2026-01-31 14:00:21:021 info: User logged in: admin
+2026-01-31 14:00:21:021 info: User logged in: admin
+2026-01-31 14:04:47:447 warn: Invalid token for GET /
+2026-01-31 14:06:08:68 info: User logged in: admin
+2026-01-31 14:06:08:68 info: User logged in: admin
+2026-01-31 14:07:27:727 info: Database connection closed
+2026-01-31 14:07:29:729 info: Starting KHConstruct server...
+2026-01-31 14:07:29:729 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-01-31 14:07:29:729 info: Database initialized
+2026-01-31 14:07:29:729 info: All migrations completed successfully
+2026-01-31 14:07:29:729 info: Database migrations completed
+2026-01-31 14:07:29:729 info: Starting database seeding...
+2026-01-31 14:07:29:729 info: ✓ Standard UK costs already seeded
+2026-01-31 14:07:29:729 info: ✓ BCIS database already seeded
+2026-01-31 14:07:29:729 info: ✓ Spons database already seeded
+2026-01-31 14:07:29:729 info: ✓ Database seeding completed
+2026-01-31 14:07:29:729 info: Database seeding completed
+2026-01-31 14:07:29:729 info: ✓ Server running on http://localhost:3000
+2026-01-31 14:07:29:729 info: Environment: development
+2026-01-31 14:07:29:729 info: Frontend URL: http://localhost:5173
+2026-01-31 14:07:29:729 info: Press Ctrl+C to stop
+2026-01-31 14:08:06:86 info: User logged in: admin
+2026-01-31 14:08:06:86 info: User logged in: admin
+2026-01-31 14:09:21:921 info: Project created: Office Refurb (ID: 2) by user admin
+2026-01-31 14:10:04:104 info: Estimate added to project 2: cost_item_id 1 x24 by user admin
+2026-01-31 14:10:54:1054 info: Estimate added to project 2: cost_item_id 3 x12 by user admin
+2026-01-31 14:13:31:1331 info: User logged out: ID 1
+2026-01-31 14:13:31:1331 info: User logged out: admin
+2026-01-31 14:15:10:1510 info: User logged in: admin
+2026-01-31 14:15:10:1510 info: User logged in: admin

@@ -1,6 +1,6 @@
 import { formatCurrency } from '../../utils/formatters'
 
-interface PortfolioHealthCardProps {
+interface ProjectHealthCardProps {
   portfolioValue: number
   activeProjects: number
   completedProjects: number
@@ -8,13 +8,13 @@ interface PortfolioHealthCardProps {
   isLoading?: boolean
 }
 
-export default function PortfolioHealthCard({
+export default function ProjectHealthCard({
   portfolioValue,
   activeProjects,
   completedProjects,
   avgProjectValue,
   isLoading = false,
-}: PortfolioHealthCardProps) {
+}: ProjectHealthCardProps) {
   if (isLoading) {
     return (
       <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg shadow-md p-8 animate-pulse">
@@ -35,15 +35,15 @@ export default function PortfolioHealthCard({
       <div className="px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h3 className="text-2xl font-bold mb-2">Portfolio Health 💪</h3>
-          <p className="text-purple-100">Complete view of your project portfolio</p>
+          <h3 className="text-2xl font-bold mb-2">Project Portfolio Health 💪</h3>
+          <p className="text-purple-100">Complete view of your projects</p>
         </div>
 
         {/* Main metrics grid */}
         <div className="grid grid-cols-2 gap-6 mb-8">
-          {/* Portfolio Value */}
+          {/* Total Project Value */}
           <div className="bg-white bg-opacity-10 backdrop-blur rounded-lg p-4 border border-white border-opacity-20">
-            <p className="text-purple-100 text-xs font-medium mb-1">Portfolio Value</p>
+            <p className="text-purple-100 text-xs font-medium mb-1">Total Value</p>
             <p className="text-2xl font-bold text-white">{formatCurrency(portfolioValue)}</p>
             <p className="text-xs text-purple-100 mt-2">across all projects</p>
           </div>

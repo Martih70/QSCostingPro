@@ -27,7 +27,7 @@ export default function Modal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center modal-overlay">
       {/* Overlay */}
       <div
         className="absolute inset-0 bg-black bg-opacity-50 transition-opacity"
@@ -35,7 +35,7 @@ export default function Modal({
       />
 
       {/* Modal */}
-      <div className={`relative bg-white rounded-lg shadow-xl ${sizeClasses[size]} w-full mx-4`}>
+      <div className={`relative bg-white rounded-lg shadow-xl ${sizeClasses[size]} w-full mx-4 modal-content`}>
         {/* Header */}
         {title && (
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">

@@ -224,6 +224,9 @@ export const projectsAPI = {
 
   rejectEstimate: (id: number, reason?: string) =>
     api.post(`/projects/${id}/reject-estimate`, { reason }),
+
+  duplicate: (id: number, data: any) =>
+    api.post(`/projects/${id}/duplicate`, data),
 };
 
 // Project Estimates API (Phase 2C)
@@ -317,6 +320,27 @@ export const sponsAPI = {
 
   search: (query: string) =>
     api.get('/cost-items', { params: { q: query, database_type: 'spons' } }),
+};
+
+// Estimate Templates API
+export const estimateTemplatesAPI = {
+  getAll: (includeShared = true) =>
+    api.get('/estimate-templates', { params: { shared: includeShared } }),
+
+  getById: (id: number) =>
+    api.get(`/estimate-templates/${id}`),
+
+  create: (data: any) =>
+    api.post('/estimate-templates', data),
+
+  update: (id: number, data: any) =>
+    api.put(`/estimate-templates/${id}`, data),
+
+  delete: (id: number) =>
+    api.delete(`/estimate-templates/${id}`),
+
+  applyToProject: (templateId: number, projectId: number) =>
+    api.post(`/estimate-templates/apply/${templateId}/to/${projectId}`),
 };
 
 export { api };

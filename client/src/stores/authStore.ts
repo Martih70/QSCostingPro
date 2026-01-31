@@ -164,6 +164,3 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
   },
 }));
-
-// Hydrate on app load
-useAuthStore.getState().hydrate();

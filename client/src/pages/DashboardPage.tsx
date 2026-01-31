@@ -1,163 +1,231 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useProjectsStore } from '../stores/projectsStore'
-import { clientsAPI, contractorsAPI } from '../services/api'
-import TopProjectsTable from '../components/dashboard/TopProjectsTable'
-import ProjectPipelineFunnel from '../components/dashboard/ProjectPipelineFunnel'
-import { getProjectsByStatus } from '../utils/dashboardAnalytics'
+import StatCard from '../components/dashboard/StatCard'
+import BudgetVarianceSummaryCard from '../components/dashboard/BudgetVarianceSummaryCard'
+import BudgetPerformanceChart from '../components/dashboard/BudgetPerformanceChart'
+import CategoryCostDistributionChart from '../components/dashboard/CategoryCostDistributionChart'
+import CategoryCostBreakdownTable from '../components/dashboard/CategoryCostBreakdownTable'
+import {
+  calculateTotalProjectValue,
+  calculateAvgCostPerM2,
+  getProjectBudgetComparison,
+} from '../utils/dashboardAnalytics'
+import { formatCurrency } from '../utils/formatters'
 
 export default function DashboardPage() {
   const { user } = useAuth()
   const { projects, isLoading, fetchProjects } = useProjectsStore()
-  const [activeClientsCount, setActiveClientsCount] = useState<number>(0)
-  const [activeContractorsCount, setActiveContractorsCount] = useState<number>(0)
-  const [isLoadingResources, setIsLoadingResources] = useState(false)
 
   useEffect(() => {
     fetchProjects()
-    fetchResourceCounts()
-  }, [])
+  }, [fetchProjects])
 
-  const fetchResourceCounts = async () => {
-    setIsLoadingResources(true)
-    try {
-      const [clientsResponse, contractorsResponse] = await Promise.all([
-        clientsAPI.getAll({ is_active: true }),
-        contractorsAPI.getAll({ is_active: true }),
-      ])
-
-      setActiveClientsCount(clientsResponse.data.data?.length || 0)
-      setActiveContractorsCount(contractorsResponse.data.data?.length || 0)
-    } catch (error) {
-      console.error('Failed to fetch resource counts:', error)
-    } finally {
-      setIsLoadingResources(false)
-    }
-  }
-
-  // Calculate metrics
-  const projectsByStatus = getProjectsByStatus(projects)
-
-  // Get recent projects (5 most recent)
-  const recentProjects = projects.slice(0, 5)
+  // Calculate financial metrics
+  const projectsTotalValue = calculateTotalProjectValue(projects)
+  const avgCostPerM2 = calculateAvgCostPerM2(projects)
+  const activeProjectsCount = projects.filter((p) => p.status !== 'completed').length
+  const projectsOverBudget = getProjectBudgetComparison(projects).length
 
   // Determine visible sections based on role
-  const visibleSections = {
-    financial: user?.role === 'admin' || user?.role === 'estimator',
-    operational: user?.role === 'admin' || user?.role === 'estimator',
-    resources: user?.role === 'admin' || user?.role === 'estimator',
-    pipeline: true, // all roles
-  }
+  const canViewFinancials = user?.role === 'admin' || user?.role === 'estimator'
 
   return (
-    <div className="space-y-8">
-      {/* TOP BANNER - 3 Elements */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* 1. Welcome & Key Metric */}
-        <div className="bg-gradient-to-br from-khc-primary to-khc-secondary rounded-lg p-6 text-white" style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}>
-          <h1 className="text-2xl font-bold mb-1">Welcome, {user?.username}! 👋</h1>
-          <p className="text-gray-100 text-sm mb-4">Dashboard Overview</p>
-          <hr className="border-white border-opacity-20 mb-4" />
-          {projects.length > 0 && (
-            <div>
-              <p className="text-xs text-gray-200 mb-1">Active Projects</p>
-              <p className="text-3xl font-bold text-white">{projects.length}</p>
-            </div>
-          )}
-        </div>
-
-        {/* 2. Recent Projects Mini */}
-        <div className="bg-white rounded-lg overflow-hidden" style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}>
-          <div className="px-6 py-3 bg-gray-50 border-b">
-            <h2 className="text-sm font-semibold text-khc-primary">🕐 Active Projects</h2>
-          </div>
-          {isLoading ? (
-            <div className="p-4 text-center text-gray-600 text-sm">Loading...</div>
-          ) : recentProjects.length === 0 ? (
-            <div className="p-4 text-center text-gray-600 text-sm">No projects yet</div>
-          ) : (
-            <div className="divide-y max-h-64 overflow-y-auto">
-              {recentProjects.slice(0, 3).map((project) => (
-                <Link
-                  key={project.id}
-                  to={`/projects/${project.id}`}
-                  className="px-6 py-3 hover:bg-gray-50 transition flex items-center justify-between group"
-                >
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-khc-primary text-sm truncate group-hover:underline">{project.name}</p>
-                    <span
-                      className={`inline-block mt-1 px-2 py-0.5 text-xs rounded font-medium ${
-                        project.estimate_status === 'approved'
-                          ? 'bg-emerald-100 text-emerald-700'
-                          : project.estimate_status === 'submitted'
-                            ? 'bg-sky-100 text-sky-700'
-                            : project.estimate_status === 'rejected'
-                              ? 'bg-rose-100 text-rose-700'
-                              : 'bg-slate-100 text-slate-700'
-                      }`}
-                    >
-                      {project.estimate_status}
-                    </span>
+    <div className="space-y-6">
+      {canViewFinancials && (
+        <>
+          {/* VARIED CARD LAYOUT - Dynamic Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
+            {/* Large Featured Card - Project Value (2x2 span) */}
+            <div className="md:col-span-2 lg:col-span-6 lg:row-span-2">
+              <div className="bg-gradient-to-br from-khc-primary to-khc-secondary rounded-lg shadow-md p-8 text-white h-full flex flex-col justify-between overflow-hidden relative"
+                style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}>
+                {isLoading ? (
+                  <div className="animate-pulse">
+                    <div className="h-4 bg-white bg-opacity-20 rounded w-1/3 mb-4"></div>
+                    <div className="h-12 bg-white bg-opacity-20 rounded w-1/2"></div>
                   </div>
-                </Link>
-              ))}
+                ) : (
+                  <>
+                    <div>
+                      <p className="text-sm font-medium text-white text-opacity-80 mb-2">Total Project Value</p>
+                      <h2 className="text-4xl font-bold mb-1">{formatCurrency(projectsTotalValue)}</h2>
+                      <p className="text-xs text-white text-opacity-70">{projects.length} active projects</p>
+                    </div>
+
+                    {/* Mini sparkline-style visualization */}
+                    <div className="mt-6 pt-6 border-t border-white border-opacity-20">
+                      <svg className="w-full h-16" viewBox="0 0 200 60">
+                        <polyline
+                          points="0,40 25,35 50,30 75,25 100,20 125,25 150,30 175,35 200,40"
+                          fill="none"
+                          stroke="rgba(255,255,255,0.5)"
+                          strokeWidth="2"
+                        />
+                        <polyline
+                          points="0,45 25,40 50,35 75,30 100,25 125,30 150,35 175,40 200,45"
+                          fill="rgba(255,255,255,0.1)"
+                          stroke="rgba(255,255,255,0.3)"
+                          strokeWidth="1"
+                        />
+                      </svg>
+                      <p className="text-xs text-white text-opacity-70 mt-2">Cumulative estimate trend</p>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
-          )}
-          {!isLoading && recentProjects.length > 3 && (
-            <div className="px-6 py-2 bg-gray-50 border-t text-center">
-              <Link to="/projects" className="text-khc-primary hover:underline text-xs font-medium">
-                View all {projects.length}
+
+            {/* Budget Variance Card (1x2 span) */}
+            <div className="md:col-span-1 lg:col-span-3 lg:row-span-2">
+              <BudgetVarianceSummaryCard projects={projects} isLoading={isLoading} />
+            </div>
+
+            {/* Small KPI - Active Projects */}
+            <div className="md:col-span-1 lg:col-span-3">
+              <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500 h-full flex flex-col justify-between"
+                style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)' }}>
+                {isLoading ? (
+                  <div className="animate-pulse">
+                    <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
+                    <div className="h-8 bg-gray-200 rounded w-1/3"></div>
+                  </div>
+                ) : (
+                  <>
+                    <div>
+                      <p className="text-gray-600 text-sm font-medium">Active Projects</p>
+                      <p className="text-3xl font-bold text-green-600 mt-2">{activeProjectsCount}</p>
+                    </div>
+                    <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
+                      <div className="bg-green-50 rounded p-2">
+                        <p className="text-gray-600">In Progress</p>
+                        <p className="font-bold text-green-700">{projects.filter(p => p.status === 'in_progress').length}</p>
+                      </div>
+                      <div className="bg-blue-50 rounded p-2">
+                        <p className="text-gray-600">Draft</p>
+                        <p className="font-bold text-blue-700">{projects.filter(p => p.status === 'draft').length}</p>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Small KPI - Avg Cost per m² */}
+            {avgCostPerM2 && (
+              <div className="md:col-span-1 lg:col-span-3">
+                <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-purple-500 h-full flex flex-col justify-between"
+                  style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)' }}>
+                  {isLoading ? (
+                    <div className="animate-pulse">
+                      <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
+                      <div className="h-8 bg-gray-200 rounded w-1/3"></div>
+                    </div>
+                  ) : (
+                    <>
+                      <div>
+                        <p className="text-gray-600 text-sm font-medium">Avg Cost per m²</p>
+                        <p className="text-3xl font-bold text-purple-600 mt-2">{formatCurrency(avgCostPerM2)}</p>
+                      </div>
+                      <div className="mt-4">
+                        <div className="text-xs text-gray-500">
+                          <p>Per square meter</p>
+                          <p className="text-purple-600 font-semibold">Industry metric</p>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Projects at Risk Card (highlighted) */}
+            <div className="md:col-span-1 lg:col-span-3">
+              <Link
+                to="/projects"
+                className="block bg-gradient-to-br from-khc-accent to-orange-600 rounded-lg shadow-md p-6 text-white h-full hover:shadow-lg transition-shadow cursor-pointer"
+                style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)' }}>
+                {isLoading ? (
+                  <div className="animate-pulse">
+                    <div className="h-4 bg-white bg-opacity-20 rounded w-1/2 mb-4"></div>
+                    <div className="h-8 bg-white bg-opacity-20 rounded w-1/3"></div>
+                  </div>
+                ) : (
+                  <>
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-white text-opacity-90 mb-2">Projects at Risk</p>
+                        <p className="text-4xl font-bold">{projectsOverBudget}</p>
+                        <p className="text-xs text-white text-opacity-80 mt-1">Over budget</p>
+                      </div>
+                      <div className="text-4xl">⚠️</div>
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-white border-opacity-20">
+                      <p className="text-xs text-white text-opacity-70">View details →</p>
+                    </div>
+                  </>
+                )}
               </Link>
             </div>
-          )}
-        </div>
 
-        {/* 3. Quick Actions */}
-        {(user?.role === 'admin' || user?.role === 'estimator') && (
-          <div className="space-y-3">
-            <Link
-              to="/projects/new"
-              className="group block bg-khc-primary hover:bg-khc-neutral text-white rounded-lg p-4 transition-all text-center"
-              style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}
-            >
-              <div className="text-2xl mb-1">🚀</div>
-              <h3 className="font-semibold">Create Project</h3>
-            </Link>
-            <Link
-              to="/projects"
-              className="group block bg-khc-secondary hover:bg-khc-primary text-white rounded-lg p-4 transition-all text-center"
-              style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}
-            >
-              <div className="text-2xl mb-1">📊</div>
-              <h3 className="font-semibold">All Projects</h3>
-            </Link>
-          </div>
-        )}
-      </div>
+            {/* Budget Performance Chart (2-col span) */}
+            <div className="md:col-span-2 lg:col-span-7">
+              <BudgetPerformanceChart projects={projects} isLoading={isLoading} />
+            </div>
 
-      {/* Top Projects */}
-      {visibleSections.financial && <TopProjectsTable projects={projects} isLoading={isLoading} />}
-
-      {/* Resources */}
-      {visibleSections.resources && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-khc-primary rounded-lg p-8 text-white overflow-hidden" style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}>
-            <div className="text-6xl mb-4">🏢</div>
-            <p className="text-gray-100 text-sm font-medium mb-1">Active Clients</p>
-            <p className="text-5xl font-bold text-white">{activeClientsCount}</p>
+            {/* Category Distribution Donut (1-col span) */}
+            <div className="md:col-span-1 lg:col-span-5">
+              <CategoryCostDistributionChart projects={projects} isLoading={isLoading} />
+            </div>
           </div>
 
-          <div className="bg-khc-neutral rounded-lg p-8 text-white overflow-hidden" style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}>
-            <div className="text-6xl mb-4">👷</div>
-            <p className="text-gray-100 text-sm font-medium mb-1">Active Contractors</p>
-            <p className="text-5xl font-bold text-white">{activeContractorsCount}</p>
+          {/* SECONDARY SECTION - Full width tables */}
+          <div className="space-y-6">
+            {/* Category breakdown table */}
+            <CategoryCostBreakdownTable projects={projects} isLoading={isLoading} />
+
+            {/* Quick Actions Grid - 3 columns */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Link
+                to="/projects/new"
+                className="group block bg-khc-primary hover:bg-khc-neutral text-white rounded-lg p-6 transition-all text-center hover:scale-105 transform"
+                style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}>
+                <div className="text-4xl mb-3">🚀</div>
+                <h3 className="font-semibold">Create Project</h3>
+                <p className="text-xs text-gray-200 mt-2">Start a new project</p>
+              </Link>
+
+              <Link
+                to="/projects"
+                className="group block bg-khc-secondary hover:bg-khc-primary text-white rounded-lg p-6 transition-all text-center hover:scale-105 transform"
+                style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}>
+                <div className="text-4xl mb-3">📋</div>
+                <h3 className="font-semibold">All Projects</h3>
+                <p className="text-xs text-gray-200 mt-2">View {projects.length} projects</p>
+              </Link>
+
+              <Link
+                to="/projects"
+                className="group block bg-gradient-to-br from-emerald-500 to-green-600 text-white rounded-lg p-6 transition-all text-center hover:scale-105 transform"
+                style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}>
+                <div className="text-4xl mb-3">✓</div>
+                <h3 className="font-semibold">Completed</h3>
+                <p className="text-xs text-gray-200 mt-2">{projects.filter(p => p.status === 'completed').length} finished</p>
+              </Link>
+            </div>
           </div>
-        </div>
+        </>
       )}
 
-      {/* Project Pipeline */}
-      {visibleSections.pipeline && <ProjectPipelineFunnel data={projectsByStatus} isLoading={isLoading} />}
+      {/* Non-Financial Users Message */}
+      {!canViewFinancials && (
+        <div className="bg-white rounded-lg shadow-md p-12 text-center">
+          <div className="text-6xl mb-4">📊</div>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h2>
+          <p className="text-gray-600">Financial metrics are available to administrators and estimators.</p>
+        </div>
+      )}
     </div>
   )
 }

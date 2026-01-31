@@ -81,24 +81,25 @@ export function calculateProjectEstimates(projectId: number): LineItemCalculatio
   try {
     const db = getDatabase();
 
+    // Query that handles both cost_item_id and custom items
     const stmt = db.prepare(`
       SELECT
         pe.id as estimate_id,
-        ci.id as item_id,
-        ci.description,
+        COALESCE(ci.id, pe.id) as item_id,
+        COALESCE(ci.description, pe.custom_description) as description,
         pe.quantity,
-        u.code as unit_code,
-        COALESCE(pe.unit_cost_override, ci.material_cost) as material_cost,
-        ci.management_cost,
-        ci.contractor_cost,
-        ci.waste_factor,
-        ci.is_contractor_required,
+        COALESCE(u.code, pe.custom_unit) as unit_code,
+        COALESCE(pe.unit_cost_override, ci.material_cost, pe.custom_unit_rate) as material_cost,
+        COALESCE(ci.management_cost, 0) as management_cost,
+        COALESCE(ci.contractor_cost, 0) as contractor_cost,
+        COALESCE(ci.waste_factor, 1.0) as waste_factor,
+        COALESCE(ci.is_contractor_required, 0) as is_contractor_required,
         pe.line_total
       FROM project_estimates pe
-      JOIN cost_items ci ON pe.cost_item_id = ci.id
-      JOIN units u ON ci.unit_id = u.id
+      LEFT JOIN cost_items ci ON pe.cost_item_id = ci.id
+      LEFT JOIN units u ON ci.unit_id = u.id
       WHERE pe.project_id = ? AND pe.is_active = 1
-      ORDER BY ci.code ASC
+      ORDER BY pe.created_at ASC
     `);
 
     const rows = stmt.all(projectId) as any[];
@@ -146,7 +147,7 @@ export function calculateCategoryTotals(
   try {
     const db = getDatabase();
 
-    // Get cost structure with categories
+    // Get categories from both cost_items and custom items
     const categoryStmt = db.prepare(`
       SELECT DISTINCT
         cc.id,
@@ -159,23 +160,44 @@ export function calculateCategoryTotals(
         JOIN cost_items ci ON pe.cost_item_id = ci.id
         JOIN cost_sub_elements cse ON ci.sub_element_id = cse.id
         WHERE pe.project_id = ? AND pe.is_active = 1
+        UNION
+        SELECT DISTINCT pe.category_id
+        FROM project_estimates pe
+        WHERE pe.project_id = ? AND pe.is_active = 1 AND pe.cost_item_id IS NULL AND pe.category_id IS NOT NULL
       )
       ORDER BY cc.code ASC
     `);
 
-    const categories = categoryStmt.all(projectId) as any[];
+    const categories = categoryStmt.all(projectId, projectId) as any[];
+
+    // Batch-load all category mappings instead of querying per-item
+    const costItemCategoriesStmt = db.prepare(`
+      SELECT DISTINCT ci.id, cse.category_id
+      FROM cost_items ci
+      JOIN cost_sub_elements cse ON ci.sub_element_id = cse.id
+    `);
+    const costItemCategories = costItemCategoriesStmt.all() as any[];
+    const costItemCategoryMap = new Map(costItemCategories.map(row => [row.id, row.category_id]));
+
+    const customItemCategoriesStmt = db.prepare(`
+      SELECT id, category_id
+      FROM project_estimates
+      WHERE project_id = ? AND is_active = 1 AND cost_item_id IS NULL AND category_id IS NOT NULL
+    `);
+    const customItemCategories = customItemCategoriesStmt.all(projectId) as any[];
+    const customItemCategoryMap = new Map(customItemCategories.map(row => [row.id, row.category_id]));
 
     return categories.map((category) => {
       const categoryItems = lineItems.filter((item) => {
-        // Get category for this item
-        const stmt = db.prepare(`
-          SELECT cse.category_id
-          FROM cost_items ci
-          JOIN cost_sub_elements cse ON ci.sub_element_id = cse.id
-          WHERE ci.id = ?
-        `);
-        const result = stmt.get(item.item_id) as any;
-        return result && result.category_id === category.id;
+        // Check cost_item-based items
+        const costItemCategoryId = costItemCategoryMap.get(item.item_id);
+        if (costItemCategoryId === category.id) {
+          return true;
+        }
+
+        // Check custom items
+        const customItemCategoryId = customItemCategoryMap.get(item.estimate_id);
+        return customItemCategoryId === category.id;
       });
 
       const subtotal = categoryItems.reduce((sum, item) => sum + item.line_total, 0);

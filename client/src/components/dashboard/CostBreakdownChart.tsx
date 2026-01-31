@@ -44,7 +44,7 @@ export default function CostBreakdownChart({ projects, isLoading = false }: Cost
   return (
     <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
       <div>
-        <h3 className="font-semibold text-gray-900 mb-1">Portfolio Cost Breakdown</h3>
+        <h3 className="font-semibold text-gray-900 mb-1">Project Cost Breakdown</h3>
         <p className="text-sm text-gray-600">by project status</p>
       </div>
 
@@ -68,7 +68,7 @@ export default function CostBreakdownChart({ projects, isLoading = false }: Cost
                 <span className="text-sm font-medium text-gray-700">Active Projects</span>
               </div>
               <p className="text-xl font-bold text-blue-600">{formatCurrency(costByStatus.active)}</p>
-              <p className="text-xs text-gray-600 mt-1">{activePercentage}% of portfolio</p>
+              <p className="text-xs text-gray-600 mt-1">{activePercentage}% of projects</p>
             </div>
 
             <div className="bg-gray-50 rounded-lg p-4">
@@ -77,7 +77,7 @@ export default function CostBreakdownChart({ projects, isLoading = false }: Cost
                 <span className="text-sm font-medium text-gray-700">Completed</span>
               </div>
               <p className="text-xl font-bold text-gray-600">{formatCurrency(costByStatus.completed)}</p>
-              <p className="text-xs text-gray-600 mt-1">{completedPercentage}% of portfolio</p>
+              <p className="text-xs text-gray-600 mt-1">{completedPercentage}% of projects</p>
             </div>
           </div>
 
