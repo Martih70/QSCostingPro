@@ -26,6 +26,7 @@ interface NRM2StoreState {
 
   // Actions
   fetchGroups: () => Promise<void>;
+  fetchTree: () => Promise<void>;
   fetchGroupDetails: (id: number) => Promise<void>;
   fetchElementDetails: (id: number) => Promise<void>;
   fetchSubElementDetails: (id: number) => Promise<void>;
@@ -68,6 +69,24 @@ export const useNRM2Store = create<NRM2StoreState>((set) => ({
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown error';
       set({ error: message, isLoading: false });
+    }
+  },
+
+  fetchTree: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await fetch('/api/v1/nrm2/tree');
+      const json = await response.json();
+
+      if (!json.success) {
+        throw new Error(json.error || 'Failed to fetch NRM 2 hierarchy');
+      }
+
+      set({ groups: json.data, isLoading: false });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      set({ error: message, isLoading: false });
+      console.error('Failed to fetch NRM 2 tree:', error);
     }
   },
 

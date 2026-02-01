@@ -12,7 +12,8 @@ const NRM2ReferencePage: React.FC = () => {
     isSearching,
     searchKeyword,
     currentWorkSection,
-    fetchGroups,
+    error,
+    fetchTree,
     searchNRM2,
     clearSearch,
     setCurrentWorkSection,
@@ -24,9 +25,9 @@ const NRM2ReferencePage: React.FC = () => {
 
   useEffect(() => {
     if (groups.length === 0) {
-      fetchGroups();
+      fetchTree();
     }
-  }, [groups, fetchGroups]);
+  }, [groups.length, fetchTree]);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,13 +75,26 @@ const NRM2ReferencePage: React.FC = () => {
               <h1 className="text-3xl font-bold text-gray-900">NRM 2 Reference</h1>
               <p className="text-gray-600 mt-2">New Rules of Measurement 2 - Complete hierarchy and search</p>
             </div>
-            <a
-              href="/references/documents"
+            <button
+              onClick={() => window.location.href = '/references/documents'}
               className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
             >
               📄 View Full PDF
-            </a>
+            </button>
           </div>
+
+          {/* Error message if loading failed */}
+          {error && (
+            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-red-800">Error loading NRM 2 data: {error}</p>
+              <button
+                onClick={() => fetchTree()}
+                className="mt-2 text-red-700 hover:text-red-900 underline text-sm"
+              >
+                Try again
+              </button>
+            </div>
+          )}
 
           {/* Search Bar */}
           <form onSubmit={handleSearch}>
@@ -167,6 +181,26 @@ const NRM2ReferencePage: React.FC = () => {
               <div className="text-center py-12">
                 <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
                 <p className="text-gray-600 mt-4">Loading NRM 2 hierarchy...</p>
+              </div>
+            ) : error || groups.length === 0 ? (
+              <div className="text-center py-12 bg-white rounded-lg border border-gray-200 p-8">
+                {error ? (
+                  <>
+                    <p className="text-red-600 font-medium mb-4">Failed to load NRM 2 data</p>
+                    <p className="text-gray-600 text-sm mb-4">{error}</p>
+                    <button
+                      onClick={() => fetchTree()}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                    >
+                      Try Again
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-gray-600">No NRM 2 data available</p>
+                    <p className="text-gray-500 text-sm mt-2">Please check the server connection and try refreshing the page</p>
+                  </>
+                )}
               </div>
             ) : (
               <NRM2TreeView

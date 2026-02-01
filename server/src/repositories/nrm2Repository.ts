@@ -223,24 +223,25 @@ export class NRM2Repository {
 
   /**
    * Get full hierarchical tree starting from a group
-   * Uses lazy loading structure - returns hierarchy but not full details
+   * Returns complete nested structure with all elements and sub-elements
    */
   getTreeStructure(groupId?: number): any {
     if (groupId) {
       return this.getGroupById(groupId);
     }
 
-    // Return all groups with element summaries
+    // Return all groups with full nested structure
     const groups = this.getAllGroups();
-    return groups.map(group => ({
-      id: group.id,
-      code: group.code,
-      title: group.title,
-      description: group.description,
-      elements_count: this.db.prepare(
-        'SELECT COUNT(*) as count FROM nrm2_elements WHERE group_id = ?'
-      ).get(group.id) as { count: number }
-    }));
+    return groups.map(group => {
+      group.elements = this.getElementsByGroupId(group.id).map(element => {
+        element.sub_elements = this.getSubElementsByElementId(element.id).map(subElement => {
+          subElement.work_sections = this.getWorkSectionsBySubElementId(subElement.id);
+          return subElement;
+        });
+        return element;
+      });
+      return group;
+    });
   }
 
   /**
