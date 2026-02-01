@@ -114,13 +114,13 @@ router.get('/sub-elements/:id', (req: Request, res: Response): void => {
 });
 
 /**
- * GET /api/v1/nrm2/work-sections/:id
- * Get a specific work section
+ * GET /api/v1/nrm2/work-sections/by-code/:code
+ * Get a work section by its code (must come before /work-sections/:id)
  */
-router.get('/work-sections/:id', (req: Request, res: Response): void => {
+router.get('/work-sections/by-code/:code', (req: Request, res: Response): void => {
   try {
-    const { id } = req.params;
-    const workSection = nrm2Repository.getWorkSectionById(parseInt(id));
+    const { code } = req.params;
+    const workSection = nrm2Repository.getWorkSectionByCode(code);
 
     if (!workSection) {
       res.status(404).json({
@@ -143,13 +143,13 @@ router.get('/work-sections/:id', (req: Request, res: Response): void => {
 });
 
 /**
- * GET /api/v1/nrm2/work-sections/by-code/:code
- * Get a work section by its code
+ * GET /api/v1/nrm2/work-sections/:id
+ * Get a specific work section
  */
-router.get('/work-sections/by-code/:code', (req: Request, res: Response): void => {
+router.get('/work-sections/:id', (req: Request, res: Response): void => {
   try {
-    const { code } = req.params;
-    const workSection = nrm2Repository.getWorkSectionByCode(code);
+    const { id } = req.params;
+    const workSection = nrm2Repository.getWorkSectionById(parseInt(id));
 
     if (!workSection) {
       res.status(404).json({

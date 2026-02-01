@@ -15,6 +15,9 @@ export interface ProjectEstimate {
   custom_unit_rate?: number
   custom_unit?: string
   category_id?: number
+  // NRM 2 fields
+  nrm2_work_section_id?: number | null
+  nrm2_code?: string | null
 }
 
 export interface CreateEstimateRequest {
@@ -27,6 +30,9 @@ export interface CreateEstimateRequest {
   custom_unit_rate?: number
   custom_unit?: string
   category_id?: number
+  // NRM 2 fields
+  nrm2_work_section_id?: number
+  nrm2_code?: string
 }
 
 export interface LineItemCalculation {
@@ -44,6 +50,9 @@ export interface LineItemCalculation {
   management_total: number
   contractor_total: number
   line_total: number
+  // NRM 2 fields (optional)
+  nrm2_code?: string
+  nrm2_work_section_id?: number
 }
 
 export interface CategoryTotal {

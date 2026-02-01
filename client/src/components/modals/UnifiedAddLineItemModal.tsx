@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Modal from '../ui/Modal'
 import Tabs from './Tabs'
 import CostLibrarySearch from '../estimates/CostLibrarySearch'
@@ -47,6 +47,7 @@ interface CustomItemData {
   custom_unit_rate: number
   category_id: number
   notes?: string
+  nrm2_work_section_id?: number
   nrm2_code?: string
 }
 
@@ -60,6 +61,8 @@ interface UnifiedAddLineItemModalProps {
   units: Unit[]
   isSubmitting: boolean
   costItemsLoading?: boolean
+  initialNRM2Code?: string | null
+  initialNRM2WorkSectionId?: number | null
 }
 
 export default function UnifiedAddLineItemModal({
@@ -72,6 +75,8 @@ export default function UnifiedAddLineItemModal({
   units,
   isSubmitting,
   costItemsLoading = false,
+  initialNRM2Code,
+  initialNRM2WorkSectionId,
 }: UnifiedAddLineItemModalProps) {
   const toast = useToast()
   const { incrementUsageCount, savePreset } = useEstimatePresets()
@@ -99,6 +104,59 @@ export default function UnifiedAddLineItemModal({
   const [presetName, setPresetName] = useState('')
 
   const selectedItem = costItems.find((i) => i.id === selectedItemId)
+
+  // Handle initial NRM 2 code or work section ID from reference page or BOQ browser
+  useEffect(() => {
+    if ((initialNRM2Code || initialNRM2WorkSectionId) && isOpen) {
+      // Clear form first to avoid state conflicts
+      setSelectedItemId(null)
+      setLibraryQuantity('1')
+      setCostOverride('')
+      setLibraryNotes('')
+      setCustomQuantity('1')
+      setCustomUnit('')
+      setCustomUnitRate('')
+      setCustomCategoryId('')
+      setCustomNotes('')
+      setNrm2Code('')
+      setSelectedNrm2WorkSection(null)
+      setErrors({})
+
+      // Determine the API endpoint based on what we have
+      let fetchUrl = ''
+      if (initialNRM2WorkSectionId) {
+        fetchUrl = `/api/v1/nrm2/work-sections/${initialNRM2WorkSectionId}`
+      } else if (initialNRM2Code) {
+        fetchUrl = `/api/v1/nrm2/work-sections/by-code/${initialNRM2Code}`
+      }
+
+      if (fetchUrl) {
+        fetch(fetchUrl)
+          .then((res) => res.json())
+          .then((json) => {
+            if (json.success && json.data) {
+              // Pre-fill form with work section data
+              setSelectedNrm2WorkSection(json.data)
+              setNrm2Code(json.data.code)
+              setCustomQuantity('1') // Ensure quantity is set
+              if (json.data.unit) {
+                setCustomUnit(json.data.unit)
+              }
+              if (json.data.title) {
+                setCustomDescription(json.data.title)
+              }
+            }
+          })
+          .catch((error) => {
+            console.error('Failed to fetch work section:', error)
+            setCustomQuantity('1') // Ensure quantity is set even if fetch fails
+          })
+      }
+
+      // Switch to custom tab after form is reset
+      setActiveTab('custom')
+    }
+  }, [initialNRM2Code, initialNRM2WorkSectionId, isOpen])
 
   const resetForm = () => {
     setSelectedItemId(null)
@@ -153,8 +211,8 @@ export default function UnifiedAddLineItemModal({
     if (!selectedItemId) {
       newErrors.item = 'Please select an item'
     }
-    if (!libraryQuantity || parseFloat(libraryQuantity) <= 0) {
-      newErrors.quantity = 'Quantity must be greater than 0'
+    if (libraryQuantity === '' || isNaN(parseFloat(libraryQuantity)) || parseFloat(libraryQuantity) <= 0) {
+      newErrors.quantity = 'Quantity must be a valid number greater than 0'
     }
     if (costOverride && isNaN(parseFloat(costOverride))) {
       newErrors.costOverride = 'Cost override must be a valid number'
@@ -170,14 +228,14 @@ export default function UnifiedAddLineItemModal({
     if (!customDescription.trim()) {
       newErrors.description = 'Description is required'
     }
-    if (!customQuantity || parseFloat(customQuantity) <= 0) {
-      newErrors.quantity = 'Quantity must be greater than 0'
+    if (customQuantity === '' || isNaN(parseFloat(customQuantity)) || parseFloat(customQuantity) <= 0) {
+      newErrors.quantity = 'Quantity must be a valid number greater than 0'
     }
     if (!customUnit.trim()) {
       newErrors.unit = 'Unit is required'
     }
-    if (!customUnitRate || parseFloat(customUnitRate) < 0) {
-      newErrors.unitRate = 'Unit rate must be 0 or greater'
+    if (customUnitRate === '' || isNaN(parseFloat(customUnitRate)) || parseFloat(customUnitRate) < 0) {
+      newErrors.unitRate = 'Unit rate must be a valid number 0 or greater'
     }
     if (!customCategoryId) {
       newErrors.category = 'Category is required'
@@ -210,15 +268,32 @@ export default function UnifiedAddLineItemModal({
     if (!validateCustomForm()) return
 
     try {
-      await onAddCustom({
+      const quantity = parseFloat(customQuantity)
+      if (isNaN(quantity) || quantity === null) {
+        toast.error('Quantity must be a valid number')
+        return
+      }
+
+      const unitRate = parseFloat(customUnitRate)
+      if (isNaN(unitRate) || unitRate === null) {
+        toast.error('Unit Rate must be a valid number')
+        return
+      }
+
+      const submitData = {
         custom_description: customDescription,
-        quantity: parseFloat(customQuantity),
+        quantity: quantity,
         custom_unit: customUnit,
-        custom_unit_rate: parseFloat(customUnitRate),
+        custom_unit_rate: unitRate,
         category_id: Number(customCategoryId),
         notes: customNotes || undefined,
+        nrm2_work_section_id: selectedNrm2WorkSection?.id,
         nrm2_code: nrm2Code || undefined,
-      })
+      }
+
+      console.log('Submitting custom item:', submitData)
+
+      await onAddCustom(submitData)
       toast.success('Custom item added successfully')
       resetForm()
     } catch (error) {

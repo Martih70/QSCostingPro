@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useProjectsStore } from '../stores/projectsStore'
 import { useEstimatesStore } from '../stores/estimatesStore'
 import { useEstimateTemplatesStore } from '../stores/estimateTemplatesStore'
+import { useNRM2Store } from '../stores/nrm2Store'
 import { costItemsAPI, unitsAPI } from '../services/api'
 import BackButton from '../components/ui/BackButton'
 import UnifiedAddLineItemModal from '../components/modals/UnifiedAddLineItemModal'
@@ -12,6 +13,7 @@ import SaveAsTemplateDialog from '../components/estimates/SaveAsTemplateDialog'
 import TemplateLibraryModal from '../components/estimates/TemplateLibraryModal'
 import { useToast } from '../components/ui/ToastContainer'
 import { handleApiError, logError } from '../utils/errorHandler'
+import BOQBrowserModal from '../components/boq/BOQBrowserModal'
 import type { EstimateTemplate } from '../types/estimateTemplate'
 
 interface CostItem {
@@ -48,8 +50,12 @@ export default function ProjectEstimatesPage() {
   const { currentProject, fetchProjectById, isLoading: projectLoading } = useProjectsStore()
   const { estimates, estimateTotals, isLoading: estimatesLoading, error, fetchEstimates, addEstimate, updateEstimate, deleteEstimate } = useEstimatesStore()
   const { saveTemplate, applyTemplate } = useEstimateTemplatesStore()
+  const { pendingWorkSection, setPendingWorkSection } = useNRM2Store()
 
   const [showAddModal, setShowAddModal] = useState(false)
+  const [initialNRM2Code, setInitialNRM2Code] = useState<string | null>(null)
+  const [initialNRM2WorkSectionId, setInitialNRM2WorkSectionId] = useState<number | null>(null)
+  const [showBOQBrowser, setShowBOQBrowser] = useState(false)
   const [showSaveTemplateDialog, setShowSaveTemplateDialog] = useState(false)
   const [showTemplateLibrary, setShowTemplateLibrary] = useState(false)
   const [costItems, setCostItems] = useState<CostItem[]>([])
@@ -72,6 +78,16 @@ export default function ProjectEstimatesPage() {
       fetchCategories()
     }
   }, [projectId, fetchProjectById, fetchEstimates])
+
+  // Check for pending NRM 2 work section and open modal
+  useEffect(() => {
+    if (pendingWorkSection && !showAddModal) {
+      setInitialNRM2Code(pendingWorkSection.code)
+      setShowAddModal(true)
+      // Clear the pending work section after opening the modal
+      setPendingWorkSection(null)
+    }
+  }, [pendingWorkSection, showAddModal, setPendingWorkSection])
 
   // Fetch cost items from backend
   const fetchCostItems = async () => {
@@ -133,6 +149,8 @@ export default function ProjectEstimatesPage() {
     custom_unit_rate: number
     category_id: number
     notes?: string
+    nrm2_work_section_id?: number
+    nrm2_code?: string
   }) => {
     try {
       setSubmitting(true)
@@ -143,6 +161,8 @@ export default function ProjectEstimatesPage() {
         custom_unit_rate: data.custom_unit_rate,
         category_id: data.category_id,
         notes: data.notes,
+        nrm2_work_section_id: data.nrm2_work_section_id,
+        nrm2_code: data.nrm2_code,
       })
       setShowAddModal(false)
     } finally {
@@ -150,11 +170,25 @@ export default function ProjectEstimatesPage() {
     }
   }
 
-  const handleUpdateEstimate = async (estimateId: number) => {
+  const handleBOQItemSelected = (workSection: {
+    id: number
+    code: string
+    title: string
+    description?: string
+    unit?: string
+  }) => {
+    // Pre-fill the add modal with NRM 2 data
+    setInitialNRM2Code(workSection.code)
+    setInitialNRM2WorkSectionId(workSection.id)
+    setShowBOQBrowser(false)
+    setShowAddModal(true)
+  }
+
+  const handleUpdateEstimate = async (estimateId: number, newQuantity: number) => {
     try {
       setSubmitting(true)
       await updateEstimate(projectId, estimateId, {
-        quantity: parseFloat(editQuantity),
+        quantity: newQuantity,
       })
       toast.success('Quantity updated successfully')
       setEditingId(null)
@@ -271,6 +305,13 @@ export default function ProjectEstimatesPage() {
             📚 Load Template
           </button>
           <button
+            onClick={() => setShowBOQBrowser(true)}
+            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg flex items-center gap-2 text-sm"
+            title="Import items from NRM 2 BOQ"
+          >
+            📋 Import from BOQ
+          </button>
+          <button
             onClick={() => setShowAddModal(true)}
             className="px-4 py-2 bg-khc-primary hover:bg-khc-secondary text-white rounded-lg flex items-center gap-2"
           >
@@ -307,10 +348,21 @@ export default function ProjectEstimatesPage() {
         </div>
       )}
 
+      {/* BOQ Browser Modal */}
+      <BOQBrowserModal
+        isOpen={showBOQBrowser}
+        onClose={() => setShowBOQBrowser(false)}
+        onSelectItem={handleBOQItemSelected}
+      />
+
       {/* Unified Add Line Item Modal */}
       <UnifiedAddLineItemModal
         isOpen={showAddModal}
-        onClose={() => setShowAddModal(false)}
+        onClose={() => {
+          setShowAddModal(false)
+          setInitialNRM2Code(null)
+          setInitialNRM2WorkSectionId(null)
+        }}
         onAddFromLibrary={handleAddFromLibrary}
         onAddCustom={handleAddCustom}
         costItems={costItems}
@@ -318,6 +370,8 @@ export default function ProjectEstimatesPage() {
         units={units}
         isSubmitting={submitting}
         costItemsLoading={costItemsLoading}
+        initialNRM2Code={initialNRM2Code}
+        initialNRM2WorkSectionId={initialNRM2WorkSectionId}
       />
 
       {/* Save as Template Dialog */}

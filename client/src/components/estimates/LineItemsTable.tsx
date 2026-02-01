@@ -77,6 +77,7 @@ export default function LineItemsTable({
             <tr className="border-b bg-gray-50">
               <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700">#</th>
               <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700">Description</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700">NRM 2 Code</th>
               <th className="px-6 py-3 text-right text-xs font-semibold text-gray-700">Qty</th>
               <th className="px-6 py-3 text-center text-xs font-semibold text-gray-700">Unit</th>
               <th className="px-6 py-3 text-right text-xs font-semibold text-gray-700">Total</th>
@@ -88,7 +89,7 @@ export default function LineItemsTable({
               <React.Fragment key={category.category_id}>
                 {/* Category Header Row */}
                 <tr className="bg-khc-light border-b hover:bg-opacity-75">
-                  <td colSpan={6} className="px-6 py-3">
+                  <td colSpan={7} className="px-6 py-3">
                     <p className="font-semibold text-khc-primary text-sm">{category.category_name}</p>
                   </td>
                 </tr>
@@ -99,6 +100,15 @@ export default function LineItemsTable({
                     <td className="px-6 py-4 text-sm text-gray-600 w-8">{idx + 1}</td>
                     <td className="px-6 py-4 text-sm">
                       <p className="font-medium text-gray-900">{item.description}</p>
+                    </td>
+                    <td className="px-6 py-4 text-sm">
+                      {item.nrm2_code ? (
+                        <span className="inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-blue-100 text-blue-800">
+                          {item.nrm2_code}
+                        </span>
+                      ) : (
+                        <span className="text-gray-400 text-xs">—</span>
+                      )}
                     </td>
                     <td className="px-6 py-4 text-sm text-right">
                       {editingId === item.estimate_id ? (
@@ -166,7 +176,7 @@ export default function LineItemsTable({
 
                 {/* Category Subtotal */}
                 <tr className="bg-gray-50 border-b">
-                  <td colSpan={4} className="px-6 py-3 text-right text-sm font-semibold text-gray-700">
+                  <td colSpan={5} className="px-6 py-3 text-right text-sm font-semibold text-gray-700">
                     {category.category_name} Subtotal:
                   </td>
                   <td className="px-6 py-3 text-right text-sm font-bold text-khc-primary">

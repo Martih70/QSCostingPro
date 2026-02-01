@@ -21,13 +21,14 @@ const createEstimateSchema = z.object({
   // Custom item fields (used when cost_item_id not provided)
   custom_description: z.string().min(3).max(255).optional(),
   custom_unit_rate: z.number().nonnegative().optional(),
-  custom_unit: z.string().max(50).optional(),
+  custom_unit: z.string().min(1).max(50).optional(),
   category_id: z.number().int().positive().optional(),
-  // NRM 2 code (optional, can be used with either library or custom items)
+  // NRM 2 fields (optional, link to NRM 2 work sections)
+  nrm2_work_section_id: z.number().int().positive().optional(),
   nrm2_code: z.string().max(50).optional(),
 }).refine(
-  (data) => data.cost_item_id || (data.custom_description && data.custom_unit_rate !== undefined),
-  { message: 'Either cost_item_id or custom_description + custom_unit_rate must be provided' }
+  (data) => data.cost_item_id || (data.custom_description && data.custom_unit_rate !== undefined && data.custom_unit && data.category_id),
+  { message: 'Either cost_item_id or all custom fields (description, unit, rate, category) must be provided' }
 );
 
 const updateEstimateSchema = z.object({
@@ -203,7 +204,7 @@ router.post(
         return;
       }
 
-      const { cost_item_id, quantity, unit_cost_override, notes, custom_description, custom_unit_rate, custom_unit, category_id, nrm2_code } = req.body;
+      const { cost_item_id, quantity, unit_cost_override, notes, custom_description, custom_unit_rate, custom_unit, category_id, nrm2_work_section_id, nrm2_code } = req.body;
 
       let lineTotal = 0;
       let estimateData: any = {
@@ -211,6 +212,7 @@ router.post(
         quantity,
         notes,
         created_by: req.user!.userId,
+        nrm2_work_section_id: nrm2_work_section_id || null,
         nrm2_code: nrm2_code || null,
       };
 
@@ -578,9 +580,9 @@ router.get('/:projectId/estimates/export-pdf', verifyAuth, (req: Request, res: R
     if (project.start_date) {
       doc.text(`Start Date: ${new Date(project.start_date).toLocaleDateString('en-GB')}`);
     }
-    if (project.location) {
-      doc.text(`Location: ${project.location}`);
-    }
+    // if (project.location) {
+    //   doc.text(`Location: ${project.location}`);
+    // }
     doc.moveDown();
 
     // Category sections

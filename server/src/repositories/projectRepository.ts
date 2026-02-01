@@ -34,6 +34,12 @@ export interface ProjectEstimate {
   created_at: string;
   version_number: number;
   is_active: boolean;
+  custom_description?: string | null;
+  custom_unit_rate?: number | null;
+  custom_unit?: string | null;
+  category_id?: number | null;
+  nrm2_work_section_id?: number | null;
+  nrm2_code?: string | null;
 }
 
 export interface ProjectAttachment {
@@ -331,6 +337,8 @@ export const projectEstimatesRepository = {
     custom_unit_rate?: number;
     custom_unit?: string;
     category_id?: number;
+    nrm2_work_section_id?: number;
+    nrm2_code?: string;
   }): ProjectEstimate => {
     try {
       const db = getDatabase();
@@ -338,8 +346,9 @@ export const projectEstimatesRepository = {
         INSERT INTO project_estimates (
           project_id, cost_item_id, quantity, unit_cost_override,
           notes, line_total, created_by, version_number, is_active,
-          custom_description, custom_unit_rate, custom_unit, category_id
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          custom_description, custom_unit_rate, custom_unit, category_id,
+          nrm2_work_section_id, nrm2_code
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `);
 
       const result = stmt.run(
@@ -355,7 +364,9 @@ export const projectEstimatesRepository = {
         data.custom_description || null,
         data.custom_unit_rate || null,
         data.custom_unit || null,
-        data.category_id || null
+        data.category_id || null,
+        data.nrm2_work_section_id || null,
+        data.nrm2_code || null
       );
 
       const created = projectEstimatesRepository.getById(result.lastInsertRowid as number);
