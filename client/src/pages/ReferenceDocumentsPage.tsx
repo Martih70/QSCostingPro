@@ -208,7 +208,7 @@ const ReferenceDocumentsPage: React.FC = () => {
           {/* Document Viewer */}
           <div className="lg:col-span-1">
             {selectedDocument ? (
-              <div className="sticky top-24 bg-white rounded-lg border border-gray-200 overflow-hidden flex flex-col h-96">
+              <div className="sticky top-24 bg-white rounded-lg border border-gray-200 overflow-hidden flex flex-col h-screen max-h-[calc(100vh-120px)]">
                 {/* Header */}
                 <div className="bg-gray-100 px-4 py-3 border-b border-gray-200">
                   <h3 className="font-semibold text-gray-900 text-sm truncate">
