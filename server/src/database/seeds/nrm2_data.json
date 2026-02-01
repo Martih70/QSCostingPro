@@ -1,0 +1,339 @@
+{
+  "groups": [
+    {
+      "code": "1",
+      "title": "Facilitating Works",
+      "description": "Works that facilitate the carrying out of the rest of the works",
+      "elements": [
+        {
+          "code": "1.1",
+          "title": "Toxic/hazardous/contaminated material treatment",
+          "description": "Treatment of toxic, hazardous or contaminated materials",
+          "measurement_rules": "Measured in tonnes or m³ depending on material type",
+          "sub_elements": [
+            {
+              "code": "1.1.1",
+              "title": "Removal of asbestos",
+              "description": "Safe removal and disposal of asbestos materials",
+              "measurement_rules": "Measured by surface area m² or mass in kg",
+              "unit": "m²",
+              "work_sections": [
+                {
+                  "code": "1.1.1.1",
+                  "title": "Removal of asbestos cement roof sheets",
+                  "description": "Careful removal of asbestos cement sheeting from roofs",
+                  "measurement_rules": "Measure the surface area of roof covered in asbestos sheets",
+                  "unit": "m²",
+                  "inclusions": "Removal, bagging, labelling, temporary weather protection",
+                  "exclusions": "Disposal to licensed facility (separate item)"
+                }
+              ]
+            },
+            {
+              "code": "1.1.2",
+              "title": "Removal of toxic waste",
+              "description": "Removal of various toxic waste materials",
+              "measurement_rules": "Measured by volume m³ or mass in tonnes",
+              "unit": "m³",
+              "work_sections": [
+                {
+                  "code": "1.1.2.1",
+                  "title": "Removal of contaminated soil",
+                  "description": "Excavation and removal of chemically contaminated soil",
+                  "measurement_rules": "Measure volume in m³ of contaminated soil requiring removal",
+                  "unit": "m³",
+                  "inclusions": "Excavation, loading, temporary storage on site",
+                  "exclusions": "Off-site disposal to licensed facility"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "1.2",
+          "title": "Site investigation and temporary support",
+          "description": "Investigations and temporary works to support main construction",
+          "measurement_rules": "Measured per item or by linear/area measurement",
+          "sub_elements": [
+            {
+              "code": "1.2.1",
+              "title": "Structural propping and support",
+              "description": "Temporary support structures for existing buildings",
+              "measurement_rules": "Measured by linear metre or as a lump sum",
+              "unit": "m",
+              "work_sections": [
+                {
+                  "code": "1.2.1.1",
+                  "title": "Temporary props to existing walls",
+                  "description": "Installation and maintenance of temporary acrow props",
+                  "measurement_rules": "Measure linear length of wall requiring temporary support",
+                  "unit": "m",
+                  "inclusions": "Supply, installation, adjustment as required",
+                  "exclusions": "Removal (separate item)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "2",
+      "title": "Substructure",
+      "description": "Works relating to the substructure of buildings",
+      "elements": [
+        {
+          "code": "2.1",
+          "title": "Ground works and demolition",
+          "description": "Site clearance, demolition and ground preparation",
+          "measurement_rules": "Measured by area, length, volume or mass",
+          "sub_elements": [
+            {
+              "code": "2.1.1",
+              "title": "Site clearance",
+              "description": "Removal of vegetation, top soil and surface obstruction",
+              "measurement_rules": "Measured in square metres or hectares",
+              "unit": "m²",
+              "work_sections": [
+                {
+                  "code": "2.1.1.1",
+                  "title": "Strip topsoil and store on site",
+                  "description": "Removal and temporary storage of topsoil layer",
+                  "measurement_rules": "Measure area of site to be cleared of topsoil",
+                  "unit": "m²",
+                  "inclusions": "Stripping, stacking, temporary protection",
+                  "exclusions": "Depth of topsoil removal beyond 300mm"
+                },
+                {
+                  "code": "2.1.1.2",
+                  "title": "Clear vegetation and undergrowth",
+                  "description": "Removal of bushes, trees and vegetation",
+                  "measurement_rules": "Measured by area or individually by number of trees",
+                  "unit": "m²",
+                  "inclusions": "Cutting, grinding of stumps to 300mm below ground",
+                  "exclusions": "Large tree felling operations"
+                }
+              ]
+            },
+            {
+              "code": "2.1.2",
+              "title": "Demolition of structures",
+              "description": "Demolition of existing buildings and structures",
+              "measurement_rules": "Measured by volume, area or mass of material",
+              "unit": "m³",
+              "work_sections": [
+                {
+                  "code": "2.1.2.1",
+                  "title": "Demolition of brick/stone walls",
+                  "description": "Breaking down and removal of masonry walls",
+                  "measurement_rules": "Measure volume m³ or area m² of walls to be demolished",
+                  "unit": "m³",
+                  "inclusions": "All breaking, loading, removal to site boundary",
+                  "exclusions": "Disposal off-site, hazardous material treatment"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "2.2",
+          "title": "Excavation and foundation works",
+          "description": "Excavation, foundations and basement construction",
+          "measurement_rules": "Measured by volume, length or area",
+          "sub_elements": [
+            {
+              "code": "2.2.1",
+              "title": "Excavation to reduce levels",
+              "description": "Excavation to reduce ground levels across the site",
+              "measurement_rules": "Measured by volume m³ of excavation",
+              "unit": "m³",
+              "work_sections": [
+                {
+                  "code": "2.2.1.1",
+                  "title": "Excavation to reduce levels - disposal to spoil heap",
+                  "description": "General excavation with spoil moved to on-site heap",
+                  "measurement_rules": "Volume of excavation in m³",
+                  "unit": "m³",
+                  "inclusions": "Breaking, excavation, loading, spreading on site",
+                  "exclusions": "Export off-site, Compact to density"
+                }
+              ]
+            },
+            {
+              "code": "2.2.2",
+              "title": "Foundation construction",
+              "description": "Preparation and construction of building foundations",
+              "measurement_rules": "Measured by linear metre, area or item",
+              "unit": "m",
+              "work_sections": [
+                {
+                  "code": "2.2.2.1",
+                  "title": "Concrete strip foundations",
+                  "description": "Excavation, preparation and concrete strip foundations",
+                  "measurement_rules": "Measure linear metres of foundation trenches",
+                  "unit": "m",
+                  "inclusions": "Excavation, blinding concrete, reinforcement, main concrete",
+                  "exclusions": "Backfill and earthworks"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "3",
+      "title": "Superstructure",
+      "description": "Works above the substructure including frame, floors and roofing",
+      "elements": [
+        {
+          "code": "3.1",
+          "title": "Frame and upper floors",
+          "description": "Structural frame, floors and associated works",
+          "measurement_rules": "Measured by area, length or mass",
+          "sub_elements": [
+            {
+              "code": "3.1.1",
+              "title": "Masonry and brick walls",
+              "description": "Brick and stone wall construction",
+              "measurement_rules": "Measured by area m² or volume m³",
+              "unit": "m²",
+              "work_sections": [
+                {
+                  "code": "3.1.1.1",
+                  "title": "Brick and block walls in cement mortar",
+                  "description": "Single skin masonry walls in portland cement mortar",
+                  "measurement_rules": "Measure area m² of wall face",
+                  "unit": "m²",
+                  "inclusions": "Bricks/blocks, mortar, labour, scaffolding",
+                  "exclusions": "Cavity insulation, external finishes"
+                }
+              ]
+            },
+            {
+              "code": "3.1.2",
+              "title": "In-situ concrete frames",
+              "description": "Concrete structural frames and beams",
+              "measurement_rules": "Measured by volume m³ or mass tonnes",
+              "unit": "m³",
+              "work_sections": [
+                {
+                  "code": "3.1.2.1",
+                  "title": "In-situ concrete beams and columns",
+                  "description": "Supply and construction of reinforced concrete frame elements",
+                  "measurement_rules": "Measure volume m³ of concrete",
+                  "unit": "m³",
+                  "inclusions": "Formwork, reinforcement, concrete, labour",
+                  "exclusions": "Curing time, temporary works"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "3.2",
+          "title": "Roof structure and covering",
+          "description": "Roof structural elements and coverings",
+          "measurement_rules": "Measured by area m² or linear metre",
+          "sub_elements": [
+            {
+              "code": "3.2.1",
+              "title": "Pitched roof structure",
+              "description": "Timber roof trusses and structure",
+              "measurement_rules": "Measured by area m² of roof slope",
+              "unit": "m²",
+              "work_sections": [
+                {
+                  "code": "3.2.1.1",
+                  "title": "Softwood pitched roof trusses",
+                  "description": "Factory-made softwood roof trusses to site and install",
+                  "measurement_rules": "Measure area m² of roof slope",
+                  "unit": "m²",
+                  "inclusions": "Supply, installation, bracing, fixings",
+                  "exclusions": "Tiles, insulation, internal finish"
+                }
+              ]
+            },
+            {
+              "code": "3.2.2",
+              "title": "Roof covering",
+              "description": "Materials covering the roof structure",
+              "measurement_rules": "Measured by area m² of roof",
+              "unit": "m²",
+              "work_sections": [
+                {
+                  "code": "3.2.2.1",
+                  "title": "Plain clay roof tiles",
+                  "description": "Supply and laying of plain clay tiles",
+                  "measurement_rules": "Measure area m² of tiled roof surface",
+                  "unit": "m²",
+                  "inclusions": "Tiles, battens, fixings, labour, mortar bedding to hips/ridges",
+                  "exclusions": "Underlays, gutters, flashings"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "4",
+      "title": "Internal Works",
+      "description": "Internal walls, partitions, doors and internal finishes",
+      "elements": [
+        {
+          "code": "4.1",
+          "title": "Partitions",
+          "description": "Internal partition walls",
+          "measurement_rules": "Measured by area m² or linear metre",
+          "sub_elements": [
+            {
+              "code": "4.1.1",
+              "title": "Stud partition walls",
+              "description": "Timber stud partition walls with plasterboard finish",
+              "measurement_rules": "Measured by area m² of wall face",
+              "unit": "m²",
+              "work_sections": [
+                {
+                  "code": "4.1.1.1",
+                  "title": "Softwood stud partition with plasterboard and skim",
+                  "description": "Timber framed stud partition with plasterboard finish",
+                  "measurement_rules": "Measure area m² of partition wall both sides",
+                  "unit": "m²",
+                  "inclusions": "Timber frame, plasterboard, skim, fixings",
+                  "exclusions": "Doors, painting, insulation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "4.2",
+          "title": "Doors and hardware",
+          "description": "Internal and external doors",
+          "measurement_rules": "Measured by number of doors or linear metre",
+          "sub_elements": [
+            {
+              "code": "4.2.1",
+              "title": "Internal timber doors",
+              "description": "Supply and hanging of internal doors",
+              "measurement_rules": "Measured per number of doors",
+              "unit": "item",
+              "work_sections": [
+                {
+                  "code": "4.2.1.1",
+                  "title": "Supply and hang internal softwood doors",
+                  "description": "Standard internal timber panelled doors hung on frames",
+                  "measurement_rules": "Each door is measured as one item",
+                  "unit": "item",
+                  "inclusions": "Door, frame, hinges, latch, labour",
+                  "exclusions": "Ironmongery, paint/stain finish"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

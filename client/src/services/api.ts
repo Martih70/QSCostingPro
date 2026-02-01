@@ -343,5 +343,67 @@ export const estimateTemplatesAPI = {
     api.post(`/estimate-templates/apply/${templateId}/to/${projectId}`),
 };
 
+// NRM 2 API (Phase 7 - NRM 2 Integration)
+export const nrm2API = {
+  getGroups: () =>
+    api.get('/nrm2/groups'),
+
+  getGroupById: (id: number) =>
+    api.get(`/nrm2/groups/${id}`),
+
+  getElementById: (id: number) =>
+    api.get(`/nrm2/elements/${id}`),
+
+  getSubElementById: (id: number) =>
+    api.get(`/nrm2/sub-elements/${id}`),
+
+  getWorkSectionById: (id: number) =>
+    api.get(`/nrm2/work-sections/${id}`),
+
+  getWorkSectionByCode: (code: string) =>
+    api.get(`/nrm2/work-sections/by-code/${code}`),
+
+  search: (keyword: string, limit?: number) =>
+    api.get('/nrm2/search', { params: { q: keyword, limit } }),
+
+  getTree: (groupId?: number) =>
+    api.get('/nrm2/tree', { params: { groupId } }),
+
+  getStatistics: () =>
+    api.get('/nrm2/stats'),
+};
+
+// Reference Documents API (Phase 7 - NRM 2 Integration)
+export const referencesAPI = {
+  getAll: (category?: string) =>
+    api.get('/references', { params: { category } }),
+
+  getById: (id: number) =>
+    api.get(`/references/${id}`),
+
+  getByCategory: (category: string) =>
+    api.get('/references', { params: { category } }),
+
+  upload: (formData: FormData) =>
+    api.post('/references/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }),
+
+  update: (id: number, data: any) =>
+    api.patch(`/references/${id}`, data),
+
+  delete: (id: number) =>
+    api.delete(`/references/${id}`),
+
+  search: (keyword: string) =>
+    api.get('/references/search', { params: { q: keyword } }),
+
+  getCategoryStats: () =>
+    api.get('/references/categories/stats'),
+
+  getDownloadUrl: (id: number) =>
+    api.get(`/references/${id}/download`),
+};
+
 export { api };
 export default api;

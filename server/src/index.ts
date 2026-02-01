@@ -19,6 +19,8 @@ import projectsRoutes from './routes/v1/projects.js';
 import projectEstimatesRoutes from './routes/v1/projectEstimates.js';
 import estimateTemplatesRoutes from './routes/v1/estimateTemplates.js';
 import bcisRoutes from './routes/v1/bcis.js';
+import nrm2Routes from './routes/v1/nrm2.js';
+import referencesRoutes from './routes/v1/references.js';
 import logger from './utils/logger.js';
 
 dotenv.config();
@@ -80,10 +82,18 @@ app.use('/api/v1/projects', projectsRoutes);
 app.use('/api/v1/projects', projectEstimatesRoutes);
 app.use('/api/v1/estimate-templates', estimateTemplatesRoutes);
 app.use('/api/v1/bcis', bcisRoutes);
+app.use('/api/v1/nrm2', nrm2Routes);
+app.use('/api/v1/references', referencesRoutes);
 
-// Serve static files from client build
+// Serve static files
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const clientDistPath = path.join(__dirname, '../../client/dist');
+const uploadsPath = path.join(__dirname, '../uploads');
+
+// Serve uploaded files (PDFs, images, etc.)
+app.use('/uploads', express.static(uploadsPath));
+
+// Serve client build
 app.use(express.static(clientDistPath));
 
 // SPA fallback: serve index.html for non-API routes

@@ -27,6 +27,8 @@ import PersonalCostDatabaseUploaderPage from './pages/PersonalCostDatabaseUpload
 import InternalRatesBuilderPage from './pages/InternalRatesBuilderPage'
 import ProjectCostAssemblyPage from './pages/ProjectCostAssemblyPage'
 import ReferralProgramPage from './pages/ReferralProgramPage'
+import NRM2ReferencePage from './pages/NRM2ReferencePage'
+import ReferenceDocumentsPage from './pages/ReferenceDocumentsPage'
 
 // Components
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
@@ -79,6 +81,8 @@ function App() {
           <Route path="/users" element={<UserManagementPage />} />
           <Route path="/clients" element={<ClientsPage />} />
           <Route path="/contractors" element={<ContractorsPage />} />
+          <Route path="/nrm2" element={<NRM2ReferencePage />} />
+          <Route path="/references/documents" element={<ReferenceDocumentsPage />} />
         </Route>
 
         {/* Redirect unmatched routes */}

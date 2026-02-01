@@ -76,6 +76,22 @@ export default function Sidebar({ onClose }: SidebarProps) {
           </div>
         </CollapsibleSection>
 
+        {/* Reference Library Section */}
+        <CollapsibleSection title="Reference Library" icon="📚" searchQuery={searchQuery}>
+          <div onClick={handleNavClick} className="space-y-1">
+            <SidebarNavItem
+              to="/nrm2"
+              icon="📖"
+              label="NRM 2 Codes"
+            />
+            <SidebarNavItem
+              to="/references/documents"
+              icon="📄"
+              label="Documents"
+            />
+          </div>
+        </CollapsibleSection>
+
         {/* Admin Section */}
         <CollapsibleSection title="Admin" icon="⚙️" searchQuery={searchQuery}>
           <div onClick={handleNavClick} className="space-y-1">

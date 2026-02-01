@@ -3,6 +3,7 @@ import { hashPassword } from '../services/authService.js';
 import logger from '../utils/logger.js';
 import { seedBCISDatabase } from './seedBCIS.js';
 import { seedSponsDatabase } from './seedSpons.js';
+import { seedNRM2 } from './seedNRM2.js';
 
 /**
  * Seed default units
@@ -697,6 +698,7 @@ export async function runSeeds(db: Database): Promise<void> {
     seedStandardUKCosts(db);
     seedBCISDatabase(db);
     seedSponsDatabase(db);
+    seedNRM2(db);
     await seedAdminUser(db);
     logger.info('✓ Database seeding completed');
   } catch (error) {

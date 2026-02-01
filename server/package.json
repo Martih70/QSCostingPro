@@ -25,7 +25,9 @@
     "pdfkit": "^0.13.0",
     "winston": "^3.11.0",
     "dotenv": "^16.3.1",
-    "axios": "^1.6.2"
+    "axios": "^1.6.2",
+    "multer": "^1.4.5-lts.1",
+    "mime-types": "^2.1.35"
   },
   "devDependencies": {
     "typescript": "^5.3.3",
@@ -35,6 +37,8 @@
     "@types/bcrypt": "^5.0.2",
     "@types/pdfkit": "^0.12.9",
     "@types/node": "^20.10.6",
+    "@types/multer": "^1.4.12",
+    "@types/mime-types": "^2.1.4",
     "ts-node": "^10.9.2"
   }
 }
