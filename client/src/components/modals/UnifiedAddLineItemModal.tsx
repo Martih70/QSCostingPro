@@ -3,6 +3,7 @@ import Modal from '../ui/Modal'
 import Tabs from './Tabs'
 import CostLibrarySearch from '../estimates/CostLibrarySearch'
 import EstimatePresetsPanel from './EstimatePresetsPanel'
+import NRM2CodeSelector from '../nrm2/NRM2CodeSelector'
 import { useToast } from '../ui/ToastContainer'
 import { useEstimatePresets } from '../../hooks/useEstimatePresets'
 import { handleApiError, logError } from '../../utils/errorHandler'
@@ -46,6 +47,7 @@ interface CustomItemData {
   custom_unit_rate: number
   category_id: number
   notes?: string
+  nrm2_code?: string
 }
 
 interface UnifiedAddLineItemModalProps {
@@ -88,6 +90,8 @@ export default function UnifiedAddLineItemModal({
   const [customUnitRate, setCustomUnitRate] = useState('')
   const [customCategoryId, setCustomCategoryId] = useState<number | string>('')
   const [customNotes, setCustomNotes] = useState('')
+  const [nrm2Code, setNrm2Code] = useState<string>('')
+  const [selectedNrm2WorkSection, setSelectedNrm2WorkSection] = useState<any>(null)
 
   // Errors
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -108,8 +112,24 @@ export default function UnifiedAddLineItemModal({
     setCustomUnitRate('')
     setCustomCategoryId('')
     setCustomNotes('')
+    setNrm2Code('')
+    setSelectedNrm2WorkSection(null)
 
     setErrors({})
+  }
+
+  const handleNrm2CodeSelected = (workSection: any) => {
+    // Pre-fill unit and description from NRM 2 work section
+    setSelectedNrm2WorkSection(workSection)
+    setNrm2Code(workSection.code)
+
+    if (workSection.unit) {
+      setCustomUnit(workSection.unit)
+    }
+
+    if (workSection.title && !customDescription) {
+      setCustomDescription(workSection.title)
+    }
   }
 
   const handleSelectPreset = (preset: any) => {
@@ -197,6 +217,7 @@ export default function UnifiedAddLineItemModal({
         custom_unit_rate: parseFloat(customUnitRate),
         category_id: Number(customCategoryId),
         notes: customNotes || undefined,
+        nrm2_code: nrm2Code || undefined,
       })
       toast.success('Custom item added successfully')
       resetForm()
@@ -337,6 +358,21 @@ export default function UnifiedAddLineItemModal({
         {/* Custom Tab */}
         {activeTab === 'custom' && (
           <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                NRM 2 Code (Optional)
+              </label>
+              <NRM2CodeSelector
+                value={nrm2Code}
+                onChange={handleNrm2CodeSelected}
+              />
+              {selectedNrm2WorkSection && (
+                <p className="text-xs text-gray-500 mt-1">
+                  Selected: {selectedNrm2WorkSection.code} - {selectedNrm2WorkSection.title}
+                </p>
+              )}
+            </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Description *
