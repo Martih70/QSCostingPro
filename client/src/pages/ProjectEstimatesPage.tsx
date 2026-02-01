@@ -55,6 +55,8 @@ export default function ProjectEstimatesPage() {
   const [showAddModal, setShowAddModal] = useState(false)
   const [initialNRM2Code, setInitialNRM2Code] = useState<string | null>(null)
   const [initialNRM2WorkSectionId, setInitialNRM2WorkSectionId] = useState<number | null>(null)
+  const [initialNRM2Title, setInitialNRM2Title] = useState<string | null>(null)
+  const [initialNRM2Unit, setInitialNRM2Unit] = useState<string | null>(null)
   const [showBOQBrowser, setShowBOQBrowser] = useState(false)
   const [showSaveTemplateDialog, setShowSaveTemplateDialog] = useState(false)
   const [showTemplateLibrary, setShowTemplateLibrary] = useState(false)
@@ -180,6 +182,8 @@ export default function ProjectEstimatesPage() {
     // Pre-fill the add modal with NRM 2 data
     setInitialNRM2Code(workSection.code)
     setInitialNRM2WorkSectionId(workSection.id)
+    setInitialNRM2Title(workSection.title)
+    setInitialNRM2Unit(workSection.unit || '')
     setShowBOQBrowser(false)
     setShowAddModal(true)
   }
@@ -362,6 +366,8 @@ export default function ProjectEstimatesPage() {
           setShowAddModal(false)
           setInitialNRM2Code(null)
           setInitialNRM2WorkSectionId(null)
+          setInitialNRM2Title(null)
+          setInitialNRM2Unit(null)
         }}
         onAddFromLibrary={handleAddFromLibrary}
         onAddCustom={handleAddCustom}
@@ -372,6 +378,8 @@ export default function ProjectEstimatesPage() {
         costItemsLoading={costItemsLoading}
         initialNRM2Code={initialNRM2Code}
         initialNRM2WorkSectionId={initialNRM2WorkSectionId}
+        initialNRM2Title={initialNRM2Title}
+        initialNRM2Unit={initialNRM2Unit}
       />
 
       {/* Save as Template Dialog */}

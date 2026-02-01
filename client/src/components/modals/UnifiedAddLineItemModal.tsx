@@ -63,6 +63,8 @@ interface UnifiedAddLineItemModalProps {
   costItemsLoading?: boolean
   initialNRM2Code?: string | null
   initialNRM2WorkSectionId?: number | null
+  initialNRM2Title?: string | null
+  initialNRM2Unit?: string | null
 }
 
 export default function UnifiedAddLineItemModal({
@@ -77,6 +79,8 @@ export default function UnifiedAddLineItemModal({
   costItemsLoading = false,
   initialNRM2Code,
   initialNRM2WorkSectionId,
+  initialNRM2Title,
+  initialNRM2Unit,
 }: UnifiedAddLineItemModalProps) {
   const toast = useToast()
   const { incrementUsageCount, savePreset } = useEstimatePresets()
@@ -108,6 +112,8 @@ export default function UnifiedAddLineItemModal({
   // Handle initial NRM 2 code or work section ID from reference page or BOQ browser
   useEffect(() => {
     if ((initialNRM2Code || initialNRM2WorkSectionId) && isOpen) {
+      console.log('BOQ import detected:', { initialNRM2Code, initialNRM2WorkSectionId, initialNRM2Title, initialNRM2Unit })
+
       // Clear form first to avoid state conflicts
       setSelectedItemId(null)
       setLibraryQuantity('1')
@@ -122,41 +128,67 @@ export default function UnifiedAddLineItemModal({
       setSelectedNrm2WorkSection(null)
       setErrors({})
 
-      // Determine the API endpoint based on what we have
-      let fetchUrl = ''
-      if (initialNRM2WorkSectionId) {
-        fetchUrl = `/api/v1/nrm2/work-sections/${initialNRM2WorkSectionId}`
-      } else if (initialNRM2Code) {
-        fetchUrl = `/api/v1/nrm2/work-sections/by-code/${initialNRM2Code}`
-      }
+      // If we have title and unit from BOQ browser, use them directly
+      if (initialNRM2Title || initialNRM2Unit) {
+        console.log('Using title and unit directly from BOQ:', { initialNRM2Title, initialNRM2Unit })
+        if (initialNRM2Title) {
+          setCustomDescription(initialNRM2Title)
+        }
+        if (initialNRM2Unit) {
+          setCustomUnit(initialNRM2Unit)
+        }
+        if (initialNRM2Code) {
+          setNrm2Code(initialNRM2Code)
+        }
+        setCustomQuantity('1')
+        setActiveTab('custom')
+      } else {
+        // Fallback: Fetch from API if title/unit not provided
+        let fetchUrl = ''
+        if (initialNRM2WorkSectionId) {
+          fetchUrl = `/api/v1/nrm2/work-sections/${initialNRM2WorkSectionId}`
+        } else if (initialNRM2Code) {
+          fetchUrl = `/api/v1/nrm2/work-sections/by-code/${initialNRM2Code}`
+        }
 
-      if (fetchUrl) {
-        fetch(fetchUrl)
-          .then((res) => res.json())
-          .then((json) => {
-            if (json.success && json.data) {
-              // Pre-fill form with work section data
-              setSelectedNrm2WorkSection(json.data)
-              setNrm2Code(json.data.code)
-              setCustomQuantity('1') // Ensure quantity is set
-              if (json.data.unit) {
-                setCustomUnit(json.data.unit)
-              }
-              if (json.data.title) {
-                setCustomDescription(json.data.title)
-              }
-            }
-          })
-          .catch((error) => {
-            console.error('Failed to fetch work section:', error)
-            setCustomQuantity('1') // Ensure quantity is set even if fetch fails
-          })
-      }
+        console.log('Fetching work section from:', fetchUrl)
 
-      // Switch to custom tab after form is reset
-      setActiveTab('custom')
+        if (fetchUrl) {
+          fetch(fetchUrl)
+            .then((res) => {
+              console.log('Fetch response status:', res.status)
+              return res.json()
+            })
+            .then((json) => {
+              console.log('Fetch response data:', json)
+              if (json.success && json.data) {
+                console.log('Pre-filling form with:', json.data)
+                // Pre-fill form with work section data
+                setSelectedNrm2WorkSection(json.data)
+                setNrm2Code(json.data.code)
+                setCustomQuantity('1')
+                if (json.data.unit) {
+                  setCustomUnit(json.data.unit)
+                }
+                if (json.data.title) {
+                  setCustomDescription(json.data.title)
+                }
+              } else {
+                console.error('Invalid response format:', json)
+              }
+            })
+            .catch((error) => {
+              console.error('Failed to fetch work section:', error)
+              toast.error('Failed to load BOQ item details')
+              setCustomQuantity('1')
+            })
+        }
+
+        // Switch to custom tab after form is reset
+        setActiveTab('custom')
+      }
     }
-  }, [initialNRM2Code, initialNRM2WorkSectionId, isOpen])
+  }, [initialNRM2Code, initialNRM2WorkSectionId, initialNRM2Title, initialNRM2Unit, isOpen, toast])
 
   const resetForm = () => {
     setSelectedItemId(null)
@@ -459,6 +491,9 @@ export default function UnifiedAddLineItemModal({
                 placeholder="Enter item description"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-khc-primary text-sm"
               />
+              {customDescription && (
+                <p className="text-xs text-green-600 mt-1">✓ From BOQ: {selectedNrm2WorkSection?.code}</p>
+              )}
               {errors.description && (
                 <p className="text-xs text-red-600 mt-1">{errors.description}</p>
               )}

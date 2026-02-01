@@ -2100,3 +2100,48 @@
 2026-02-01 19:30:45:3045 info: Environment: development
 2026-02-01 19:30:45:3045 info: Frontend URL: http://localhost:5173
 2026-02-01 19:30:45:3045 info: Press Ctrl+C to stop
+2026-02-01 19:32:28:3228 info: User logged in: admin
+2026-02-01 19:32:28:3228 info: User logged in: admin
+2026-02-01 19:35:03:353 info: User logged in: admin
+2026-02-01 19:35:03:353 info: User logged in: admin
+2026-02-01 19:39:49:3949 info: User logged in: admin
+2026-02-01 19:39:49:3949 info: User logged in: admin
+2026-02-01 19:41:11:4111 info: Estimate added to project 2: Concrete strip foundations x1 by user admin
+2026-02-01 19:46:55:4655 info: Database connection closed
+2026-02-01 19:46:58:4658 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 19:46:58:4658 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 19:46:58:4658 info: Starting KHConstruct server...
+2026-02-01 19:46:58:4658 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 19:46:58:4658 info: Database initialized
+2026-02-01 19:46:58:4658 info: All migrations completed successfully
+2026-02-01 19:46:58:4658 info: Database migrations completed
+2026-02-01 19:46:58:4658 info: Starting database seeding...
+2026-02-01 19:46:58:4658 info: ✓ Standard UK costs already seeded
+2026-02-01 19:46:58:4658 info: ✓ BCIS database already seeded
+2026-02-01 19:46:58:4658 info: ✓ Spons database already seeded
+2026-02-01 19:46:58:4658 info: ✓ NRM 2 data already seeded, skipping
+2026-02-01 19:46:58:4658 info: ✓ Database seeding completed
+2026-02-01 19:46:58:4658 info: Database seeding completed
+2026-02-01 19:46:58:4658 info: ✓ Server running on http://localhost:3000
+2026-02-01 19:46:58:4658 info: Environment: development
+2026-02-01 19:46:58:4658 info: Frontend URL: http://localhost:5173
+2026-02-01 19:46:58:4658 info: Press Ctrl+C to stop
+2026-02-01 19:50:47:5047 info: Database connection closed
+2026-02-01 19:50:50:5050 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 19:50:50:5050 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 19:50:50:5050 info: Starting KHConstruct server...
+2026-02-01 19:50:50:5050 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 19:50:50:5050 info: Database initialized
+2026-02-01 19:50:50:5050 info: All migrations completed successfully
+2026-02-01 19:50:50:5050 info: Database migrations completed
+2026-02-01 19:50:50:5050 info: Starting database seeding...
+2026-02-01 19:50:50:5050 info: ✓ Standard UK costs already seeded
+2026-02-01 19:50:50:5050 info: ✓ BCIS database already seeded
+2026-02-01 19:50:50:5050 info: ✓ Spons database already seeded
+2026-02-01 19:50:50:5050 info: ✓ NRM 2 data already seeded, skipping
+2026-02-01 19:50:50:5050 info: ✓ Database seeding completed
+2026-02-01 19:50:50:5050 info: Database seeding completed
+2026-02-01 19:50:50:5050 info: ✓ Server running on http://localhost:3000
+2026-02-01 19:50:50:5050 info: Environment: development
+2026-02-01 19:50:50:5050 info: Frontend URL: http://localhost:5173
+2026-02-01 19:50:50:5050 info: Press Ctrl+C to stop
