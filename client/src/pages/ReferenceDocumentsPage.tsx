@@ -162,10 +162,10 @@ const ReferenceDocumentsPage: React.FC = () => {
             ) : (
               <div className="space-y-3">
                 {documents.map((doc) => (
-                  <button
+                  <div
                     key={doc.id}
                     onClick={() => setSelectedDocument(doc)}
-                    className={`w-full text-left p-4 rounded-lg border transition-colors ${
+                    className={`w-full text-left p-4 rounded-lg border transition-colors cursor-pointer ${
                       selectedDocument?.id === doc.id
                         ? 'border-blue-300 bg-blue-50'
                         : 'border-gray-200 bg-white hover:border-gray-300'
@@ -196,7 +196,7 @@ const ReferenceDocumentsPage: React.FC = () => {
                         </button>
                       )}
                     </div>
-                  </button>
+                  </div>
                 ))}
               </div>
             )}
