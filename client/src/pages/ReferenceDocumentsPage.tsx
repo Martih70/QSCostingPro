@@ -97,10 +97,10 @@ const ReferenceDocumentsPage: React.FC = () => {
   console.log('ReferenceDocumentsPage rendered - state:', { isLoading, error, documentsCount: documents.length });
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="h-screen flex flex-col bg-gray-50 overflow-hidden">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="bg-white border-b border-gray-200 flex-shrink-0">
+        <div className="mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Reference Documents</h1>
@@ -134,10 +134,10 @@ const ReferenceDocumentsPage: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div className="flex-1 overflow-hidden px-4 sm:px-6 lg:px-8 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-full">
           {/* Documents List */}
-          <div className="lg:col-span-1 overflow-y-auto max-h-screen">
+          <div className="lg:col-span-1 overflow-y-auto h-full">
             {isLoading ? (
               <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
                 <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
@@ -206,9 +206,9 @@ const ReferenceDocumentsPage: React.FC = () => {
           </div>
 
           {/* Document Viewer */}
-          <div className="lg:col-span-3 flex flex-col overflow-hidden">
+          <div className="lg:col-span-3 flex flex-col overflow-hidden h-full">
             {selectedDocument ? (
-              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden flex flex-col flex-1">
+              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden flex flex-col h-full">
                 {/* Header */}
                 <div className="bg-gray-100 px-4 py-3 border-b border-gray-200">
                   <h3 className="font-semibold text-gray-900 text-sm truncate">
