@@ -15,7 +15,9 @@ const referenceRepository = new ReferenceRepository(db);
  */
 router.post('/upload', verifyAuth, authorize('admin', 'estimator'), uploadReference.single('file'), (req: Request, res: Response): void => {
   try {
+    console.log('Upload endpoint hit');
     if (!req.file) {
+      console.log('No file provided');
       res.status(400).json({
         success: false,
         error: 'No file provided'
@@ -23,9 +25,11 @@ router.post('/upload', verifyAuth, authorize('admin', 'estimator'), uploadRefere
       return;
     }
 
+    console.log('File received:', { name: req.file.originalname, size: req.file.size, mimetype: req.file.mimetype });
     const { description, category } = req.body;
     const userId = (req as any).user?.userId;
 
+    console.log('User ID:', userId);
     if (!userId) {
       res.status(401).json({
         success: false,
@@ -34,6 +38,7 @@ router.post('/upload', verifyAuth, authorize('admin', 'estimator'), uploadRefere
       return;
     }
 
+    console.log('Creating document record...');
     const document = referenceRepository.createDocument({
       name: req.file.originalname,
       description: description || '',
@@ -44,12 +49,14 @@ router.post('/upload', verifyAuth, authorize('admin', 'estimator'), uploadRefere
       uploaded_by: userId
     });
 
+    console.log('Document created:', document);
     res.status(201).json({
       success: true,
       data: document,
       message: 'Document uploaded successfully'
     });
   } catch (error) {
+    console.error('Upload error:', error);
     res.status(500).json({
       success: false,
       error: `Upload failed: ${error instanceof Error ? error.message : String(error)}`
