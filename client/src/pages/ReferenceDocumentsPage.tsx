@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { referencesAPI } from '../services/api.js';
 import type { ReferenceDocument } from '../types/nrm2.js';
 
+// Use the same server URL as API calls
+const SERVER_URL = 'http://localhost:3000';
+
 const ReferenceDocumentsPage: React.FC = () => {
   const [documents, setDocuments] = useState<ReferenceDocument[]>([]);
   const [selectedDocument, setSelectedDocument] = useState<ReferenceDocument | null>(null);
@@ -217,13 +220,13 @@ const ReferenceDocumentsPage: React.FC = () => {
                 <div className="flex-1 overflow-auto bg-gray-50 flex items-center justify-center">
                   {selectedDocument.file_type === 'application/pdf' ? (
                     <iframe
-                      src={selectedDocument.file_path}
+                      src={`${SERVER_URL}${selectedDocument.file_path}`}
                       className="w-full h-full border-none"
                       title="PDF Viewer"
                     />
                   ) : selectedDocument.file_type.startsWith('image/') ? (
                     <img
-                      src={selectedDocument.file_path}
+                      src={`${SERVER_URL}${selectedDocument.file_path}`}
                       alt={selectedDocument.name}
                       className="max-w-full max-h-full object-contain"
                     />
@@ -231,7 +234,7 @@ const ReferenceDocumentsPage: React.FC = () => {
                     <div className="text-center text-gray-500">
                       <p className="text-sm">File type not supported for preview</p>
                       <a
-                        href={selectedDocument.file_path}
+                        href={`${SERVER_URL}${selectedDocument.file_path}`}
                         download
                         className="text-blue-600 hover:text-blue-700 text-sm mt-2 inline-block"
                       >
