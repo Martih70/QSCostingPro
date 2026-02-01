@@ -97,20 +97,18 @@ const ReferenceDocumentsPage: React.FC = () => {
   console.log('ReferenceDocumentsPage rendered - state:', { isLoading, error, documentsCount: documents.length });
 
   return (
-    <div className="h-screen flex flex-col bg-gray-50">
-      {/* Header - Compact */}
-      <div className="bg-white border-b border-gray-200 flex-shrink-0">
-        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-bold text-gray-900">Reference Documents</h1>
-          </div>
-          <div className="flex items-center gap-4">
-            {isUploading && (
-              <div className="text-sm text-blue-600">Uploading...</div>
-            )}
-            <label className="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer transition-colors text-sm">
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Reference Documents</h1>
+              <p className="text-gray-600 mt-2">Manage PDFs, images, and standards documents</p>
+            </div>
+            <label className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer transition-colors">
               <span className="mr-2">⬆️</span>
-              <span>Upload</span>
+              <span>Upload Document</span>
               <input
                 type="file"
                 onChange={handleFileUpload}
@@ -120,47 +118,52 @@ const ReferenceDocumentsPage: React.FC = () => {
               />
             </label>
           </div>
-        </div>
 
-        {(uploadError || error) && (
-          <div className="px-4 sm:px-6 lg:px-8 pb-3">
-            <div className="p-2 bg-red-50 border border-red-200 rounded text-red-700 text-xs">
+          {(uploadError || error) && (
+            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
               {uploadError || error}
             </div>
-          </div>
-        )}
+          )}
+
+          {isUploading && (
+            <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded text-blue-700 text-sm">
+              Uploading document...
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Main Content - Full Height */}
-      <div className="flex-1 overflow-hidden flex flex-col">
-        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 flex-1 flex overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 w-full h-full">
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Documents List */}
-          <div className="lg:col-span-1 overflow-y-auto">
+          <div className="lg:col-span-1">
             {isLoading ? (
-              <div className="text-center py-6 bg-white rounded-lg border border-gray-200">
+              <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
                 <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                <p className="text-gray-600 mt-2 text-sm">Loading...</p>
+                <p className="text-gray-600 mt-4">Loading documents...</p>
               </div>
             ) : error ? (
-              <div className="text-center py-6 bg-white rounded-lg border border-red-200 bg-red-50">
-                <div className="text-2xl mx-auto">⚠️</div>
-                <p className="text-red-600 mt-2 font-medium text-sm">Failed to load</p>
+              <div className="text-center py-12 bg-white rounded-lg border border-red-200 bg-red-50">
+                <div className="text-4xl mx-auto">⚠️</div>
+                <p className="text-red-600 mt-4 font-medium">Failed to load documents</p>
+                <p className="text-red-600 text-sm mt-2">{error}</p>
                 <button
                   onClick={() => fetchDocuments()}
-                  className="mt-2 px-3 py-1 bg-red-600 text-white rounded text-xs hover:bg-red-700"
+                  className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
                 >
-                  Retry
+                  Try Again
                 </button>
               </div>
             ) : documents.length === 0 ? (
-              <div className="text-center py-6 bg-white rounded-lg border border-gray-200">
-                <div className="text-4xl text-gray-400 mx-auto">📋</div>
-                <p className="text-gray-700 mt-2 font-semibold text-sm">No documents</p>
-                <p className="text-gray-600 text-xs mt-1">Upload to get started</p>
+              <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
+                <div className="text-6xl text-gray-400 mx-auto">📋</div>
+                <p className="text-gray-700 mt-4 font-semibold">No documents uploaded yet</p>
+                <p className="text-gray-600 text-sm mt-2">Upload NRM 2 PDF or reference documents using the button above</p>
+                <p className="text-gray-500 text-xs mt-3">Supported formats: PDF, PNG, JPG (max 50MB)</p>
               </div>
             ) : (
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {documents.map((doc) => (
                   <div
                     key={doc.id}
@@ -203,9 +206,9 @@ const ReferenceDocumentsPage: React.FC = () => {
           </div>
 
           {/* Document Viewer */}
-          <div className="lg:col-span-3 overflow-hidden">
+          <div className="lg:col-span-3">
             {selectedDocument ? (
-              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden flex flex-col h-full">
+              <div className="sticky top-24 bg-white rounded-lg border border-gray-200 overflow-hidden flex flex-col h-screen max-h-[calc(100vh-120px)]">
                 {/* Header */}
                 <div className="bg-gray-100 px-4 py-3 border-b border-gray-200">
                   <h3 className="font-semibold text-gray-900 text-sm truncate">
