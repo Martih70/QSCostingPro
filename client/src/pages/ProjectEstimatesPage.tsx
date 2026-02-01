@@ -53,10 +53,6 @@ export default function ProjectEstimatesPage() {
   const { pendingWorkSection, setPendingWorkSection } = useNRM2Store()
 
   const [showAddModal, setShowAddModal] = useState(false)
-  const [initialNRM2Code, setInitialNRM2Code] = useState<string | null>(null)
-  const [initialNRM2WorkSectionId, setInitialNRM2WorkSectionId] = useState<number | null>(null)
-  const [initialNRM2Title, setInitialNRM2Title] = useState<string | null>(null)
-  const [initialNRM2Unit, setInitialNRM2Unit] = useState<string | null>(null)
   const [showBOQBrowser, setShowBOQBrowser] = useState(false)
   const [showSaveTemplateDialog, setShowSaveTemplateDialog] = useState(false)
   const [showTemplateLibrary, setShowTemplateLibrary] = useState(false)
@@ -80,16 +76,6 @@ export default function ProjectEstimatesPage() {
       fetchCategories()
     }
   }, [projectId, fetchProjectById, fetchEstimates])
-
-  // Check for pending NRM 2 work section and open modal
-  useEffect(() => {
-    if (pendingWorkSection && !showAddModal) {
-      setInitialNRM2Code(pendingWorkSection.code)
-      setShowAddModal(true)
-      // Clear the pending work section after opening the modal
-      setPendingWorkSection(null)
-    }
-  }, [pendingWorkSection, showAddModal, setPendingWorkSection])
 
   // Fetch cost items from backend
   const fetchCostItems = async () => {
@@ -172,20 +158,35 @@ export default function ProjectEstimatesPage() {
     }
   }
 
-  const handleBOQItemSelected = (workSection: {
+  const handleBOQItemSelected = async (workSections: Array<{
     id: number
     code: string
     title: string
     description?: string
     unit?: string
-  }) => {
-    // Pre-fill the add modal with NRM 2 data
-    setInitialNRM2Code(workSection.code)
-    setInitialNRM2WorkSectionId(workSection.id)
-    setInitialNRM2Title(workSection.title)
-    setInitialNRM2Unit(workSection.unit || '')
-    setShowBOQBrowser(false)
-    setShowAddModal(true)
+  }>) => {
+    // Handle multiple items - add each with quantity=1 and no rate
+    try {
+      setSubmitting(true)
+      for (const workSection of workSections) {
+        await addEstimate(projectId, {
+          custom_description: workSection.title,
+          quantity: 1,
+          custom_unit: workSection.unit || 'item',
+          custom_unit_rate: 0,
+          category_id: 9, // Default to Substructure
+          nrm2_work_section_id: workSection.id,
+          nrm2_code: workSection.code,
+        })
+      }
+      toast.success(`Added ${workSections.length} item${workSections.length !== 1 ? 's' : ''} from BOQ`)
+      setShowBOQBrowser(false)
+    } catch (error) {
+      logError(error, 'AddBOQItems')
+      toast.error(handleApiError(error))
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const handleUpdateEstimate = async (estimateId: number, newQuantity: number) => {
@@ -364,10 +365,6 @@ export default function ProjectEstimatesPage() {
         isOpen={showAddModal}
         onClose={() => {
           setShowAddModal(false)
-          setInitialNRM2Code(null)
-          setInitialNRM2WorkSectionId(null)
-          setInitialNRM2Title(null)
-          setInitialNRM2Unit(null)
         }}
         onAddFromLibrary={handleAddFromLibrary}
         onAddCustom={handleAddCustom}
@@ -376,10 +373,6 @@ export default function ProjectEstimatesPage() {
         units={units}
         isSubmitting={submitting}
         costItemsLoading={costItemsLoading}
-        initialNRM2Code={initialNRM2Code}
-        initialNRM2WorkSectionId={initialNRM2WorkSectionId}
-        initialNRM2Title={initialNRM2Title}
-        initialNRM2Unit={initialNRM2Unit}
       />
 
       {/* Save as Template Dialog */}

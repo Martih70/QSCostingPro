@@ -16,7 +16,7 @@ interface BOQWorkSection {
 interface BOQBrowserModalProps {
   isOpen: boolean
   onClose: () => void
-  onSelectItem: (workSection: BOQWorkSection) => void
+  onSelectItem: (workSections: BOQWorkSection[]) => void
 }
 
 export default function BOQBrowserModal({
@@ -27,7 +27,7 @@ export default function BOQBrowserModal({
   const toast = useToast()
   const { groups, isLoading, fetchGroups } = useNRM2Store()
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedItemId, setSelectedItemId] = useState<number | null>(null)
+  const [selectedItemIds, setSelectedItemIds] = useState<Set<number>>(new Set())
 
   // Fetch groups when modal opens
   useEffect(() => {
@@ -71,29 +71,39 @@ export default function BOQBrowserModal({
     return results
   }, [groups, searchQuery])
 
-  const handleSelectItem = (item: BOQWorkSection) => {
-    setSelectedItemId(item.id)
+  const handleSelectItem = (itemId: number) => {
+    const newSelected = new Set(selectedItemIds)
+    if (newSelected.has(itemId)) {
+      newSelected.delete(itemId)
+    } else {
+      newSelected.add(itemId)
+    }
+    setSelectedItemIds(newSelected)
   }
 
   const handleImport = () => {
-    if (!selectedItemId) {
-      toast.error('Please select an item to import')
+    if (selectedItemIds.size === 0) {
+      toast.error('Please select at least one item to import')
       return
     }
 
-    const selectedItem = filteredWorkSections.find((item) => item.id === selectedItemId)
-    if (!selectedItem) {
-      toast.error('Selected item not found')
+    const selectedItems = filteredWorkSections.filter((item) =>
+      selectedItemIds.has(item.id)
+    )
+
+    if (selectedItems.length === 0) {
+      toast.error('Selected items not found')
       return
     }
 
-    onSelectItem(selectedItem)
+    onSelectItem(selectedItems)
 
-    // Reset and close
+    // Clear selection but keep modal open for more imports
+    setSelectedItemIds(new Set())
     setSearchQuery('')
-    setSelectedItemId(null)
-    onClose()
-    toast.success(`Imported: ${selectedItem.code} - ${selectedItem.title}`)
+    toast.success(
+      `Imported ${selectedItems.length} item${selectedItems.length !== 1 ? 's' : ''}`
+    )
   }
 
   return (
@@ -130,18 +140,16 @@ export default function BOQBrowserModal({
             {filteredWorkSections.map((item) => (
               <div
                 key={item.id}
-                onClick={() => handleSelectItem(item)}
+                onClick={() => handleSelectItem(item.id)}
                 className={`p-3 border-b cursor-pointer hover:bg-blue-50 transition-colors ${
-                  selectedItemId === item.id ? 'bg-blue-100 border-l-4 border-l-blue-500' : ''
+                  selectedItemIds.has(item.id) ? 'bg-blue-100 border-l-4 border-l-blue-500' : ''
                 }`}
               >
                 <div className="flex items-start gap-2">
                   <input
-                    type="radio"
-                    name="boq-item"
-                    value={item.id}
-                    checked={selectedItemId === item.id}
-                    onChange={() => handleSelectItem(item)}
+                    type="checkbox"
+                    checked={selectedItemIds.has(item.id)}
+                    onChange={() => handleSelectItem(item.id)}
                     className="mt-1"
                   />
                   <div className="flex-1 min-w-0">
@@ -167,16 +175,20 @@ export default function BOQBrowserModal({
         )}
 
         {/* Summary */}
-        {selectedItemId && filteredWorkSections.length > 0 && (
+        {selectedItemIds.size > 0 && filteredWorkSections.length > 0 && (
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
             <p className="text-sm text-blue-900">
-              Selected:{' '}
-              <strong>
-                {filteredWorkSections.find((item) => item.id === selectedItemId)?.code}
-              </strong>{' '}
-              -{' '}
-              {filteredWorkSections.find((item) => item.id === selectedItemId)?.title}
+              Selected: <strong>{selectedItemIds.size}</strong> item{selectedItemIds.size !== 1 ? 's' : ''}
             </p>
+            <div className="mt-2 space-y-1 text-xs text-blue-800 max-h-20 overflow-y-auto">
+              {filteredWorkSections
+                .filter((item) => selectedItemIds.has(item.id))
+                .map((item) => (
+                  <div key={item.id}>
+                    • {item.code} - {item.title}
+                  </div>
+                ))}
+            </div>
           </div>
         )}
 
@@ -186,14 +198,14 @@ export default function BOQBrowserModal({
             onClick={onClose}
             className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
           >
-            Cancel
+            Close
           </button>
           <button
             onClick={handleImport}
-            disabled={!selectedItemId || isLoading}
+            disabled={selectedItemIds.size === 0 || isLoading}
             className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-300 transition-colors"
           >
-            Import Selected Item
+            Import Selected Items ({selectedItemIds.size})
           </button>
         </div>
       </div>
