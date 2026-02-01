@@ -506,8 +506,14 @@ export default function UnifiedAddLineItemModal({
                 </label>
                 <input
                   type="number"
+                  step="0.01"
+                  min="0"
                   value={customQuantity}
-                  onChange={(e) => setCustomQuantity(e.target.value)}
+                  onChange={(e) => {
+                    console.log('Quantity changed:', e.target.value)
+                    setCustomQuantity(e.target.value)
+                  }}
+                  placeholder="Enter quantity"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-khc-primary text-sm"
                 />
                 {errors.quantity && (
@@ -521,7 +527,10 @@ export default function UnifiedAddLineItemModal({
                 <input
                   type="text"
                   value={customUnit}
-                  onChange={(e) => setCustomUnit(e.target.value)}
+                  onChange={(e) => {
+                    console.log('Unit changed:', e.target.value)
+                    setCustomUnit(e.target.value)
+                  }}
                   placeholder="e.g., m2, sqm, item"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-khc-primary text-sm"
                 />
