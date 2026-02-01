@@ -188,7 +188,7 @@ export default function UnifiedAddLineItemModal({
         setActiveTab('custom')
       }
     }
-  }, [initialNRM2Code, initialNRM2WorkSectionId, initialNRM2Title, initialNRM2Unit, isOpen, toast])
+  }, [initialNRM2Code, initialNRM2WorkSectionId, initialNRM2Title, initialNRM2Unit, isOpen])
 
   const resetForm = () => {
     setSelectedItemId(null)
