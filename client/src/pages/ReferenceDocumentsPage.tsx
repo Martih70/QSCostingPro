@@ -124,15 +124,28 @@ const ReferenceDocumentsPage: React.FC = () => {
           {/* Documents List */}
           <div className="lg:col-span-2">
             {isLoading ? (
-              <div className="text-center py-12">
+              <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
                 <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
                 <p className="text-gray-600 mt-4">Loading documents...</p>
+              </div>
+            ) : error ? (
+              <div className="text-center py-12 bg-white rounded-lg border border-red-200 bg-red-50">
+                <div className="text-4xl mx-auto">⚠️</div>
+                <p className="text-red-600 mt-4 font-medium">Failed to load documents</p>
+                <p className="text-red-600 text-sm mt-2">{error}</p>
+                <button
+                  onClick={() => fetchDocuments()}
+                  className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                >
+                  Try Again
+                </button>
               </div>
             ) : documents.length === 0 ? (
               <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
                 <div className="text-6xl text-gray-400 mx-auto">📋</div>
-                <p className="text-gray-600 mt-4">No documents uploaded yet</p>
-                <p className="text-gray-500 text-sm mt-2">Upload PDFs or images to build your reference library</p>
+                <p className="text-gray-700 mt-4 font-semibold">No documents uploaded yet</p>
+                <p className="text-gray-600 text-sm mt-2">Upload NRM 2 PDF or reference documents using the button above</p>
+                <p className="text-gray-500 text-xs mt-3">Supported formats: PDF, PNG, JPG (max 50MB)</p>
               </div>
             ) : (
               <div className="space-y-3">
@@ -223,8 +236,10 @@ const ReferenceDocumentsPage: React.FC = () => {
                 </div>
               </div>
             ) : (
-              <div className="bg-white rounded-lg border border-gray-200 p-6 text-center text-gray-500">
-                <p>Select a document to preview</p>
+              <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
+                <div className="text-4xl text-gray-400 mx-auto mb-3">👀</div>
+                <p className="text-gray-600 font-medium">Select a document to preview</p>
+                <p className="text-gray-500 text-sm mt-2">Choose a document from the list to view it here</p>
               </div>
             )}
           </div>
