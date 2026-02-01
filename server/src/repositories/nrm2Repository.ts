@@ -61,7 +61,7 @@ export class NRM2Repository {
   constructor(private db: Database) {}
 
   /**
-   * Get all top-level groups
+   * Get all top-level groups with full hierarchy
    */
   getAllGroups(): NRM2Group[] {
     const stmt = this.db.prepare(`
@@ -69,7 +69,14 @@ export class NRM2Repository {
       FROM nrm2_groups
       ORDER BY sort_order ASC, code ASC
     `);
-    return stmt.all() as NRM2Group[];
+    const groups = stmt.all() as NRM2Group[];
+
+    // Load all elements for each group
+    groups.forEach((group) => {
+      group.elements = this.getElementsByGroupId(group.id);
+    });
+
+    return groups;
   }
 
   /**
@@ -91,7 +98,7 @@ export class NRM2Repository {
   }
 
   /**
-   * Get all elements for a group
+   * Get all elements for a group with full sub-hierarchy
    */
   getElementsByGroupId(groupId: number): NRM2Element[] {
     const stmt = this.db.prepare(`
@@ -100,7 +107,18 @@ export class NRM2Repository {
       WHERE group_id = ?
       ORDER BY sort_order ASC, code ASC
     `);
-    return stmt.all(groupId) as NRM2Element[];
+    const elements = stmt.all(groupId) as NRM2Element[];
+
+    // Load sub-elements and work-sections for each element
+    elements.forEach((element) => {
+      element.sub_elements = this.getSubElementsByElementId(element.id);
+      // Also load work sections for each sub-element
+      element.sub_elements?.forEach((subElement) => {
+        subElement.work_sections = this.getWorkSectionsBySubElementId(subElement.id);
+      });
+    });
+
+    return elements;
   }
 
   /**

@@ -3,7 +3,7 @@ export class NRM2Repository {
         this.db = db;
     }
     /**
-     * Get all top-level groups
+     * Get all top-level groups with full hierarchy
      */
     getAllGroups() {
         const stmt = this.db.prepare(`
@@ -11,7 +11,12 @@ export class NRM2Repository {
       FROM nrm2_groups
       ORDER BY sort_order ASC, code ASC
     `);
-        return stmt.all();
+        const groups = stmt.all();
+        // Load all elements for each group
+        groups.forEach((group) => {
+            group.elements = this.getElementsByGroupId(group.id);
+        });
+        return groups;
     }
     /**
      * Get a group with all its elements
@@ -30,7 +35,7 @@ export class NRM2Repository {
         return group;
     }
     /**
-     * Get all elements for a group
+     * Get all elements for a group with full sub-hierarchy
      */
     getElementsByGroupId(groupId) {
         const stmt = this.db.prepare(`
@@ -39,7 +44,16 @@ export class NRM2Repository {
       WHERE group_id = ?
       ORDER BY sort_order ASC, code ASC
     `);
-        return stmt.all(groupId);
+        const elements = stmt.all(groupId);
+        // Load sub-elements and work-sections for each element
+        elements.forEach((element) => {
+            element.sub_elements = this.getSubElementsByElementId(element.id);
+            // Also load work sections for each sub-element
+            element.sub_elements?.forEach((subElement) => {
+                subElement.work_sections = this.getWorkSectionsBySubElementId(subElement.id);
+            });
+        });
+        return elements;
     }
     /**
      * Get an element with all its sub-elements

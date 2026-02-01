@@ -1979,3 +1979,124 @@
 2026-02-01 19:15:42:1542 info: Environment: development
 2026-02-01 19:15:42:1542 info: Frontend URL: http://localhost:5173
 2026-02-01 19:15:42:1542 info: Press Ctrl+C to stop
+2026-02-01 19:17:43:1743 info: Password reset requested for non-existent email: admin@example.com
+2026-02-01 19:17:43:1743 info: Password reset requested for: admin@example.com
+2026-02-01 19:21:35:2135 info: User logged in: admin
+2026-02-01 19:21:35:2135 info: User logged in: admin
+2026-02-01 19:23:44:2344 info: User logged in: admin
+2026-02-01 19:23:44:2344 info: User logged in: admin
+2026-02-01 19:26:15:2615 error: Error fetching templates: RangeError: Too many parameter values were provided
+2026-02-01 19:26:15:2615 error: Error fetching templates: Too many parameter values were provided
+2026-02-01 19:29:27:2927 info: Database connection closed
+2026-02-01 19:29:39:2939 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 19:29:39:2939 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 19:29:39:2939 info: Starting KHConstruct server...
+2026-02-01 19:29:39:2939 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 19:29:39:2939 info: Database initialized
+2026-02-01 19:29:39:2939 info: Running migration: 001_initial_schema.sql
+2026-02-01 19:29:39:2939 info: ✓ Migration completed: 001_initial_schema.sql
+2026-02-01 19:29:39:2939 info: Running migration: 002_add_multi_tenant_fields.sql
+2026-02-01 19:29:39:2939 info: ✓ Migration completed: 002_add_multi_tenant_fields.sql
+2026-02-01 19:29:39:2939 info: Running migration: 003_qscosting_pro_refactor.sql
+2026-02-01 19:29:39:2939 info: ✓ Migration completed: 003_qscosting_pro_refactor.sql
+2026-02-01 19:29:39:2939 info: Running migration: 004_update_projects_schema.sql
+2026-02-01 19:29:39:2939 info: ✓ Migration completed: 004_update_projects_schema.sql
+2026-02-01 19:29:39:2939 info: Running migration: 005_add_project_address_contractor.sql
+2026-02-01 19:29:39:2939 info: ✓ Migration completed: 005_add_project_address_contractor.sql
+2026-02-01 19:29:39:2939 info: Running migration: 006_make_location_nullable.sql
+2026-02-01 19:29:39:2939 info: ✓ Migration completed: 006_make_location_nullable.sql
+2026-02-01 19:29:39:2939 info: Running migration: 007_add_spons_database_type.sql
+2026-02-01 19:29:39:2939 info: ✓ Migration completed: 007_add_spons_database_type.sql
+2026-02-01 19:29:39:2939 info: Running migration: 008_add_custom_line_items.sql
+2026-02-01 19:29:39:2939 info: ✓ Migration completed: 008_add_custom_line_items.sql
+2026-02-01 19:29:39:2939 info: Running migration: 009_add_estimate_templates.sql
+2026-02-01 19:29:39:2939 info: ✓ Migration completed: 009_add_estimate_templates.sql
+2026-02-01 19:29:39:2939 info: Running migration: 010_add_nrm2_structure.sql
+2026-02-01 19:29:39:2939 info: ✓ Migration completed: 010_add_nrm2_structure.sql
+2026-02-01 19:29:39:2939 info: Running migration: 011_add_nrm2_to_project_estimates.sql
+2026-02-01 19:29:39:2939 info: ✓ Migration completed: 011_add_nrm2_to_project_estimates.sql
+2026-02-01 19:29:39:2939 info: Running migration: 012_add_password_reset.sql
+2026-02-01 19:29:39:2939 info: ✓ Migration completed: 012_add_password_reset.sql
+2026-02-01 19:29:39:2939 info: All migrations completed successfully
+2026-02-01 19:29:39:2939 info: Database migrations completed
+2026-02-01 19:29:39:2939 info: Starting database seeding...
+2026-02-01 19:29:39:2939 info: ✓ Seeded 4 units
+2026-02-01 19:29:39:2939 info: ✓ Seeded 7 cost categories
+2026-02-01 19:29:39:2939 info: ✓ Seeded 13 sub-elements
+2026-02-01 19:29:39:2939 info: ✓ Seeded 13 witness cost items
+2026-02-01 19:29:39:2939 info: ✓ Seeded 12 Standard UK cost items
+2026-02-01 19:29:39:2939 info: ✓ Seeded 11 BCIS Elements
+2026-02-01 19:29:39:2939 info: ✓ Seeded 26 BCIS Sub-Elements
+2026-02-01 19:29:39:2939 info: ✓ Seeded 39 BCIS Cost Items
+2026-02-01 19:29:39:2939 info: ✓ BCIS Database seeding completed successfully
+2026-02-01 19:29:39:2939 info: ✓ Seeded 84 Spons detailed cost items
+2026-02-01 19:29:39:2939 info: Seeding NRM 2 data...
+2026-02-01 19:29:39:2939 info: ✓ NRM 2 seeding completed:
+2026-02-01 19:29:39:2939 info:   - Groups: 8
+2026-02-01 19:29:39:2939 info:   - Elements: 25
+2026-02-01 19:29:39:2939 info:   - Sub-elements: 56
+2026-02-01 19:29:39:2939 info:   - Work sections: 123
+2026-02-01 19:29:39:2939 info: ✓ Seeded admin user (username: admin, password: admin123456)
+2026-02-01 19:29:39:2939 info: ✓ Database seeding completed
+2026-02-01 19:29:39:2939 info: Database seeding completed
+2026-02-01 19:29:39:2939 info: ✓ Server running on http://localhost:3000
+2026-02-01 19:29:39:2939 info: Environment: development
+2026-02-01 19:29:39:2939 info: Frontend URL: http://localhost:5173
+2026-02-01 19:29:39:2939 info: Press Ctrl+C to stop
+2026-02-01 19:30:07:307 info: Database connection closed
+2026-02-01 19:30:08:308 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 19:30:08:308 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 19:30:08:308 info: Starting KHConstruct server...
+2026-02-01 19:30:08:308 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 19:30:08:308 info: Database initialized
+2026-02-01 19:30:08:308 info: All migrations completed successfully
+2026-02-01 19:30:08:308 info: Database migrations completed
+2026-02-01 19:30:08:308 info: Starting database seeding...
+2026-02-01 19:30:08:308 info: ✓ Standard UK costs already seeded
+2026-02-01 19:30:08:308 info: ✓ BCIS database already seeded
+2026-02-01 19:30:08:308 info: ✓ Spons database already seeded
+2026-02-01 19:30:08:308 info: ✓ NRM 2 data already seeded, skipping
+2026-02-01 19:30:08:308 info: ✓ Database seeding completed
+2026-02-01 19:30:08:308 info: Database seeding completed
+2026-02-01 19:30:08:308 info: ✓ Server running on http://localhost:3000
+2026-02-01 19:30:08:308 info: Environment: development
+2026-02-01 19:30:08:308 info: Frontend URL: http://localhost:5173
+2026-02-01 19:30:08:308 info: Press Ctrl+C to stop
+2026-02-01 19:30:14:3014 info: Database connection closed
+2026-02-01 19:30:14:3014 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 19:30:14:3014 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 19:30:14:3014 info: Starting KHConstruct server...
+2026-02-01 19:30:14:3014 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 19:30:14:3014 info: Database initialized
+2026-02-01 19:30:14:3014 info: All migrations completed successfully
+2026-02-01 19:30:14:3014 info: Database migrations completed
+2026-02-01 19:30:14:3014 info: Starting database seeding...
+2026-02-01 19:30:14:3014 info: ✓ Standard UK costs already seeded
+2026-02-01 19:30:14:3014 info: ✓ BCIS database already seeded
+2026-02-01 19:30:14:3014 info: ✓ Spons database already seeded
+2026-02-01 19:30:14:3014 info: ✓ NRM 2 data already seeded, skipping
+2026-02-01 19:30:14:3014 info: ✓ Database seeding completed
+2026-02-01 19:30:14:3014 info: Database seeding completed
+2026-02-01 19:30:14:3014 info: ✓ Server running on http://localhost:3000
+2026-02-01 19:30:14:3014 info: Environment: development
+2026-02-01 19:30:14:3014 info: Frontend URL: http://localhost:5173
+2026-02-01 19:30:14:3014 info: Press Ctrl+C to stop
+2026-02-01 19:30:42:3042 info: Database connection closed
+2026-02-01 19:30:45:3045 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 19:30:45:3045 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 19:30:45:3045 info: Starting KHConstruct server...
+2026-02-01 19:30:45:3045 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 19:30:45:3045 info: Database initialized
+2026-02-01 19:30:45:3045 info: All migrations completed successfully
+2026-02-01 19:30:45:3045 info: Database migrations completed
+2026-02-01 19:30:45:3045 info: Starting database seeding...
+2026-02-01 19:30:45:3045 info: ✓ Standard UK costs already seeded
+2026-02-01 19:30:45:3045 info: ✓ BCIS database already seeded
+2026-02-01 19:30:45:3045 info: ✓ Spons database already seeded
+2026-02-01 19:30:45:3045 info: ✓ NRM 2 data already seeded, skipping
+2026-02-01 19:30:45:3045 info: ✓ Database seeding completed
+2026-02-01 19:30:45:3045 info: Database seeding completed
+2026-02-01 19:30:45:3045 info: ✓ Server running on http://localhost:3000
+2026-02-01 19:30:45:3045 info: Environment: development
+2026-02-01 19:30:45:3045 info: Frontend URL: http://localhost:5173
+2026-02-01 19:30:45:3045 info: Press Ctrl+C to stop

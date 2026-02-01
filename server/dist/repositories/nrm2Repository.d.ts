@@ -55,7 +55,7 @@ export declare class NRM2Repository {
     private db;
     constructor(db: Database);
     /**
-     * Get all top-level groups
+     * Get all top-level groups with full hierarchy
      */
     getAllGroups(): NRM2Group[];
     /**
@@ -63,7 +63,7 @@ export declare class NRM2Repository {
      */
     getGroupById(id: number): NRM2Group | null;
     /**
-     * Get all elements for a group
+     * Get all elements for a group with full sub-hierarchy
      */
     getElementsByGroupId(groupId: number): NRM2Element[];
     /**
