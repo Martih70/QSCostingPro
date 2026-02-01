@@ -15,11 +15,17 @@ const ReferenceDocumentsPage: React.FC = () => {
     try {
       setIsLoading(true);
       setError(null);
+      console.log('Fetching documents...');
       const response = await referencesAPI.getAll(selectedCategory || undefined);
-      setDocuments(response.data);
-    } catch (err) {
-      setError('Failed to load documents');
-      console.error(err);
+      console.log('Documents API response:', response);
+      // API returns {success, data: [...], count}
+      const docs = response.data?.data || [];
+      console.log('Documents array:', docs);
+      setDocuments(Array.isArray(docs) ? docs : []);
+    } catch (err: any) {
+      console.error('Error fetching documents:', err);
+      const errorMsg = err?.response?.data?.error || err?.message || 'Failed to load documents';
+      setError(errorMsg);
     } finally {
       setIsLoading(false);
     }
@@ -80,6 +86,8 @@ const ReferenceDocumentsPage: React.FC = () => {
       day: 'numeric',
     });
   };
+
+  console.log('ReferenceDocumentsPage rendered - state:', { isLoading, error, documentsCount: documents.length });
 
   return (
     <div className="min-h-screen bg-gray-50">
