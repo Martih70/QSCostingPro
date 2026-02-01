@@ -1,12 +1,16 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 import { config } from './config/index.js';
 import { initializeDatabase } from './database/connection.js';
 import { runMigrations } from './database/migrations.js';
 import { runSeeds } from './database/seeds.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
 import authRoutes from './routes/v1/auth.js';
+import passwordResetRoutes from './routes/v1/passwordReset.js';
 import clientsRoutes from './routes/v1/clients.js';
 import contractorsRoutes from './routes/v1/contractors.js';
 import costCategoriesRoutes from './routes/v1/costCategories.js';
@@ -17,6 +21,8 @@ import projectsRoutes from './routes/v1/projects.js';
 import projectEstimatesRoutes from './routes/v1/projectEstimates.js';
 import estimateTemplatesRoutes from './routes/v1/estimateTemplates.js';
 import bcisRoutes from './routes/v1/bcis.js';
+import nrm2Routes from './routes/v1/nrm2.js';
+import referencesRoutes from './routes/v1/references.js';
 import logger from './utils/logger.js';
 dotenv.config();
 const app = express();
@@ -58,6 +64,7 @@ app.get('/api/v1/health', (_req, res) => {
 });
 // API Routes v1
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/password-reset', passwordResetRoutes);
 app.use('/api/v1/clients', clientsRoutes);
 app.use('/api/v1/contractors', contractorsRoutes);
 app.use('/api/v1/cost-categories', costCategoriesRoutes);
@@ -68,6 +75,36 @@ app.use('/api/v1/projects', projectsRoutes);
 app.use('/api/v1/projects', projectEstimatesRoutes);
 app.use('/api/v1/estimate-templates', estimateTemplatesRoutes);
 app.use('/api/v1/bcis', bcisRoutes);
+app.use('/api/v1/nrm2', nrm2Routes);
+app.use('/api/v1/references', referencesRoutes);
+// Serve static files
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const clientDistPath = path.join(__dirname, '../../client/dist');
+const uploadsPath = path.join(__dirname, '../uploads');
+console.log('Uploads path:', uploadsPath);
+console.log('Uploads path exists:', fs.existsSync(uploadsPath));
+// Serve uploaded files (PDFs, images, etc.)
+app.use('/uploads', express.static(uploadsPath, {
+    setHeaders: (res) => {
+        res.setHeader('Cache-Control', 'no-cache');
+    }
+}));
+// Serve client build
+app.use(express.static(clientDistPath));
+// SPA fallback: serve index.html for non-API routes
+app.get('*', (req, res) => {
+    // Don't redirect API calls
+    if (!req.path.startsWith('/api')) {
+        res.sendFile(path.join(clientDistPath, 'index.html'));
+    }
+    else {
+        res.status(404).json({
+            success: false,
+            error: 'Route not found',
+            path: req.path,
+        });
+    }
+});
 // 404 handler
 app.use((req, res) => {
     logger.warn(`Route not found: ${req.method} ${req.path}`);

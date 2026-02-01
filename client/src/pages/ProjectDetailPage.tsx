@@ -6,6 +6,8 @@ import { useEstimatesStore } from '../stores/estimatesStore'
 import { useRecentlyViewed } from '../hooks/useRecentlyViewed'
 import BackButton from '../components/ui/BackButton'
 import ExportPDFButton from '../components/estimates/ExportPDFButton'
+import BudgetTracker from '../components/projects/BudgetTracker'
+import ProjectNotesPanel from '../components/projects/ProjectNotesPanel'
 import { useToast } from '../components/ui/ToastContainer'
 import { handleApiError, logError } from '../utils/errorHandler'
 
@@ -25,6 +27,7 @@ export default function ProjectDetailPage() {
   const [showApprovalModal, setShowApprovalModal] = useState(false)
   const [showRejectionModal, setShowRejectionModal] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [projectNotes, setProjectNotes] = useState<any[]>([])
 
   useEffect(() => {
     if (projectId) {
@@ -96,6 +99,22 @@ export default function ProjectDetailPage() {
       toast.error(handleApiError(error))
       setSubmitting(false)
     }
+  }
+
+  const handleAddNote = async (content: string) => {
+    const newNote = {
+      id: Date.now().toString(),
+      author: user?.username || 'Unknown',
+      content,
+      createdAt: new Date().toISOString(),
+    }
+    setProjectNotes([newNote, ...projectNotes])
+    toast.success('Note added successfully')
+  }
+
+  const handleDeleteNote = async (noteId: string) => {
+    setProjectNotes(projectNotes.filter(note => note.id !== noteId))
+    toast.success('Note deleted successfully')
   }
 
   const isLoading = projectLoading || estimatesLoading
@@ -188,6 +207,18 @@ export default function ProjectDetailPage() {
           </div>
         )}
       </div>
+
+      {/* Budget Tracker */}
+      {currentProject.budget_cost && estimateTotals && (
+        <div className="bg-white rounded-lg shadow p-6">
+          <h3 className="text-lg font-semibold text-khc-primary mb-4">Budget Overview</h3>
+          <BudgetTracker
+            budgetCost={currentProject.budget_cost}
+            actualCost={estimateTotals.grand_total}
+            contingencyAmount={estimateTotals.contingency_amount}
+          />
+        </div>
+      )}
 
       {/* Project Description */}
       {currentProject.description && (
@@ -315,6 +346,14 @@ export default function ProjectDetailPage() {
           </div>
         </div>
       )}
+
+      {/* Project Notes */}
+      <ProjectNotesPanel
+        projectId={projectId}
+        notes={projectNotes}
+        onAddNote={handleAddNote}
+        onDeleteNote={handleDeleteNote}
+      />
 
       {/* Approval Modal */}
       {showApprovalModal && (

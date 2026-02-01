@@ -29,6 +29,12 @@ export interface ProjectEstimate {
     created_at: string;
     version_number: number;
     is_active: boolean;
+    custom_description?: string | null;
+    custom_unit_rate?: number | null;
+    custom_unit?: string | null;
+    category_id?: number | null;
+    nrm2_work_section_id?: number | null;
+    nrm2_code?: string | null;
 }
 export interface ProjectAttachment {
     id: number;
@@ -85,6 +91,8 @@ export declare const projectEstimatesRepository: {
         custom_unit_rate?: number;
         custom_unit?: string;
         category_id?: number;
+        nrm2_work_section_id?: number;
+        nrm2_code?: string;
     }) => ProjectEstimate;
     update: (id: number, data: {
         quantity?: number;

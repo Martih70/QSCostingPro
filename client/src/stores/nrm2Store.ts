@@ -15,6 +15,7 @@ interface NRM2StoreState {
   currentElement: NRM2Element | null;
   currentSubElement: NRM2SubElement | null;
   currentWorkSection: NRM2WorkSection | null;
+  pendingWorkSection: NRM2WorkSection | null;
   searchResults: NRM2SearchResult[];
   statistics: NRM2Statistics | null;
 
@@ -37,6 +38,7 @@ interface NRM2StoreState {
   setCurrentElement: (element: NRM2Element | null) => void;
   setCurrentSubElement: (subElement: NRM2SubElement | null) => void;
   setCurrentWorkSection: (workSection: NRM2WorkSection | null) => void;
+  setPendingWorkSection: (workSection: NRM2WorkSection | null) => void;
   fetchStatistics: () => Promise<void>;
 }
 
@@ -47,6 +49,7 @@ export const useNRM2Store = create<NRM2StoreState>((set) => ({
   currentElement: null,
   currentSubElement: null,
   currentWorkSection: null,
+  pendingWorkSection: null,
   searchResults: [],
   statistics: null,
   isLoading: false,
@@ -185,6 +188,10 @@ export const useNRM2Store = create<NRM2StoreState>((set) => ({
 
   setCurrentWorkSection: (workSection: NRM2WorkSection | null) => {
     set({ currentWorkSection: workSection });
+  },
+
+  setPendingWorkSection: (workSection: NRM2WorkSection | null) => {
+    set({ pendingWorkSection: workSection });
   },
 
   fetchStatistics: async () => {

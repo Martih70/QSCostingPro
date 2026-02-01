@@ -139,3 +139,20 @@
 2026-01-31 13:07:30:730 error: Error calculating estimate summary: no such column: estimate_id
 2026-01-31 13:21:59:2159 error: Error fetching templates: RangeError: Too many parameter values were provided
 2026-01-31 13:21:59:2159 error: Error fetching templates: Too many parameter values were provided
+2026-02-01 12:41:39:4139 error: Error fetching templates: RangeError: Too many parameter values were provided
+2026-02-01 12:41:39:4139 error: Error fetching templates: Too many parameter values were provided
+2026-02-01 16:00:02:02 error: Login failed: Error: Invalid username or password
+2026-02-01 19:10:57:1057 error: Login failed: Error: Invalid username or password
+2026-02-01 19:13:52:1352 error: Registration error: [
+  {
+    "code": "too_small",
+    "minimum": 8,
+    "type": "string",
+    "inclusive": true,
+    "exact": false,
+    "message": "String must contain at least 8 character(s)",
+    "path": [
+      "password"
+    ]
+  }
+]

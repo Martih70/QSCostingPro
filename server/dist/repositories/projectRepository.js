@@ -237,10 +237,11 @@ export const projectEstimatesRepository = {
         INSERT INTO project_estimates (
           project_id, cost_item_id, quantity, unit_cost_override,
           notes, line_total, created_by, version_number, is_active,
-          custom_description, custom_unit_rate, custom_unit, category_id
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          custom_description, custom_unit_rate, custom_unit, category_id,
+          nrm2_work_section_id, nrm2_code
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `);
-            const result = stmt.run(data.project_id, data.cost_item_id || null, data.quantity, data.unit_cost_override || null, data.notes || null, data.line_total || null, data.created_by, 1, 1, data.custom_description || null, data.custom_unit_rate || null, data.custom_unit || null, data.category_id || null);
+            const result = stmt.run(data.project_id, data.cost_item_id || null, data.quantity, data.unit_cost_override || null, data.notes || null, data.line_total || null, data.created_by, 1, 1, data.custom_description || null, data.custom_unit_rate || null, data.custom_unit || null, data.category_id || null, data.nrm2_work_section_id || null, data.nrm2_code || null);
             const created = projectEstimatesRepository.getById(result.lastInsertRowid);
             if (!created)
                 throw new Error('Failed to create estimate');

@@ -10,6 +10,7 @@ import { runMigrations } from './database/migrations.js';
 import { runSeeds } from './database/seeds.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
 import authRoutes from './routes/v1/auth.js';
+import passwordResetRoutes from './routes/v1/passwordReset.js';
 import clientsRoutes from './routes/v1/clients.js';
 import contractorsRoutes from './routes/v1/contractors.js';
 import costCategoriesRoutes from './routes/v1/costCategories.js';
@@ -73,6 +74,7 @@ app.get('/api/v1/health', (_req: Request, res: Response) => {
 
 // API Routes v1
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/password-reset', passwordResetRoutes);
 app.use('/api/v1/clients', clientsRoutes);
 app.use('/api/v1/contractors', contractorsRoutes);
 app.use('/api/v1/cost-categories', costCategoriesRoutes);

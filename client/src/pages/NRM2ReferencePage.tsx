@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import NRM2TreeView from '../components/nrm2/NRM2TreeView.js';
 import NRM2DetailPanel from '../components/nrm2/NRM2DetailPanel.js';
 import { useNRM2Store } from '../stores/nrm2Store.js';
 import type { NRM2WorkSection, NRM2SearchResult } from '../types/nrm2.js';
 
 const NRM2ReferencePage: React.FC = () => {
+  const navigate = useNavigate();
   const {
     groups,
     searchResults,
@@ -17,6 +19,7 @@ const NRM2ReferencePage: React.FC = () => {
     searchNRM2,
     clearSearch,
     setCurrentWorkSection,
+    setPendingWorkSection,
   } = useNRM2Store();
 
   const [selectedWorkSection, setSelectedWorkSection] = useState<NRM2WorkSection | null>(null);
@@ -59,10 +62,12 @@ const NRM2ReferencePage: React.FC = () => {
   };
 
   const handleUseInEstimate = (code: string, title: string, unit?: string) => {
-    // This could trigger opening cost item creation modal
-    // For now, we'll just log it
-    console.log('Use in estimate:', { code, title, unit });
-    // In full implementation, emit event or use store to handle this
+    if (selectedWorkSection) {
+      // Store the work section for use in estimate creation
+      setPendingWorkSection(selectedWorkSection);
+      // Navigate to projects page with indication to create estimate
+      navigate('/projects');
+    }
   };
 
   return (

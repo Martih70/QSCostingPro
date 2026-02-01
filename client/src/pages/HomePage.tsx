@@ -98,9 +98,9 @@ export default function HomePage() {
   const benefits = [
     {
       icon: '📋',
-      title: 'Cost Database',
+      title: 'NRM 2 Database',
       description:
-        'Access comprehensive cost data with regional variations, elemental breakdowns, and specialist pricing. Always up-to-date with market rates.',
+        'Standard measurement rules to simplify and normalise cost assembly',
     },
     {
       icon: '👥',
@@ -181,10 +181,10 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-              Cost Estimation for QS's & SME Contractors
+              Construction Costing Made Easy
             </h1>
             <p className="text-lg text-khc-light mb-8 max-w-3xl mx-auto">
-              All-in-one platform with built-in cost database<br /><span className="block mt-2">all from £19/month</span>
+              All-in-one cost-estimate and management platform from just £19/month
             </p>
             <div className="flex gap-4 justify-center">
               <Link
