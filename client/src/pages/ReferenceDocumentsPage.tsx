@@ -135,9 +135,9 @@ const ReferenceDocumentsPage: React.FC = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Documents List */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-1">
             {isLoading ? (
               <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
                 <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
@@ -206,7 +206,7 @@ const ReferenceDocumentsPage: React.FC = () => {
           </div>
 
           {/* Document Viewer */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-3">
             {selectedDocument ? (
               <div className="sticky top-24 bg-white rounded-lg border border-gray-200 overflow-hidden flex flex-col h-screen max-h-[calc(100vh-120px)]">
                 {/* Header */}
