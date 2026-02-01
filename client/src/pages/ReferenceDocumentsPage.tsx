@@ -47,11 +47,15 @@ const ReferenceDocumentsPage: React.FC = () => {
     try {
       setIsUploading(true);
       setUploadError(null);
-      await referencesAPI.upload(formData);
+      console.log('Starting upload...');
+      const response = await referencesAPI.upload(formData);
+      console.log('Upload response:', response);
       await fetchDocuments();
-    } catch (err) {
-      setUploadError('Failed to upload document');
-      console.error(err);
+      console.log('Documents refreshed after upload');
+    } catch (err: any) {
+      console.error('Upload error:', err);
+      const errorMsg = err?.response?.data?.error || err?.message || 'Failed to upload document';
+      setUploadError(errorMsg);
     } finally {
       setIsUploading(false);
     }

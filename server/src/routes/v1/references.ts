@@ -24,12 +24,12 @@ router.post('/upload', verifyAuth, authorize('admin', 'estimator'), uploadRefere
     }
 
     const { description, category } = req.body;
-    const userId = (req as any).user?.id;
+    const userId = (req as any).user?.userId;
 
     if (!userId) {
       res.status(401).json({
         success: false,
-        error: 'User ID not found'
+        error: 'User ID not found in token'
       });
       return;
     }
