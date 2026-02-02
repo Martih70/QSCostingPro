@@ -135,9 +135,6 @@ export default function LineItemsTable({
               <th className="px-4 py-3 text-center font-semibold text-gray-700">NRM2</th>
               <th className="px-4 py-3 text-right font-semibold text-gray-700">Qty</th>
               <th className="px-4 py-3 text-center font-semibold text-gray-700">Unit</th>
-              <th className="px-4 py-3 text-left font-semibold text-gray-700">Component</th>
-              <th className="px-4 py-3 text-right font-semibold text-gray-700">Unit Rate</th>
-              <th className="px-4 py-3 text-right font-semibold text-gray-700">Waste</th>
               <th className="px-4 py-3 text-right font-semibold text-gray-700">Total</th>
               <th className="px-4 py-3 text-center font-semibold text-gray-700">Actions</th>
             </tr>
@@ -147,7 +144,7 @@ export default function LineItemsTable({
               <React.Fragment key={element.bcis_code}>
                 {/* BCIS Element Header Row */}
                 <tr className="bg-khc-light border-b">
-                  <td colSpan={10} className="px-4 py-3">
+                  <td colSpan={7} className="px-4 py-3">
                     <p className="font-bold text-khc-primary text-sm">
                       {element.bcis_code}. {element.bcis_name}
                     </p>
@@ -194,7 +191,7 @@ export default function LineItemsTable({
                           )}
                         </td>
                         <td className="px-4 py-3 text-center text-gray-600">{item.unit}</td>
-                        <td colSpan={4} className="px-4 py-3 text-right font-bold text-khc-primary">
+                        <td className="px-4 py-3 text-right font-bold text-khc-primary">
                           £{item.subtotal.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
                         </td>
                         <td className="px-4 py-3 text-center">
@@ -362,7 +359,7 @@ export default function LineItemsTable({
                           {/* Add Component Buttons */}
                           {isExpanded && (
                             <tr className="bg-blue-50 border-b">
-                              <td colSpan={10} className="px-8 py-2">
+                              <td colSpan={7} className="px-8 py-2">
                                 <div className="flex gap-2">
                                   {!item.components.material && (
                                     <button
@@ -415,7 +412,7 @@ export default function LineItemsTable({
 
                 {/* Element Subtotal */}
                 <tr className="bg-khc-light border-b font-semibold">
-                  <td colSpan={8} className="px-4 py-3 text-right text-gray-700">
+                  <td colSpan={5} className="px-4 py-3 text-right text-gray-700">
                     {element.bcis_name} SUBTOTAL:
                   </td>
                   <td className="px-4 py-3 text-right font-bold text-khc-primary">
