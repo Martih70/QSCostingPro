@@ -15,6 +15,7 @@ import { useToast } from '../components/ui/ToastContainer'
 import { handleApiError, logError } from '../utils/errorHandler'
 import BOQBrowserModal from '../components/boq/BOQBrowserModal'
 import type { EstimateTemplate } from '../types/estimateTemplate'
+import type { BCISGroupedEstimates } from '../types/estimate'
 
 interface CostItem {
   id: number
@@ -65,6 +66,7 @@ export default function ProjectEstimatesPage() {
   const [submitting, setSubmitting] = useState(false)
   const [dismissedError, setDismissedError] = useState(false)
   const [templateLoading, setTemplateLoading] = useState(false)
+  const [bcisGroupedData, setBcisGroupedData] = useState<BCISGroupedEstimates | null>(null)
 
   // Fetch project and estimates
   useEffect(() => {
@@ -74,8 +76,26 @@ export default function ProjectEstimatesPage() {
       fetchCostItems()
       fetchUnits()
       fetchCategories()
+      fetchBCISGroupedData()
     }
   }, [projectId, fetchProjectById, fetchEstimates])
+
+  // Fetch BCIS grouped estimates
+  const fetchBCISGroupedData = async () => {
+    try {
+      const response = await fetch(`/api/v1/projects/${projectId}/estimates/by-bcis-element`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      if (response.ok) {
+        const data = await response.json()
+        setBcisGroupedData(data.data)
+      }
+    } catch (err) {
+      console.error('Failed to fetch BCIS grouped data:', err)
+    }
+  }
 
   // Fetch cost items from backend
   const fetchCostItems = async () => {
@@ -287,9 +307,6 @@ export default function ProjectEstimatesPage() {
     return <div className="text-center py-12">Project not found</div>
   }
 
-  // Group estimates by category
-  const estimatesByCategory = estimateTotals?.categories || []
-
   return (
     <div className="space-y-6">
       {/* Back Button */}
@@ -393,7 +410,7 @@ export default function ProjectEstimatesPage() {
 
       {/* Line Items Section */}
       <LineItemsTable
-        categories={estimatesByCategory}
+        data={bcisGroupedData}
         onUpdateQuantity={handleUpdateEstimate}
         onDeleteItem={handleDeleteEstimate}
         isLoading={estimatesLoading}

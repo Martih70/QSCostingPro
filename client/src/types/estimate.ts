@@ -106,3 +106,36 @@ export interface EstimateSummaryResponse {
     estimate: ProjectEstimateTotal
   }
 }
+
+// BCIS Element Grouping Types (for elemental BoQ output)
+export interface BCISElementItem {
+  id: number // estimate id
+  description: string
+  quantity: number
+  unit: string
+  rate: number
+  total: number
+  nrm2_code?: string
+  notes?: string
+}
+
+export interface BCISElementGroup {
+  bcis_code: string
+  bcis_name: string
+  sort_order: number
+  items: BCISElementItem[]
+  subtotal: number
+  item_count: number
+}
+
+export interface BCISGroupedEstimates {
+  project_id: number
+  elements: BCISElementGroup[]
+  total_items: number
+  grand_total: number
+}
+
+export interface BCISGroupedResponse {
+  success: boolean
+  data: BCISGroupedEstimates
+}

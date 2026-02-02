@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import React from 'react'
 
-import { CategoryTotal } from '../../types/estimate'
+import { BCISGroupedEstimates } from '../../types/estimate'
 
 interface LineItemsTableProps {
-  categories: CategoryTotal[]
+  data: BCISGroupedEstimates | null
   onUpdateQuantity: (estimateId: number, newQuantity: number) => Promise<void>
   onDeleteItem: (estimateId: number) => Promise<void>
   isLoading: boolean
@@ -12,7 +12,7 @@ interface LineItemsTableProps {
 }
 
 export default function LineItemsTable({
-  categories,
+  data,
   onUpdateQuantity,
   onDeleteItem,
   isLoading,
@@ -85,18 +85,20 @@ export default function LineItemsTable({
             </tr>
           </thead>
           <tbody>
-            {categories.map((category) => (
-              <React.Fragment key={category.category_id}>
-                {/* Category Header Row */}
+            {data?.elements.map((element) => (
+              <React.Fragment key={element.bcis_code}>
+                {/* BCIS Element Header Row */}
                 <tr className="bg-khc-light border-b hover:bg-opacity-75">
                   <td colSpan={7} className="px-6 py-3">
-                    <p className="font-semibold text-khc-primary text-sm">{category.category_name}</p>
+                    <p className="font-semibold text-khc-primary text-sm">
+                      {element.bcis_code}. {element.bcis_name}
+                    </p>
                   </td>
                 </tr>
 
                 {/* Line Items */}
-                {category.line_items.map((item, idx) => (
-                  <tr key={item.estimate_id} className="border-b hover:bg-gray-50 transition">
+                {element.items.map((item, idx) => (
+                  <tr key={item.id} className="border-b hover:bg-gray-50 transition">
                     <td className="px-6 py-4 text-sm text-gray-600 w-8">{idx + 1}</td>
                     <td className="px-6 py-4 text-sm">
                       <p className="font-medium text-gray-900">{item.description}</p>
@@ -111,7 +113,7 @@ export default function LineItemsTable({
                       )}
                     </td>
                     <td className="px-6 py-4 text-sm text-right">
-                      {editingId === item.estimate_id ? (
+                      {editingId === item.id ? (
                         <input
                           type="number"
                           step="0.01"
@@ -125,18 +127,18 @@ export default function LineItemsTable({
                         <span className="font-medium">{item.quantity}</span>
                       )}
                     </td>
-                    <td className="px-6 py-4 text-sm text-center text-gray-600">{item.unit_code}</td>
+                    <td className="px-6 py-4 text-sm text-center text-gray-600">{item.unit}</td>
                     <td className="px-6 py-4 text-sm text-right">
                       <span className="font-bold text-khc-primary">
-                        £{item.line_total.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
+                        £{item.total.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-sm">
                       <div className="flex gap-2 justify-center">
-                        {editingId === item.estimate_id ? (
+                        {editingId === item.id ? (
                           <>
                             <button
-                              onClick={() => handleSaveQuantity(item.estimate_id)}
+                              onClick={() => handleSaveQuantity(item.id)}
                               disabled={isSubmitting}
                               className="px-3 py-1 bg-khc-primary text-white text-xs rounded hover:bg-khc-secondary disabled:bg-gray-400"
                             >
@@ -153,7 +155,7 @@ export default function LineItemsTable({
                           <>
                             <button
                               onClick={() => {
-                                setEditingId(item.estimate_id)
+                                setEditingId(item.id)
                                 setEditQuantity(item.quantity.toString())
                               }}
                               className="text-khc-primary hover:text-khc-secondary text-xs hover:underline"
@@ -161,7 +163,7 @@ export default function LineItemsTable({
                               Edit
                             </button>
                             <button
-                              onClick={() => handleDeleteClick(item.estimate_id)}
+                              onClick={() => handleDeleteClick(item.id)}
                               disabled={isSubmitting}
                               className="text-red-600 hover:text-red-700 text-xs hover:underline disabled:text-gray-400"
                             >
@@ -174,13 +176,13 @@ export default function LineItemsTable({
                   </tr>
                 ))}
 
-                {/* Category Subtotal */}
+                {/* Element Subtotal */}
                 <tr className="bg-gray-50 border-b">
                   <td colSpan={5} className="px-6 py-3 text-right text-sm font-semibold text-gray-700">
-                    {category.category_name} Subtotal:
+                    {element.bcis_name} Subtotal:
                   </td>
                   <td className="px-6 py-3 text-right text-sm font-bold text-khc-primary">
-                    £{category.subtotal.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
+                    £{element.subtotal.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
                   </td>
                   <td></td>
                 </tr>
