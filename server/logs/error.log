@@ -172,3 +172,5 @@
 2026-02-02 11:28:19:2819 error: Error creating cost component: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
 2026-02-02 12:04:27:427 error: Login failed: Error: Invalid username or password
 2026-02-02 12:04:31:431 error: Login failed: Error: Invalid username or password
+2026-02-02 12:08:53:853 error: Error fetching templates: RangeError: Too many parameter values were provided
+2026-02-02 12:08:53:853 error: Error fetching templates: Too many parameter values were provided

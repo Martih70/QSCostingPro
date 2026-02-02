@@ -67,22 +67,26 @@ export default function ProjectEstimatesPage() {
   const [dismissedError, setDismissedError] = useState(false)
   const [templateLoading, setTemplateLoading] = useState(false)
   const [bcisGroupedData, setBcisGroupedData] = useState<BCISGroupedEstimates | null>(null)
+  const [bcisLoading, setBcisLoading] = useState(false)
 
   // Fetch project and estimates
   useEffect(() => {
     if (projectId) {
+      console.log('ProjectEstimatesPage: Loading data for project', projectId)
       fetchProjectById(projectId)
       fetchEstimates(projectId)
       fetchCostItems()
       fetchUnits()
       fetchCategories()
+      // BCIS data fetch (don't await, let it complete in background)
       fetchBCISGroupedData()
     }
-  }, [projectId, fetchProjectById, fetchEstimates])
+  }, [projectId])
 
   // Fetch BCIS grouped estimates
   const fetchBCISGroupedData = async () => {
     try {
+      setBcisLoading(true)
       const response = await fetch(`/api/v1/projects/${projectId}/estimates/by-bcis-element`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -90,6 +94,7 @@ export default function ProjectEstimatesPage() {
       })
       if (response.ok) {
         const data = await response.json()
+        console.log('BCIS data loaded:', data.data)
         setBcisGroupedData(data.data)
       } else {
         console.error('Failed to fetch BCIS grouped data: HTTP', response.status)
@@ -100,6 +105,8 @@ export default function ProjectEstimatesPage() {
     } catch (err) {
       console.error('Failed to fetch BCIS grouped data:', err)
       setBcisGroupedData(null)
+    } finally {
+      setBcisLoading(false)
     }
   }
 
@@ -533,6 +540,16 @@ export default function ProjectEstimatesPage() {
         showShared={true}
       />
 
+      {/* Debug Info - Remove this later */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="bg-gray-100 p-4 rounded text-xs text-gray-600 mb-4 font-mono">
+          <div>bcisLoading: {bcisLoading ? 'true' : 'false'}</div>
+          <div>bcisGroupedData: {bcisGroupedData ? `${bcisGroupedData.elements.length} elements` : 'null'}</div>
+          <div>isEmpty: {(!bcisGroupedData || bcisGroupedData.elements.length === 0) ? 'true' : 'false'}</div>
+          <div>estimates.length: {estimates.length}</div>
+        </div>
+      )}
+
       {/* Line Items Section */}
       <LineItemsTable
         data={bcisGroupedData}
@@ -541,8 +558,8 @@ export default function ProjectEstimatesPage() {
         onUpdateComponent={handleUpdateComponent}
         onAddComponent={handleAddComponent}
         onDeleteComponent={handleDeleteComponent}
-        isLoading={estimatesLoading}
-        isEmpty={estimates.length === 0}
+        isLoading={bcisLoading}
+        isEmpty={!bcisGroupedData || bcisGroupedData.elements.length === 0}
       />
 
 
