@@ -258,12 +258,13 @@ export default function LineItemsTable({
                           {componentEntries.length > 0 && (
                             <tr className="bg-gray-50 border-b">
                               <td colSpan={2} className="px-8 py-2 text-xs font-semibold text-gray-600">
-                                Cost Components
+                                Type
                               </td>
-                              <td colSpan={2} className="text-xs text-gray-600">Unit Rate</td>
-                              <td colSpan={1} className="text-xs text-gray-600">Waste</td>
-                              <td className="text-right text-xs font-semibold text-gray-600">Total</td>
-                              <td colSpan={2}></td>
+                              <td colSpan={3} className="px-4 py-2 text-xs text-gray-600"></td>
+                              <td className="px-4 py-2 text-right text-xs font-semibold text-gray-600">Unit Rate</td>
+                              <td className="px-4 py-2 text-right text-xs font-semibold text-gray-600">Waste</td>
+                              <td className="px-4 py-2 text-right text-xs font-semibold text-gray-600">Total</td>
+                              <td className="px-4 py-2 text-center text-xs"></td>
                             </tr>
                           )}
 
@@ -275,7 +276,8 @@ export default function LineItemsTable({
                                   {type}
                                 </span>
                               </td>
-                              <td colSpan={2} className="px-4 py-2 text-right">
+                              <td colSpan={3} className="px-4 py-2"></td>
+                              <td className="px-4 py-2 text-right">
                                 {editingComponentId === component.id ? (
                                   <div className="flex gap-1 justify-end">
                                     <span className="text-xs text-gray-600">£</span>
@@ -312,7 +314,7 @@ export default function LineItemsTable({
                               <td className="px-4 py-2 text-right font-semibold text-purple-600">
                                 £{component.total.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
                               </td>
-                              <td colSpan={2} className="px-4 py-2 text-center">
+                              <td className="px-4 py-2 text-center">
                                 <div className="flex gap-1 justify-center">
                                   {editingComponentId === component.id ? (
                                     <>
