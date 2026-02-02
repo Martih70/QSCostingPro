@@ -2956,3 +2956,26 @@
 2026-02-02 14:40:30:4030 error: Error creating cost component: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
 2026-02-02 14:40:36:4036 error: Error creating cost component: SqliteError: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
 2026-02-02 14:40:36:4036 error: Error creating cost component: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
+2026-02-02 14:43:42:4342 info: User logged in: admin
+2026-02-02 14:43:42:4342 info: User logged in: admin
+2026-02-02 14:44:12:4412 error: Error creating cost component: SqliteError: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
+2026-02-02 14:44:12:4412 error: Error creating cost component: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
+2026-02-02 14:45:25:4525 info: Database connection closed
+2026-02-02 14:45:26:4526 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 14:45:26:4526 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 14:45:26:4526 info: Starting KHConstruct server...
+2026-02-02 14:45:26:4526 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 14:45:26:4526 info: Database initialized
+2026-02-02 14:45:26:4526 info: All migrations completed successfully
+2026-02-02 14:45:26:4526 info: Database migrations completed
+2026-02-02 14:45:26:4526 info: Starting database seeding...
+2026-02-02 14:45:26:4526 info: ✓ Standard UK costs already seeded
+2026-02-02 14:45:26:4526 info: ✓ BCIS database already seeded
+2026-02-02 14:45:26:4526 info: ✓ Spons database already seeded
+2026-02-02 14:45:26:4526 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 14:45:26:4526 info: ✓ Database seeding completed
+2026-02-02 14:45:26:4526 info: Database seeding completed
+2026-02-02 14:45:26:4526 info: ✓ Server running on http://localhost:3000
+2026-02-02 14:45:26:4526 info: Environment: development
+2026-02-02 14:45:26:4526 info: Frontend URL: http://localhost:5173
+2026-02-02 14:45:26:4526 info: Press Ctrl+C to stop

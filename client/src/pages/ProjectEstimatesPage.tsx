@@ -328,13 +328,15 @@ export default function ProjectEstimatesPage() {
   const handleAddComponent = async (estimateId: number, componentType: 'material' | 'labor' | 'plant', unitRate: number, wasteFactor: number) => {
     try {
       setSubmitting(true)
+      const token = localStorage.getItem('accessToken')
+      console.log('AddComponent - Token exists:', !!token, 'Token length:', token?.length)
       const response = await fetch(
         `/api/v1/projects/${projectId}/estimates/${estimateId}/cost-components`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify({
             component_type: componentType,

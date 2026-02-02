@@ -638,6 +638,29 @@ export const costComponentsRepository = {
   }): CostComponent => {
     try {
       const db = getDatabase();
+
+      // Check if an inactive component of this type already exists
+      const existingStmt = db.prepare(`
+        SELECT id FROM estimate_cost_components
+        WHERE estimate_id = ? AND component_type = ? AND is_active = 0
+      `);
+      const existingInactive = existingStmt.get(data.estimate_id, data.component_type) as any;
+
+      if (existingInactive) {
+        // Reactivate the deleted component instead of creating a new one
+        const updateStmt = db.prepare(`
+          UPDATE estimate_cost_components
+          SET is_active = 1, unit_rate = ?, waste_factor = ?, updated_at = CURRENT_TIMESTAMP
+          WHERE id = ?
+        `);
+        updateStmt.run(data.unit_rate, data.waste_factor, existingInactive.id);
+
+        const updated = costComponentsRepository.getById(existingInactive.id);
+        if (!updated) throw new Error('Failed to reactivate cost component');
+        return updated;
+      }
+
+      // No inactive component exists, create new one
       const stmt = db.prepare(`
         INSERT INTO estimate_cost_components (
           estimate_id, component_type, unit_rate, waste_factor
