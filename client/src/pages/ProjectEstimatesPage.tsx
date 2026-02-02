@@ -87,19 +87,30 @@ export default function ProjectEstimatesPage() {
   const fetchBCISGroupedData = async () => {
     try {
       setBcisLoading(true)
+      // Use 'accessToken' key (same as axios interceptors in api.ts)
+      const token = localStorage.getItem('accessToken')
+      if (!token) {
+        console.error('No auth token found in localStorage - user may not be logged in')
+        setBcisGroupedData(null)
+        return
+      }
+
       const response = await fetch(`/api/v1/projects/${projectId}/estimates/by-bcis-element`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${token}`
         }
       })
+
       if (response.ok) {
         const data = await response.json()
         console.log('BCIS data loaded:', data.data)
         setBcisGroupedData(data.data)
+      } else if (response.status === 401 || response.status === 403) {
+        console.error('Authentication failed - token may be invalid or expired. Status:', response.status)
+        setBcisGroupedData(null)
+        toast.error('Session expired - please refresh the page and log in again')
       } else {
         console.error('Failed to fetch BCIS grouped data: HTTP', response.status)
-        // If fetch fails but we have estimates, we should still display something
-        // For now, set to empty but in production might want to fall back to old view
         setBcisGroupedData(null)
       }
     } catch (err) {
