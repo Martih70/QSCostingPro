@@ -104,15 +104,46 @@ export function calculateProjectEstimates(projectId: number): LineItemCalculatio
 
     const rows = stmt.all(projectId) as any[];
 
+    // Query for cost components
+    const componentStmt = db.prepare(`
+      SELECT estimate_id, component_type, total
+      FROM estimate_cost_components
+      WHERE is_active = 1
+    `);
+    const componentRows = componentStmt.all() as any[];
+    const componentsByEstimate = new Map<number, number>();
+    componentRows.forEach((comp) => {
+      const current = componentsByEstimate.get(comp.estimate_id) || 0;
+      componentsByEstimate.set(comp.estimate_id, current + comp.total);
+    });
+
     return rows.map((row) => {
-      const costs = calculateLineTotal(
-        row.quantity,
-        row.material_cost,
-        row.management_cost,
-        row.contractor_cost,
-        row.waste_factor,
-        row.is_contractor_required
-      );
+      // Check if this estimate has cost components
+      const componentTotal = componentsByEstimate.get(row.estimate_id);
+
+      let line_total: number;
+      let material_total: number = 0;
+      let management_total: number = 0;
+      let contractor_total: number = 0;
+
+      if (componentTotal !== undefined && componentTotal > 0) {
+        // Use cost component total if available
+        line_total = componentTotal;
+      } else {
+        // Fall back to old calculation method
+        const costs = calculateLineTotal(
+          row.quantity,
+          row.material_cost,
+          row.management_cost,
+          row.contractor_cost,
+          row.waste_factor,
+          row.is_contractor_required
+        );
+        line_total = costs.total;
+        material_total = costs.material;
+        management_total = costs.management;
+        contractor_total = costs.contractor;
+      }
 
       return {
         item_id: row.item_id,
@@ -125,10 +156,10 @@ export function calculateProjectEstimates(projectId: number): LineItemCalculatio
         contractor_cost: row.contractor_cost,
         waste_factor: row.waste_factor,
         is_contractor_required: row.is_contractor_required,
-        material_total: costs.material,
-        management_total: costs.management,
-        contractor_total: costs.contractor,
-        line_total: costs.total,
+        material_total,
+        management_total,
+        contractor_total,
+        line_total,
       };
     });
   } catch (error) {
