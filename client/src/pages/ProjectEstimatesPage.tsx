@@ -308,14 +308,19 @@ export default function ProjectEstimatesPage() {
         }
       )
 
-      if (!response.ok) throw new Error('Failed to update component')
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        console.error('Update component failed:', response.status, errorData)
+        throw new Error(errorData.error || `Failed to update component (HTTP ${response.status})`)
+      }
 
       await fetchBCISGroupedData()
       toast.success('Cost component updated')
       setSubmitting(false)
     } catch (error) {
+      console.error('UpdateComponent error:', error)
       logError(error, 'UpdateComponent')
-      toast.error(handleApiError(error))
+      toast.error(handleApiError(error) || 'Failed to update component')
       setSubmitting(false)
     }
   }
@@ -339,14 +344,19 @@ export default function ProjectEstimatesPage() {
         }
       )
 
-      if (!response.ok) throw new Error('Failed to add component')
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        console.error('Add component failed:', response.status, errorData)
+        throw new Error(errorData.error || `Failed to add component (HTTP ${response.status})`)
+      }
 
       await fetchBCISGroupedData()
       toast.success(`${componentType.charAt(0).toUpperCase() + componentType.slice(1)} cost component added`)
       setSubmitting(false)
     } catch (error) {
+      console.error('AddComponent error:', error)
       logError(error, 'AddComponent')
-      toast.error(handleApiError(error))
+      toast.error(handleApiError(error) || 'Failed to add component')
       setSubmitting(false)
     }
   }
@@ -371,14 +381,19 @@ export default function ProjectEstimatesPage() {
           }
         )
 
-        if (!response.ok) throw new Error('Failed to delete component')
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}))
+          console.error('Delete component failed:', response.status, errorData)
+          throw new Error(errorData.error || `Failed to delete component (HTTP ${response.status})`)
+        }
 
         await fetchBCISGroupedData()
         toast.success('Cost component removed')
         setSubmitting(false)
       } catch (error) {
+        console.error('DeleteComponent error:', error)
         logError(error, 'DeleteComponent')
-        toast.error(handleApiError(error))
+        toast.error(handleApiError(error) || 'Failed to delete component')
         setSubmitting(false)
       }
     }

@@ -2951,3 +2951,8 @@
 2026-02-02 14:36:05:365 warn: Invalid token for POST /3/estimates/40/cost-components
 2026-02-02 14:36:07:367 warn: Invalid token for POST /3/estimates/40/cost-components
 2026-02-02 14:36:09:369 warn: Invalid token for POST /3/estimates/40/cost-components
+2026-02-02 14:40:04:404 info: Estimate updated: ID 40 by user admin
+2026-02-02 14:40:30:4030 error: Error creating cost component: SqliteError: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
+2026-02-02 14:40:30:4030 error: Error creating cost component: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
+2026-02-02 14:40:36:4036 error: Error creating cost component: SqliteError: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
+2026-02-02 14:40:36:4036 error: Error creating cost component: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
