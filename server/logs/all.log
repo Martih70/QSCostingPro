@@ -3022,3 +3022,26 @@
 2026-02-02 14:55:38:5538 info: Environment: development
 2026-02-02 14:55:38:5538 info: Frontend URL: http://localhost:5173
 2026-02-02 14:55:38:5538 info: Press Ctrl+C to stop
+2026-02-02 14:56:02:562 info: Database connection closed
+2026-02-02 14:56:05:565 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 14:56:05:565 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 14:56:05:565 info: Starting KHConstruct server...
+2026-02-02 14:56:05:565 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 14:56:05:565 info: Database initialized
+2026-02-02 14:56:05:565 info: All migrations completed successfully
+2026-02-02 14:56:05:565 info: Database migrations completed
+2026-02-02 14:56:05:565 info: Starting database seeding...
+2026-02-02 14:56:05:565 info: ✓ Standard UK costs already seeded
+2026-02-02 14:56:05:565 info: ✓ BCIS database already seeded
+2026-02-02 14:56:05:565 info: ✓ Spons database already seeded
+2026-02-02 14:56:05:565 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 14:56:05:565 info: ✓ Database seeding completed
+2026-02-02 14:56:05:565 info: Database seeding completed
+2026-02-02 14:56:05:565 info: ✓ Server running on http://localhost:3000
+2026-02-02 14:56:05:565 info: Environment: development
+2026-02-02 14:56:05:565 info: Frontend URL: http://localhost:5173
+2026-02-02 14:56:05:565 info: Press Ctrl+C to stop
+2026-02-02 14:56:35:5635 info: User logged in: admin
+2026-02-02 14:56:35:5635 info: User logged in: admin
+2026-02-02 14:57:06:576 info: Estimate deleted: ID 41 from project 3 by user admin
+2026-02-02 14:57:12:5712 info: Estimate deleted: ID 42 from project 3 by user admin
