@@ -241,6 +241,120 @@ export default function ProjectEstimatesPage() {
     }
   }
 
+  const getEstimateIdFromComponent = (componentId: number): number | null => {
+    if (!bcisGroupedData) return null
+    for (const element of bcisGroupedData.elements) {
+      for (const item of element.items) {
+        for (const component of Object.values(item.components)) {
+          if (component && component.id === componentId) {
+            return item.id
+          }
+        }
+      }
+    }
+    return null
+  }
+
+  const handleUpdateComponent = async (componentId: number, unitRate: number, wasteFactor: number) => {
+    const estimateId = getEstimateIdFromComponent(componentId)
+    if (!estimateId) {
+      toast.error('Could not find estimate for this component')
+      return
+    }
+
+    try {
+      setSubmitting(true)
+      const response = await fetch(
+        `/api/v1/projects/${projectId}/estimates/${estimateId}/cost-components/${componentId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify({
+            unit_rate: unitRate,
+            waste_factor: wasteFactor
+          })
+        }
+      )
+
+      if (!response.ok) throw new Error('Failed to update component')
+
+      await fetchBCISGroupedData()
+      toast.success('Cost component updated')
+      setSubmitting(false)
+    } catch (error) {
+      logError(error, 'UpdateComponent')
+      toast.error(handleApiError(error))
+      setSubmitting(false)
+    }
+  }
+
+  const handleAddComponent = async (estimateId: number, componentType: 'material' | 'labor' | 'plant', unitRate: number, wasteFactor: number) => {
+    try {
+      setSubmitting(true)
+      const response = await fetch(
+        `/api/v1/projects/${projectId}/estimates/${estimateId}/cost-components`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify({
+            component_type: componentType,
+            unit_rate: unitRate,
+            waste_factor: wasteFactor
+          })
+        }
+      )
+
+      if (!response.ok) throw new Error('Failed to add component')
+
+      await fetchBCISGroupedData()
+      toast.success(`${componentType.charAt(0).toUpperCase() + componentType.slice(1)} cost component added`)
+      setSubmitting(false)
+    } catch (error) {
+      logError(error, 'AddComponent')
+      toast.error(handleApiError(error))
+      setSubmitting(false)
+    }
+  }
+
+  const handleDeleteComponent = async (componentId: number) => {
+    const estimateId = getEstimateIdFromComponent(componentId)
+    if (!estimateId) {
+      toast.error('Could not find estimate for this component')
+      return
+    }
+
+    if (window.confirm('Remove this cost component?')) {
+      try {
+        setSubmitting(true)
+        const response = await fetch(
+          `/api/v1/projects/${projectId}/estimates/${estimateId}/cost-components/${componentId}`,
+          {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          }
+        )
+
+        if (!response.ok) throw new Error('Failed to delete component')
+
+        await fetchBCISGroupedData()
+        toast.success('Cost component removed')
+        setSubmitting(false)
+      } catch (error) {
+        logError(error, 'DeleteComponent')
+        toast.error(handleApiError(error))
+        setSubmitting(false)
+      }
+    }
+  }
+
   const handleSaveAsTemplate = async (
     name: string,
     description: string,
@@ -413,6 +527,9 @@ export default function ProjectEstimatesPage() {
         data={bcisGroupedData}
         onUpdateQuantity={handleUpdateEstimate}
         onDeleteItem={handleDeleteEstimate}
+        onUpdateComponent={handleUpdateComponent}
+        onAddComponent={handleAddComponent}
+        onDeleteComponent={handleDeleteComponent}
         isLoading={estimatesLoading}
         isEmpty={estimates.length === 0}
       />

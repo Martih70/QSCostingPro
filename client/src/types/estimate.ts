@@ -107,23 +107,44 @@ export interface EstimateSummaryResponse {
   }
 }
 
+// Cost Component Types (QS-level detail)
+export interface CostComponent {
+  id: number
+  estimate_id: number
+  component_type: 'material' | 'labor' | 'plant'
+  unit_rate: number
+  waste_factor: number
+  total: number
+  is_active: boolean
+  created_at: string
+  updated_at: string
+}
+
 // BCIS Element Grouping Types (for elemental BoQ output)
-export interface BCISElementItem {
+export interface BCISDetailedItem {
   id: number // estimate id
   description: string
   quantity: number
   unit: string
-  rate: number
-  total: number
   nrm2_code?: string
   notes?: string
+
+  // Cost components for this item
+  components: {
+    material?: CostComponent
+    labor?: CostComponent
+    plant?: CostComponent
+  }
+
+  // Calculated totals
+  subtotal: number
 }
 
 export interface BCISElementGroup {
   bcis_code: string
   bcis_name: string
   sort_order: number
-  items: BCISElementItem[]
+  items: BCISDetailedItem[]
   subtotal: number
   item_count: number
 }

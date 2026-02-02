@@ -2755,3 +2755,57 @@
 2026-02-02 11:29:07:297 warn: Invalid token for GET /1/estimates/by-bcis-element
 2026-02-02 11:29:17:2917 warn: Invalid token for GET /1/estimates/by-bcis-element
 2026-02-02 11:29:22:2922 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 11:31:59:3159 info: Database connection closed
+2026-02-02 11:32:03:323 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:32:03:323 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:32:03:323 info: Starting KHConstruct server...
+2026-02-02 11:32:03:323 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:32:03:323 info: Database initialized
+2026-02-02 11:32:03:323 info: All migrations completed successfully
+2026-02-02 11:32:03:323 info: Database migrations completed
+2026-02-02 11:32:03:323 info: Starting database seeding...
+2026-02-02 11:32:03:323 info: ✓ Standard UK costs already seeded
+2026-02-02 11:32:03:323 info: ✓ BCIS database already seeded
+2026-02-02 11:32:03:323 info: ✓ Spons database already seeded
+2026-02-02 11:32:03:323 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 11:32:03:323 info: ✓ Database seeding completed
+2026-02-02 11:32:03:323 info: Database seeding completed
+2026-02-02 11:32:03:323 info: ✓ Server running on http://localhost:3000
+2026-02-02 11:32:03:323 info: Environment: development
+2026-02-02 11:32:03:323 info: Frontend URL: http://localhost:5173
+2026-02-02 11:32:03:323 info: Press Ctrl+C to stop
+2026-02-02 11:32:16:3216 info: User logged in: admin
+2026-02-02 11:32:16:3216 info: User logged in: admin
+2026-02-02 11:32:20:3220 info: User logged in: admin
+2026-02-02 11:32:20:3220 info: User logged in: admin
+2026-02-02 11:32:52:3252 info: User logged in: admin
+2026-02-02 11:32:52:3252 info: User logged in: admin
+2026-02-02 11:33:00:330 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:33:00:330 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:33:13:3313 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:33:13:3313 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:33:25:3325 info: User logged in: admin
+2026-02-02 11:33:25:3325 info: User logged in: admin
+2026-02-02 11:33:32:3332 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:33:32:3332 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:34:03:343 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:34:03:343 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:35:29:3529 info: Database connection closed
+2026-02-02 11:36:03:363 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:36:03:363 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:36:03:363 info: Starting KHConstruct server...
+2026-02-02 11:36:03:363 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:36:03:363 info: Database initialized
+2026-02-02 11:36:03:363 info: All migrations completed successfully
+2026-02-02 11:36:03:363 info: Database migrations completed
+2026-02-02 11:36:03:363 info: Starting database seeding...
+2026-02-02 11:36:03:363 info: ✓ Standard UK costs already seeded
+2026-02-02 11:36:03:363 info: ✓ BCIS database already seeded
+2026-02-02 11:36:03:363 info: ✓ Spons database already seeded
+2026-02-02 11:36:03:363 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 11:36:03:363 info: ✓ Database seeding completed
+2026-02-02 11:36:03:363 info: Database seeding completed
+2026-02-02 11:36:03:363 info: ✓ Server running on http://localhost:3000
+2026-02-02 11:36:03:363 info: Environment: development
+2026-02-02 11:36:03:363 info: Frontend URL: http://localhost:5173
+2026-02-02 11:36:03:363 info: Press Ctrl+C to stop
