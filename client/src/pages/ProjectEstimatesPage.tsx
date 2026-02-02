@@ -91,9 +91,15 @@ export default function ProjectEstimatesPage() {
       if (response.ok) {
         const data = await response.json()
         setBcisGroupedData(data.data)
+      } else {
+        console.error('Failed to fetch BCIS grouped data: HTTP', response.status)
+        // If fetch fails but we have estimates, we should still display something
+        // For now, set to empty but in production might want to fall back to old view
+        setBcisGroupedData(null)
       }
     } catch (err) {
       console.error('Failed to fetch BCIS grouped data:', err)
+      setBcisGroupedData(null)
     }
   }
 
@@ -144,6 +150,7 @@ export default function ProjectEstimatesPage() {
         unit_cost_override: data.unit_cost_override,
         notes: data.notes,
       })
+      await fetchBCISGroupedData()
       setShowAddModal(false)
     } finally {
       setSubmitting(false)
@@ -172,6 +179,7 @@ export default function ProjectEstimatesPage() {
         nrm2_work_section_id: data.nrm2_work_section_id,
         nrm2_code: data.nrm2_code,
       })
+      await fetchBCISGroupedData()
       setShowAddModal(false)
     } finally {
       setSubmitting(false)
@@ -199,6 +207,7 @@ export default function ProjectEstimatesPage() {
           nrm2_code: workSection.code,
         })
       }
+      await fetchBCISGroupedData()
       toast.success(`Added ${workSections.length} item${workSections.length !== 1 ? 's' : ''} from BOQ`)
       setShowBOQBrowser(false)
     } catch (error) {
@@ -215,6 +224,7 @@ export default function ProjectEstimatesPage() {
       await updateEstimate(projectId, estimateId, {
         quantity: newQuantity,
       })
+      await fetchBCISGroupedData()
       toast.success('Quantity updated successfully')
       setEditingId(null)
       setEditQuantity('')
@@ -231,6 +241,7 @@ export default function ProjectEstimatesPage() {
       try {
         setSubmitting(true)
         await deleteEstimate(projectId, estimateId)
+        await fetchBCISGroupedData()
         toast.success('Item removed successfully')
         setSubmitting(false)
       } catch (error) {

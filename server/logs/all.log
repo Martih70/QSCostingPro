@@ -2809,3 +2809,70 @@
 2026-02-02 11:36:03:363 info: Environment: development
 2026-02-02 11:36:03:363 info: Frontend URL: http://localhost:5173
 2026-02-02 11:36:03:363 info: Press Ctrl+C to stop
+2026-02-02 11:42:14:4214 info: User logged in: admin
+2026-02-02 11:42:14:4214 info: User logged in: admin
+2026-02-02 11:42:21:4221 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:42:21:4221 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:42:29:4229 info: Estimate added to project 2: Site administration and office x1 by user admin
+2026-02-02 11:43:31:4331 info: User logged in: admin
+2026-02-02 11:43:31:4331 info: User logged in: admin
+2026-02-02 11:44:16:4416 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:44:17:4417 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:45:20:4520 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 11:45:20:4520 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 11:46:32:4632 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 11:46:32:4632 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 11:47:09:479 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:47:09:479 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:48:19:4819 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:48:19:4819 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:48:28:4828 info: User logged in: admin
+2026-02-02 11:48:28:4828 info: User logged in: admin
+2026-02-02 11:48:40:4840 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:48:40:4840 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:49:04:494 info: User logged in: admin
+2026-02-02 11:52:01:521 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:52:01:521 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:52:01:521 info: Starting KHConstruct server...
+2026-02-02 11:52:01:521 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:52:01:521 info: Database initialized
+2026-02-02 11:52:01:521 info: All migrations completed successfully
+2026-02-02 11:52:01:521 info: Database migrations completed
+2026-02-02 11:52:01:521 info: Starting database seeding...
+2026-02-02 11:52:01:521 info: ✓ Standard UK costs already seeded
+2026-02-02 11:52:01:521 info: ✓ BCIS database already seeded
+2026-02-02 11:52:01:521 info: ✓ Spons database already seeded
+2026-02-02 11:52:01:521 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 11:52:01:521 info: ✓ Database seeding completed
+2026-02-02 11:52:01:521 info: Database seeding completed
+2026-02-02 11:52:01:521 info: ✓ Server running on http://localhost:3000
+2026-02-02 11:52:01:521 info: Environment: development
+2026-02-02 11:52:01:521 info: Frontend URL: http://localhost:5173
+2026-02-02 11:52:01:521 info: Press Ctrl+C to stop
+2026-02-02 11:52:16:5216 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 11:59:56:5956 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:59:56:5956 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 12:00:45:045 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 12:00:45:045 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 12:00:55:055 info: User logged in: admin
+2026-02-02 12:00:55:055 info: User logged in: admin
+2026-02-02 12:01:05:15 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 12:01:05:15 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 12:01:29:129 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 12:01:29:129 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 12:02:21:221 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 12:02:21:221 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 12:03:15:315 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 12:03:20:320 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 12:03:23:323 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 12:03:28:328 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 12:03:32:332 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 12:03:38:338 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 12:03:52:352 info: Estimate added to project 1: Test Item for Phase 2B x5 by user admin
+2026-02-02 12:04:07:47 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 12:04:15:415 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 12:04:18:418 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 12:04:27:427 error: Login failed: Error: Invalid username or password
+2026-02-02 12:04:27:427 warn: Login failed: Invalid username or password
+2026-02-02 12:04:31:431 error: Login failed: Error: Invalid username or password
+2026-02-02 12:04:31:431 warn: Login failed: Invalid username or password
