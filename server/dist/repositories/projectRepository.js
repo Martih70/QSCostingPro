@@ -570,9 +570,10 @@ export const costComponentsRepository = {
             if (!estimate)
                 throw new Error('Estimate not found');
             // Update all components with calculated totals
+            // waste_factor is a percentage (5, 10, 15) so convert to multiplier: (1 + waste_factor/100)
             const updateStmt = db.prepare(`
         UPDATE estimate_cost_components
-        SET total = ? * unit_rate * waste_factor
+        SET total = ? * unit_rate * (1 + waste_factor / 100)
         WHERE estimate_id = ? AND is_active = 1
       `);
             updateStmt.run(estimate.quantity, estimateId);

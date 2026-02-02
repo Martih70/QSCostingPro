@@ -67,8 +67,8 @@ export default function LineItemsTable({
       alert('Please enter a valid unit rate')
       return
     }
-    if (isNaN(waste) || waste <= 0) {
-      alert('Please enter a valid waste factor (e.g., 1.05 for 5% waste)')
+    if (isNaN(waste) || waste < 0) {
+      alert('Please enter a valid waste factor as a percentage (e.g., 5 for 5% waste, 0 for no waste)')
       return
     }
 
@@ -298,17 +298,20 @@ export default function LineItemsTable({
                               </td>
                               <td className="px-4 py-2 text-right">
                                 {editingComponentId === component.id ? (
-                                  <input
-                                    type="number"
-                                    step="0.01"
-                                    min="0.01"
-                                    value={editWasteFactor}
-                                    onChange={(e) => setEditWasteFactor(e.target.value)}
-                                    className="w-16 px-2 py-1 border border-gray-300 rounded text-right text-xs"
-                                    placeholder="Waste"
-                                  />
+                                  <div className="flex gap-1 justify-end items-center">
+                                    <input
+                                      type="number"
+                                      step="1"
+                                      min="0"
+                                      value={editWasteFactor}
+                                      onChange={(e) => setEditWasteFactor(e.target.value)}
+                                      className="w-12 px-2 py-1 border border-gray-300 rounded text-right text-xs"
+                                      placeholder="0"
+                                    />
+                                    <span className="text-xs text-gray-600">%</span>
+                                  </div>
                                 ) : (
-                                  <span className="text-sm">{component.waste_factor.toFixed(2)}</span>
+                                  <span className="text-sm">{component.waste_factor.toFixed(0)}%</span>
                                 )}
                               </td>
                               <td className="px-4 py-2 text-right font-semibold text-purple-600">

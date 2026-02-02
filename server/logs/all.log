@@ -3045,3 +3045,62 @@
 2026-02-02 14:56:35:5635 info: User logged in: admin
 2026-02-02 14:57:06:576 info: Estimate deleted: ID 41 from project 3 by user admin
 2026-02-02 14:57:12:5712 info: Estimate deleted: ID 42 from project 3 by user admin
+2026-02-02 15:03:05:35 info: User logged in: admin
+2026-02-02 15:03:05:35 info: User logged in: admin
+2026-02-02 15:10:56:1056 info: Database connection closed
+2026-02-02 15:10:57:1057 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 15:10:57:1057 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 15:10:57:1057 info: Starting KHConstruct server...
+2026-02-02 15:10:57:1057 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 15:10:57:1057 info: Database initialized
+2026-02-02 15:10:57:1057 info: All migrations completed successfully
+2026-02-02 15:10:57:1057 info: Database migrations completed
+2026-02-02 15:10:57:1057 info: Starting database seeding...
+2026-02-02 15:10:57:1057 info: ✓ Standard UK costs already seeded
+2026-02-02 15:10:57:1057 info: ✓ BCIS database already seeded
+2026-02-02 15:10:57:1057 info: ✓ Spons database already seeded
+2026-02-02 15:10:57:1057 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 15:10:57:1057 info: ✓ Database seeding completed
+2026-02-02 15:10:57:1057 info: Database seeding completed
+2026-02-02 15:10:57:1057 info: ✓ Server running on http://localhost:3000
+2026-02-02 15:10:57:1057 info: Environment: development
+2026-02-02 15:10:57:1057 info: Frontend URL: http://localhost:5173
+2026-02-02 15:10:57:1057 info: Press Ctrl+C to stop
+2026-02-02 15:11:06:116 info: Database connection closed
+2026-02-02 15:11:06:116 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 15:11:06:116 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 15:11:06:116 info: Starting KHConstruct server...
+2026-02-02 15:11:06:116 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 15:11:06:116 info: Database initialized
+2026-02-02 15:11:06:116 info: All migrations completed successfully
+2026-02-02 15:11:06:116 info: Database migrations completed
+2026-02-02 15:11:06:116 info: Starting database seeding...
+2026-02-02 15:11:06:116 info: ✓ Standard UK costs already seeded
+2026-02-02 15:11:06:116 info: ✓ BCIS database already seeded
+2026-02-02 15:11:06:116 info: ✓ Spons database already seeded
+2026-02-02 15:11:06:116 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 15:11:06:116 info: ✓ Database seeding completed
+2026-02-02 15:11:06:116 info: Database seeding completed
+2026-02-02 15:11:06:116 info: ✓ Server running on http://localhost:3000
+2026-02-02 15:11:06:116 info: Environment: development
+2026-02-02 15:11:06:116 info: Frontend URL: http://localhost:5173
+2026-02-02 15:11:06:116 info: Press Ctrl+C to stop
+2026-02-02 15:11:15:1115 info: Database connection closed
+2026-02-02 15:11:15:1115 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 15:11:15:1115 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 15:11:15:1115 info: Starting KHConstruct server...
+2026-02-02 15:11:15:1115 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 15:11:15:1115 info: Database initialized
+2026-02-02 15:11:15:1115 info: All migrations completed successfully
+2026-02-02 15:11:15:1115 info: Database migrations completed
+2026-02-02 15:11:15:1115 info: Starting database seeding...
+2026-02-02 15:11:15:1115 info: ✓ Standard UK costs already seeded
+2026-02-02 15:11:15:1115 info: ✓ BCIS database already seeded
+2026-02-02 15:11:15:1115 info: ✓ Spons database already seeded
+2026-02-02 15:11:15:1115 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 15:11:15:1115 info: ✓ Database seeding completed
+2026-02-02 15:11:15:1115 info: Database seeding completed
+2026-02-02 15:11:15:1115 info: ✓ Server running on http://localhost:3000
+2026-02-02 15:11:15:1115 info: Environment: development
+2026-02-02 15:11:15:1115 info: Frontend URL: http://localhost:5173
+2026-02-02 15:11:15:1115 info: Press Ctrl+C to stop

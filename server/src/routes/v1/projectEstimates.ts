@@ -796,10 +796,10 @@ router.post(
         return;
       }
 
-      if (typeof waste_factor !== 'number' || waste_factor <= 0) {
+      if (typeof waste_factor !== 'number' || waste_factor < 0) {
         res.status(400).json({
           success: false,
-          error: 'Waste factor must be a positive number (e.g., 1.05 for 5% waste)',
+          error: 'Waste factor must be a percentage value (e.g., 5 for 5% waste, 0 for no waste)',
         });
         return;
       }
@@ -912,10 +912,10 @@ router.patch(
         return;
       }
 
-      if (waste_factor !== undefined && (typeof waste_factor !== 'number' || waste_factor <= 0)) {
+      if (waste_factor !== undefined && (typeof waste_factor !== 'number' || waste_factor < 0)) {
         res.status(400).json({
           success: false,
-          error: 'Waste factor must be a positive number',
+          error: 'Waste factor must be a percentage value (e.g., 5 for 5% waste, 0 for no waste)',
         });
         return;
       }
