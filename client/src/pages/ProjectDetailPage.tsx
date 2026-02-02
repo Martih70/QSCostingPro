@@ -237,7 +237,7 @@ export default function ProjectDetailPage() {
               to={`/projects/${projectId}/estimates`}
               className="px-4 py-2 bg-khc-primary hover:bg-khc-secondary text-white rounded-lg transition"
             >
-              Manage Estimates
+              Manage Estimate
             </Link>
           </div>
 
