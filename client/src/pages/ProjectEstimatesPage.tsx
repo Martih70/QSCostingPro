@@ -299,7 +299,7 @@ export default function ProjectEstimatesPage() {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
           },
           body: JSON.stringify({
             unit_rate: unitRate,
@@ -329,7 +329,7 @@ export default function ProjectEstimatesPage() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
           },
           body: JSON.stringify({
             component_type: componentType,
@@ -366,7 +366,7 @@ export default function ProjectEstimatesPage() {
           {
             method: 'DELETE',
             headers: {
-              'Authorization': `Bearer ${localStorage.getItem('token')}`
+              'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
             }
           }
         )
