@@ -45,6 +45,45 @@ export interface ProjectAttachment {
     uploaded_by: number;
     uploaded_at: string;
 }
+export interface CostComponent {
+    id: number;
+    estimate_id: number;
+    component_type: 'material' | 'labor' | 'plant';
+    unit_rate: number;
+    waste_factor: number;
+    total: number;
+    is_active: boolean;
+    created_at: string;
+    updated_at: string;
+}
+export interface BCISDetailedItem {
+    id: number;
+    description: string;
+    quantity: number;
+    unit: string;
+    nrm2_code?: string;
+    notes?: string;
+    components: {
+        material?: CostComponent;
+        labor?: CostComponent;
+        plant?: CostComponent;
+    };
+    subtotal: number;
+}
+export interface BCISElementGroup {
+    bcis_code: string;
+    bcis_name: string;
+    sort_order: number;
+    items: BCISDetailedItem[];
+    subtotal: number;
+    item_count: number;
+}
+export interface BCISGroupedEstimates {
+    project_id: number;
+    elements: BCISElementGroup[];
+    total_items: number;
+    grand_total: number;
+}
 export declare const projectsRepository: {
     getAll: (userId?: number, role?: string) => Project[];
     getById: (id: number) => Project | null;
@@ -102,6 +141,46 @@ export declare const projectEstimatesRepository: {
     }) => ProjectEstimate;
     delete: (id: number) => boolean;
     getByProjectAndCostItem: (projectId: number, costItemId: number) => ProjectEstimate | null;
+    /**
+     * Get all estimates grouped by BCIS element
+     * Handles both library items (via cost_items) and custom items (via category_id)
+     */
+    getEstimatesByBCISElement: (projectId: number) => BCISGroupedEstimates;
+};
+export declare const costComponentsRepository: {
+    /**
+     * Add a cost component to an estimate (material, labor, or plant)
+     */
+    create: (data: {
+        estimate_id: number;
+        component_type: "material" | "labor" | "plant";
+        unit_rate: number;
+        waste_factor: number;
+    }) => CostComponent;
+    /**
+     * Get a cost component by ID
+     */
+    getById: (id: number) => CostComponent | null;
+    /**
+     * Get all cost components for an estimate
+     */
+    getByEstimateId: (estimateId: number) => CostComponent[];
+    /**
+     * Update a cost component (unit rate and/or waste factor)
+     */
+    update: (id: number, data: {
+        unit_rate?: number;
+        waste_factor?: number;
+    }) => CostComponent;
+    /**
+     * Delete (soft delete) a cost component
+     */
+    delete: (id: number) => boolean;
+    /**
+     * Calculate totals for all components of an estimate
+     * Updates the total field based on quantity × unit_rate × waste_factor
+     */
+    recalculateComponentTotals: (estimateId: number) => void;
 };
 export declare const projectAttachmentsRepository: {
     getAll: (projectId: number) => ProjectAttachment[];

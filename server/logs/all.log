@@ -2287,3 +2287,471 @@
 2026-02-01 20:18:45:1845 info: Environment: development
 2026-02-01 20:18:45:1845 info: Frontend URL: http://localhost:5173
 2026-02-01 20:18:45:1845 info: Press Ctrl+C to stop
+2026-02-01 20:20:37:2037 info: User logged in: admin
+2026-02-01 20:20:37:2037 info: User logged in: admin
+2026-02-01 20:21:24:2124 info: Estimate added to project 2: Strip topsoil and store on site x123 by user admin
+2026-02-01 20:22:08:228 info: Estimate added to project 2: Rock excavation x14 by user admin
+2026-02-01 20:23:01:231 info: Estimate added to project 2: Excavation to reduce levels - export off-site x1178 by user admin
+2026-02-01 20:34:06:346 info: Estimate submitted for project: Shop Reno by user admin
+2026-02-01 20:34:32:3432 info: Estimate approved for project: Shop Reno by user admin
+2026-02-01 20:35:41:3541 warn: Invalid token for GET /
+2026-02-01 20:35:41:3541 warn: Invalid token for GET /
+2026-02-01 20:35:41:3541 info: Token refreshed for user: admin
+2026-02-01 20:35:41:3541 info: Token refreshed
+2026-02-01 20:35:41:3541 info: Token refreshed for user: admin
+2026-02-01 20:35:41:3541 info: Token refreshed
+2026-02-01 20:36:20:3620 info: Estimate added to project 1: Concrete driveway x209 by user admin
+2026-02-01 20:42:57:4257 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 20:42:57:4257 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 20:42:57:4257 info: Starting KHConstruct server...
+2026-02-01 20:42:57:4257 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-01 20:42:57:4257 info: Database initialized
+2026-02-01 20:42:57:4257 info: All migrations completed successfully
+2026-02-01 20:42:57:4257 info: Database migrations completed
+2026-02-01 20:42:57:4257 info: Starting database seeding...
+2026-02-01 20:42:57:4257 info: ✓ Standard UK costs already seeded
+2026-02-01 20:42:57:4257 info: ✓ BCIS database already seeded
+2026-02-01 20:42:57:4257 info: ✓ Spons database already seeded
+2026-02-01 20:42:57:4257 info: ✓ NRM 2 data already seeded, skipping
+2026-02-01 20:42:57:4257 info: ✓ Database seeding completed
+2026-02-01 20:42:57:4257 info: Database seeding completed
+2026-02-01 20:42:57:4257 info: ✓ Server running on http://localhost:3000
+2026-02-01 20:42:57:4257 info: Environment: development
+2026-02-01 20:42:57:4257 info: Frontend URL: http://localhost:5173
+2026-02-01 20:42:57:4257 info: Press Ctrl+C to stop
+2026-02-01 20:44:32:4432 info: User logged in: admin
+2026-02-01 20:44:32:4432 info: User logged in: admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Site agent and project manager x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Site administration and office x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Site signage and identification x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Setting out and site surveys x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Temporary hoarding and fencing x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Temporary gates and access x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Temporary haul roads x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Temporary parking and laydown areas x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Temporary water supply x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Temporary electrical installation x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Temporary drainage x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Temporary telecommunications x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Personal protective equipment x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Temporary scaffolding x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Temporary staircases and ramps x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Fall protection and safety nets x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Temporary edge protection x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Site canteen and rest facilities x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Changing and washing facilities x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Temporary toilets x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: General site cleaning x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Temporary shoring to excavations x1 by user admin
+2026-02-01 20:49:02:492 info: Estimate added to project 2: Boreholes and soil testing x1 by user admin
+2026-02-01 20:49:03:493 info: Estimate added to project 2: Demolition of residential building x1 by user admin
+2026-02-01 20:49:17:4917 info: Estimate updated: ID 5 by user admin
+2026-02-01 20:49:39:4939 info: Estimate updated: ID 5 by user admin
+2026-02-01 20:50:15:5015 info: Estimate updated: ID 10 by user admin
+2026-02-01 20:50:37:5037 info: Estimate updated: ID 5 by user admin
+2026-02-01 20:51:52:5152 info: Estimate added to project 2: Softwood stud partition with plasterboard and skim x1 by user admin
+2026-02-01 20:51:52:5152 info: Estimate added to project 2: Plasterboard to walls x1 by user admin
+2026-02-01 20:51:52:5152 info: Estimate added to project 2: Plaster to walls x1 by user admin
+2026-02-01 20:51:52:5152 info: Estimate added to project 2: Plasterboard ceiling x1 by user admin
+2026-02-01 21:05:29:529 warn: Invalid token for GET /
+2026-02-01 21:05:29:529 warn: Invalid token for GET /
+2026-02-01 21:05:29:529 info: Token refreshed for user: admin
+2026-02-01 21:05:29:529 info: Token refreshed
+2026-02-01 21:05:29:529 info: Token refreshed for user: admin
+2026-02-01 21:05:29:529 info: Token refreshed
+2026-02-02 09:44:22:4422 info: User logged in: admin
+2026-02-02 09:44:22:4422 info: User logged in: admin
+2026-02-02 09:45:32:4532 info: User logged in: admin
+2026-02-02 09:45:32:4532 info: User logged in: admin
+2026-02-02 10:32:47:3247 info: Database connection closed
+2026-02-02 10:32:47:3247 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:32:47:3247 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:32:47:3247 info: Starting KHConstruct server...
+2026-02-02 10:32:47:3247 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:32:47:3247 info: Database initialized
+2026-02-02 10:32:47:3247 info: All migrations completed successfully
+2026-02-02 10:32:47:3247 info: Database migrations completed
+2026-02-02 10:32:47:3247 info: Starting database seeding...
+2026-02-02 10:32:47:3247 info: ✓ Standard UK costs already seeded
+2026-02-02 10:32:47:3247 info: ✓ BCIS database already seeded
+2026-02-02 10:32:47:3247 info: ✓ Spons database already seeded
+2026-02-02 10:32:47:3247 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 10:32:47:3247 info: ✓ Database seeding completed
+2026-02-02 10:32:47:3247 info: Database seeding completed
+2026-02-02 10:32:47:3247 info: ✓ Server running on http://localhost:3000
+2026-02-02 10:32:47:3247 info: Environment: development
+2026-02-02 10:32:47:3247 info: Frontend URL: http://localhost:5173
+2026-02-02 10:32:47:3247 info: Press Ctrl+C to stop
+2026-02-02 10:32:57:3257 info: Database connection closed
+2026-02-02 10:32:57:3257 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:32:57:3257 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:32:57:3257 info: Starting KHConstruct server...
+2026-02-02 10:32:57:3257 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:32:57:3257 info: Database initialized
+2026-02-02 10:32:57:3257 info: All migrations completed successfully
+2026-02-02 10:32:57:3257 info: Database migrations completed
+2026-02-02 10:32:57:3257 info: Starting database seeding...
+2026-02-02 10:32:57:3257 info: ✓ Standard UK costs already seeded
+2026-02-02 10:32:57:3257 info: ✓ BCIS database already seeded
+2026-02-02 10:32:57:3257 info: ✓ Spons database already seeded
+2026-02-02 10:32:57:3257 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 10:32:57:3257 info: ✓ Database seeding completed
+2026-02-02 10:32:57:3257 info: Database seeding completed
+2026-02-02 10:32:57:3257 info: ✓ Server running on http://localhost:3000
+2026-02-02 10:32:57:3257 info: Environment: development
+2026-02-02 10:32:57:3257 info: Frontend URL: http://localhost:5173
+2026-02-02 10:32:57:3257 info: Press Ctrl+C to stop
+2026-02-02 10:33:13:3313 info: Database connection closed
+2026-02-02 10:33:13:3313 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:33:13:3313 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:33:13:3313 info: Starting KHConstruct server...
+2026-02-02 10:33:13:3313 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:33:13:3313 info: Database initialized
+2026-02-02 10:33:13:3313 info: All migrations completed successfully
+2026-02-02 10:33:13:3313 info: Database migrations completed
+2026-02-02 10:33:13:3313 info: Starting database seeding...
+2026-02-02 10:33:13:3313 info: ✓ Standard UK costs already seeded
+2026-02-02 10:33:13:3313 info: ✓ BCIS database already seeded
+2026-02-02 10:33:13:3313 info: ✓ Spons database already seeded
+2026-02-02 10:33:13:3313 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 10:33:13:3313 info: ✓ Database seeding completed
+2026-02-02 10:33:13:3313 info: Database seeding completed
+2026-02-02 10:33:13:3313 info: ✓ Server running on http://localhost:3000
+2026-02-02 10:33:13:3313 info: Environment: development
+2026-02-02 10:33:13:3313 info: Frontend URL: http://localhost:5173
+2026-02-02 10:33:13:3313 info: Press Ctrl+C to stop
+2026-02-02 10:33:17:3317 warn: Invalid token for GET /
+2026-02-02 10:33:17:3317 warn: Invalid token for GET /
+2026-02-02 10:33:17:3317 warn: Invalid token for GET /
+2026-02-02 10:33:17:3317 warn: Invalid token for GET /
+2026-02-02 10:33:17:3317 warn: Invalid token for GET /
+2026-02-02 10:33:17:3317 warn: Invalid token for GET /
+2026-02-02 10:33:17:3317 warn: Invalid token for GET /
+2026-02-02 10:33:17:3317 warn: Invalid token for GET /
+2026-02-02 10:33:18:3318 info: Token refreshed for user: admin
+2026-02-02 10:33:18:3318 info: Token refreshed
+2026-02-02 10:33:18:3318 info: Token refreshed for user: admin
+2026-02-02 10:33:18:3318 info: Token refreshed
+2026-02-02 10:33:18:3318 info: Token refreshed for user: admin
+2026-02-02 10:33:18:3318 info: Token refreshed
+2026-02-02 10:33:18:3318 info: Token refreshed for user: admin
+2026-02-02 10:33:18:3318 info: Token refreshed
+2026-02-02 10:33:18:3318 info: Token refreshed for user: admin
+2026-02-02 10:33:18:3318 info: Token refreshed
+2026-02-02 10:33:18:3318 info: Token refreshed for user: admin
+2026-02-02 10:33:18:3318 info: Token refreshed
+2026-02-02 10:33:18:3318 info: Token refreshed for user: admin
+2026-02-02 10:33:18:3318 info: Token refreshed
+2026-02-02 10:33:18:3318 info: Token refreshed for user: admin
+2026-02-02 10:33:18:3318 info: Token refreshed
+2026-02-02 10:33:37:3337 info: User logged in: admin
+2026-02-02 10:33:37:3337 info: User logged in: admin
+2026-02-02 10:33:37:3337 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 10:36:35:3635 info: User logged in: admin
+2026-02-02 10:36:35:3635 info: User logged in: admin
+2026-02-02 10:36:35:3635 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 10:36:40:3640 info: User logged in: admin
+2026-02-02 10:36:40:3640 info: User logged in: admin
+2026-02-02 10:37:07:377 info: Database connection closed
+2026-02-02 10:37:07:377 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:37:07:377 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:37:07:377 info: Starting KHConstruct server...
+2026-02-02 10:37:07:377 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:37:07:377 info: Database initialized
+2026-02-02 10:37:07:377 info: All migrations completed successfully
+2026-02-02 10:37:07:377 info: Database migrations completed
+2026-02-02 10:37:07:377 info: Starting database seeding...
+2026-02-02 10:37:07:377 info: ✓ Standard UK costs already seeded
+2026-02-02 10:37:07:377 info: ✓ BCIS database already seeded
+2026-02-02 10:37:07:377 info: ✓ Spons database already seeded
+2026-02-02 10:37:07:377 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 10:37:07:377 info: ✓ Database seeding completed
+2026-02-02 10:37:07:377 info: Database seeding completed
+2026-02-02 10:37:07:377 info: ✓ Server running on http://localhost:3000
+2026-02-02 10:37:07:377 info: Environment: development
+2026-02-02 10:37:07:377 info: Frontend URL: http://localhost:5173
+2026-02-02 10:37:07:377 info: Press Ctrl+C to stop
+2026-02-02 10:37:15:3715 info: Database connection closed
+2026-02-02 10:37:15:3715 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:37:15:3715 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:37:15:3715 info: Starting KHConstruct server...
+2026-02-02 10:37:15:3715 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:37:15:3715 info: Database initialized
+2026-02-02 10:37:15:3715 info: All migrations completed successfully
+2026-02-02 10:37:15:3715 info: Database migrations completed
+2026-02-02 10:37:15:3715 info: Starting database seeding...
+2026-02-02 10:37:15:3715 info: ✓ Standard UK costs already seeded
+2026-02-02 10:37:15:3715 info: ✓ BCIS database already seeded
+2026-02-02 10:37:15:3715 info: ✓ Spons database already seeded
+2026-02-02 10:37:15:3715 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 10:37:15:3715 info: ✓ Database seeding completed
+2026-02-02 10:37:15:3715 info: Database seeding completed
+2026-02-02 10:37:15:3715 info: ✓ Server running on http://localhost:3000
+2026-02-02 10:37:15:3715 info: Environment: development
+2026-02-02 10:37:15:3715 info: Frontend URL: http://localhost:5173
+2026-02-02 10:37:15:3715 info: Press Ctrl+C to stop
+2026-02-02 10:37:23:3723 info: Database connection closed
+2026-02-02 10:37:26:3726 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:37:26:3726 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:37:26:3726 info: Starting KHConstruct server...
+2026-02-02 10:37:26:3726 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:37:26:3726 info: Database initialized
+2026-02-02 10:37:26:3726 info: All migrations completed successfully
+2026-02-02 10:37:26:3726 info: Database migrations completed
+2026-02-02 10:37:26:3726 info: Starting database seeding...
+2026-02-02 10:37:26:3726 info: ✓ Standard UK costs already seeded
+2026-02-02 10:37:26:3726 info: ✓ BCIS database already seeded
+2026-02-02 10:37:26:3726 info: ✓ Spons database already seeded
+2026-02-02 10:37:26:3726 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 10:37:26:3726 info: ✓ Database seeding completed
+2026-02-02 10:37:26:3726 info: Database seeding completed
+2026-02-02 10:37:26:3726 info: ✓ Server running on http://localhost:3000
+2026-02-02 10:37:26:3726 info: Environment: development
+2026-02-02 10:37:26:3726 info: Frontend URL: http://localhost:5173
+2026-02-02 10:37:26:3726 info: Press Ctrl+C to stop
+2026-02-02 10:37:40:3740 info: User logged in: admin
+2026-02-02 10:37:40:3740 info: User logged in: admin
+2026-02-02 10:39:00:390 info: User logged in: admin
+2026-02-02 10:39:00:390 info: User logged in: admin
+2026-02-02 10:39:54:3954 info: User logged in: admin
+2026-02-02 10:39:54:3954 info: User logged in: admin
+2026-02-02 10:55:56:5556 info: Database connection closed
+2026-02-02 10:55:59:5559 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:55:59:5559 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:55:59:5559 info: Starting KHConstruct server...
+2026-02-02 10:55:59:5559 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 10:55:59:5559 info: Database initialized
+2026-02-02 10:55:59:5559 info: All migrations completed successfully
+2026-02-02 10:55:59:5559 info: Database migrations completed
+2026-02-02 10:55:59:5559 info: Starting database seeding...
+2026-02-02 10:55:59:5559 info: ✓ Standard UK costs already seeded
+2026-02-02 10:55:59:5559 info: ✓ BCIS database already seeded
+2026-02-02 10:55:59:5559 info: ✓ Spons database already seeded
+2026-02-02 10:55:59:5559 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 10:55:59:5559 info: ✓ Database seeding completed
+2026-02-02 10:55:59:5559 info: Database seeding completed
+2026-02-02 10:55:59:5559 info: ✓ Server running on http://localhost:3000
+2026-02-02 10:55:59:5559 info: Environment: development
+2026-02-02 10:55:59:5559 info: Frontend URL: http://localhost:5173
+2026-02-02 10:55:59:5559 info: Press Ctrl+C to stop
+2026-02-02 11:00:08:08 info: User logged in: admin
+2026-02-02 11:00:08:08 info: User logged in: admin
+2026-02-02 11:00:15:015 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:00:15:015 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:00:55:055 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 11:00:55:055 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 11:02:39:239 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:02:39:239 warn: Invalid token for GET /2/estimates/by-bcis-element
+2026-02-02 11:05:28:528 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 11:05:28:528 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 11:23:54:2354 info: Database connection closed
+2026-02-02 11:23:55:2355 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:23:55:2355 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:23:55:2355 info: Starting KHConstruct server...
+2026-02-02 11:23:55:2355 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:23:55:2355 info: Database initialized
+2026-02-02 11:23:55:2355 info: Running migration: 004_add_estimate_cost_components.sql
+2026-02-02 11:23:55:2355 info: ✓ Migration completed: 004_add_estimate_cost_components.sql
+2026-02-02 11:23:55:2355 info: All migrations completed successfully
+2026-02-02 11:23:55:2355 info: Database migrations completed
+2026-02-02 11:23:55:2355 info: Starting database seeding...
+2026-02-02 11:23:55:2355 info: ✓ Standard UK costs already seeded
+2026-02-02 11:23:55:2355 info: ✓ BCIS database already seeded
+2026-02-02 11:23:55:2355 info: ✓ Spons database already seeded
+2026-02-02 11:23:55:2355 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 11:23:55:2355 info: ✓ Database seeding completed
+2026-02-02 11:23:55:2355 info: Database seeding completed
+2026-02-02 11:23:55:2355 info: ✓ Server running on http://localhost:3000
+2026-02-02 11:23:55:2355 info: Environment: development
+2026-02-02 11:23:55:2355 info: Frontend URL: http://localhost:5173
+2026-02-02 11:23:55:2355 info: Press Ctrl+C to stop
+2026-02-02 11:24:13:2413 info: Database connection closed
+2026-02-02 11:24:14:2414 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:24:14:2414 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:24:14:2414 info: Starting KHConstruct server...
+2026-02-02 11:24:14:2414 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:24:14:2414 info: Database initialized
+2026-02-02 11:24:14:2414 info: All migrations completed successfully
+2026-02-02 11:24:14:2414 info: Database migrations completed
+2026-02-02 11:24:14:2414 info: Starting database seeding...
+2026-02-02 11:24:14:2414 info: ✓ Standard UK costs already seeded
+2026-02-02 11:24:14:2414 info: ✓ BCIS database already seeded
+2026-02-02 11:24:14:2414 info: ✓ Spons database already seeded
+2026-02-02 11:24:14:2414 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 11:24:14:2414 info: ✓ Database seeding completed
+2026-02-02 11:24:14:2414 info: Database seeding completed
+2026-02-02 11:24:14:2414 info: ✓ Server running on http://localhost:3000
+2026-02-02 11:24:14:2414 info: Environment: development
+2026-02-02 11:24:14:2414 info: Frontend URL: http://localhost:5173
+2026-02-02 11:24:14:2414 info: Press Ctrl+C to stop
+2026-02-02 11:24:27:2427 info: Database connection closed
+2026-02-02 11:24:27:2427 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:24:27:2427 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:24:27:2427 info: Starting KHConstruct server...
+2026-02-02 11:24:27:2427 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:24:27:2427 info: Database initialized
+2026-02-02 11:24:27:2427 info: All migrations completed successfully
+2026-02-02 11:24:27:2427 info: Database migrations completed
+2026-02-02 11:24:27:2427 info: Starting database seeding...
+2026-02-02 11:24:27:2427 info: ✓ Standard UK costs already seeded
+2026-02-02 11:24:27:2427 info: ✓ BCIS database already seeded
+2026-02-02 11:24:27:2427 info: ✓ Spons database already seeded
+2026-02-02 11:24:27:2427 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 11:24:27:2427 info: ✓ Database seeding completed
+2026-02-02 11:24:27:2427 info: Database seeding completed
+2026-02-02 11:24:27:2427 info: ✓ Server running on http://localhost:3000
+2026-02-02 11:24:27:2427 info: Environment: development
+2026-02-02 11:24:27:2427 info: Frontend URL: http://localhost:5173
+2026-02-02 11:24:27:2427 info: Press Ctrl+C to stop
+2026-02-02 11:24:33:2433 info: Database connection closed
+2026-02-02 11:24:33:2433 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:24:33:2433 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:24:33:2433 info: Starting KHConstruct server...
+2026-02-02 11:24:33:2433 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:24:33:2433 info: Database initialized
+2026-02-02 11:24:33:2433 info: All migrations completed successfully
+2026-02-02 11:24:33:2433 info: Database migrations completed
+2026-02-02 11:24:33:2433 info: Starting database seeding...
+2026-02-02 11:24:33:2433 info: ✓ Standard UK costs already seeded
+2026-02-02 11:24:33:2433 info: ✓ BCIS database already seeded
+2026-02-02 11:24:33:2433 info: ✓ Spons database already seeded
+2026-02-02 11:24:33:2433 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 11:24:33:2433 info: ✓ Database seeding completed
+2026-02-02 11:24:33:2433 info: Database seeding completed
+2026-02-02 11:24:33:2433 info: ✓ Server running on http://localhost:3000
+2026-02-02 11:24:33:2433 info: Environment: development
+2026-02-02 11:24:33:2433 info: Frontend URL: http://localhost:5173
+2026-02-02 11:24:33:2433 info: Press Ctrl+C to stop
+2026-02-02 11:24:47:2447 info: Database connection closed
+2026-02-02 11:24:48:2448 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:24:48:2448 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:24:48:2448 info: Starting KHConstruct server...
+2026-02-02 11:24:48:2448 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:24:48:2448 info: Database initialized
+2026-02-02 11:24:48:2448 info: All migrations completed successfully
+2026-02-02 11:24:48:2448 info: Database migrations completed
+2026-02-02 11:24:48:2448 info: Starting database seeding...
+2026-02-02 11:24:48:2448 info: ✓ Standard UK costs already seeded
+2026-02-02 11:24:48:2448 info: ✓ BCIS database already seeded
+2026-02-02 11:24:48:2448 info: ✓ Spons database already seeded
+2026-02-02 11:24:48:2448 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 11:24:48:2448 info: ✓ Database seeding completed
+2026-02-02 11:24:48:2448 info: Database seeding completed
+2026-02-02 11:24:48:2448 info: ✓ Server running on http://localhost:3000
+2026-02-02 11:24:48:2448 info: Environment: development
+2026-02-02 11:24:48:2448 info: Frontend URL: http://localhost:5173
+2026-02-02 11:24:48:2448 info: Press Ctrl+C to stop
+2026-02-02 11:25:01:251 info: Database connection closed
+2026-02-02 11:25:04:254 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:25:04:254 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:25:04:254 info: Starting KHConstruct server...
+2026-02-02 11:25:04:254 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:25:04:254 info: Database initialized
+2026-02-02 11:25:04:254 info: All migrations completed successfully
+2026-02-02 11:25:04:254 info: Database migrations completed
+2026-02-02 11:25:04:254 info: Starting database seeding...
+2026-02-02 11:25:04:254 info: ✓ Standard UK costs already seeded
+2026-02-02 11:25:04:254 info: ✓ BCIS database already seeded
+2026-02-02 11:25:04:254 info: ✓ Spons database already seeded
+2026-02-02 11:25:04:254 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 11:25:04:254 info: ✓ Database seeding completed
+2026-02-02 11:25:04:254 info: Database seeding completed
+2026-02-02 11:25:04:254 info: ✓ Server running on http://localhost:3000
+2026-02-02 11:25:04:254 info: Environment: development
+2026-02-02 11:25:04:254 info: Frontend URL: http://localhost:5173
+2026-02-02 11:25:04:254 info: Press Ctrl+C to stop
+2026-02-02 11:25:05:255 warn: Invalid token for GET /1
+2026-02-02 11:25:05:255 warn: Invalid token for GET /1/estimates
+2026-02-02 11:25:05:255 warn: Invalid token for GET /
+2026-02-02 11:25:05:255 warn: Invalid token for GET /1/estimates
+2026-02-02 11:25:05:255 warn: Invalid token for GET /
+2026-02-02 11:25:05:255 warn: Invalid token for GET /
+2026-02-02 11:25:05:255 warn: Invalid token for GET /
+2026-02-02 11:25:05:255 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 11:25:05:255 warn: Invalid token for GET /
+2026-02-02 11:25:05:255 warn: Invalid token for GET /1
+2026-02-02 11:25:05:255 warn: Invalid token for GET /
+2026-02-02 11:25:05:255 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 11:25:05:255 info: Token refreshed for user: admin
+2026-02-02 11:25:05:255 info: Token refreshed
+2026-02-02 11:25:05:255 info: Token refreshed for user: admin
+2026-02-02 11:25:05:255 info: Token refreshed
+2026-02-02 11:25:06:256 info: Token refreshed for user: admin
+2026-02-02 11:25:06:256 info: Token refreshed
+2026-02-02 11:25:06:256 info: Token refreshed for user: admin
+2026-02-02 11:25:06:256 info: Token refreshed
+2026-02-02 11:25:06:256 info: Token refreshed for user: admin
+2026-02-02 11:25:06:256 info: Token refreshed
+2026-02-02 11:25:06:256 info: Token refreshed for user: admin
+2026-02-02 11:25:06:256 info: Token refreshed
+2026-02-02 11:25:06:256 info: Token refreshed for user: admin
+2026-02-02 11:25:06:256 info: Token refreshed
+2026-02-02 11:25:06:256 info: Token refreshed for user: admin
+2026-02-02 11:25:06:256 info: Token refreshed
+2026-02-02 11:25:06:256 info: Token refreshed for user: admin
+2026-02-02 11:25:06:256 info: Token refreshed
+2026-02-02 11:25:06:256 info: Token refreshed for user: admin
+2026-02-02 11:25:06:256 info: Token refreshed
+2026-02-02 11:25:35:2535 info: User logged in: admin
+2026-02-02 11:25:35:2535 info: User logged in: admin
+2026-02-02 11:25:35:2535 error: Error recalculating component totals for estimate 1: SqliteError: no such column: quantity
+2026-02-02 11:25:35:2535 error: Error creating cost component: no such column: quantity
+2026-02-02 11:25:45:2545 info: Database connection closed
+2026-02-02 11:25:45:2545 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:25:45:2545 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:25:45:2545 info: Starting KHConstruct server...
+2026-02-02 11:25:45:2545 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:25:45:2545 info: Database initialized
+2026-02-02 11:25:45:2545 info: All migrations completed successfully
+2026-02-02 11:25:45:2545 info: Database migrations completed
+2026-02-02 11:25:45:2545 info: Starting database seeding...
+2026-02-02 11:25:45:2545 info: ✓ Standard UK costs already seeded
+2026-02-02 11:25:45:2545 info: ✓ BCIS database already seeded
+2026-02-02 11:25:45:2545 info: ✓ Spons database already seeded
+2026-02-02 11:25:45:2545 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 11:25:45:2545 info: ✓ Database seeding completed
+2026-02-02 11:25:45:2545 info: Database seeding completed
+2026-02-02 11:25:45:2545 info: ✓ Server running on http://localhost:3000
+2026-02-02 11:25:45:2545 info: Environment: development
+2026-02-02 11:25:45:2545 info: Frontend URL: http://localhost:5173
+2026-02-02 11:25:45:2545 info: Press Ctrl+C to stop
+2026-02-02 11:26:15:2615 info: Database connection closed
+2026-02-02 11:26:18:2618 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:26:18:2618 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:26:18:2618 info: Starting KHConstruct server...
+2026-02-02 11:26:18:2618 info: Database initialized at /Users/martinhamp/Herd/QSCostingPro/server/database/khconstruct.db
+2026-02-02 11:26:18:2618 info: Database initialized
+2026-02-02 11:26:18:2618 info: All migrations completed successfully
+2026-02-02 11:26:18:2618 info: Database migrations completed
+2026-02-02 11:26:18:2618 info: Starting database seeding...
+2026-02-02 11:26:18:2618 info: ✓ Standard UK costs already seeded
+2026-02-02 11:26:18:2618 info: ✓ BCIS database already seeded
+2026-02-02 11:26:18:2618 info: ✓ Spons database already seeded
+2026-02-02 11:26:18:2618 info: ✓ NRM 2 data already seeded, skipping
+2026-02-02 11:26:18:2618 info: ✓ Database seeding completed
+2026-02-02 11:26:18:2618 info: Database seeding completed
+2026-02-02 11:26:18:2618 info: ✓ Server running on http://localhost:3000
+2026-02-02 11:26:18:2618 info: Environment: development
+2026-02-02 11:26:18:2618 info: Frontend URL: http://localhost:5173
+2026-02-02 11:26:18:2618 info: Press Ctrl+C to stop
+2026-02-02 11:27:23:2723 info: User logged in: admin
+2026-02-02 11:27:23:2723 info: User logged in: admin
+2026-02-02 11:27:23:2723 error: Error creating cost component: SqliteError: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
+2026-02-02 11:27:23:2723 error: Error creating cost component: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
+2026-02-02 11:27:35:2735 info: User logged in: admin
+2026-02-02 11:27:35:2735 info: User logged in: admin
+2026-02-02 11:27:46:2746 info: User logged in: admin
+2026-02-02 11:27:46:2746 info: User logged in: admin
+2026-02-02 11:28:00:280 info: User logged in: admin
+2026-02-02 11:28:00:280 info: User logged in: admin
+2026-02-02 11:28:00:280 error: Error creating cost component: SqliteError: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
+2026-02-02 11:28:00:280 error: Error creating cost component: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
+2026-02-02 11:28:19:2819 info: User logged in: admin
+2026-02-02 11:28:19:2819 info: User logged in: admin
+2026-02-02 11:28:19:2819 error: Error creating cost component: SqliteError: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
+2026-02-02 11:28:19:2819 error: Error creating cost component: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
+2026-02-02 11:28:33:2833 warn: Invalid token for POST /1/estimates/1/cost-components
+2026-02-02 11:28:46:2846 warn: Invalid token for POST /1/estimates/1/cost-components
+2026-02-02 11:29:07:297 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 11:29:17:2917 warn: Invalid token for GET /1/estimates/by-bcis-element
+2026-02-02 11:29:22:2922 warn: Invalid token for GET /1/estimates/by-bcis-element

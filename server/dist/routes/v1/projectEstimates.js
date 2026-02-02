@@ -4,7 +4,7 @@ import PDFDocument from 'pdfkit';
 import { verifyAuth } from '../../middleware/auth.js';
 import { authorize } from '../../middleware/authorize.js';
 import { validate } from '../../middleware/validate.js';
-import { projectEstimatesRepository, projectsRepository } from '../../repositories/projectRepository.js';
+import { projectEstimatesRepository, projectsRepository, costComponentsRepository } from '../../repositories/projectRepository.js';
 import { costItemsRepository } from '../../repositories/costRepository.js';
 import { calculateProjectTotal } from '../../services/estimationEngine.js';
 import logger from '../../utils/logger.js';
@@ -87,6 +87,53 @@ router.get('/:projectId/estimates', verifyAuth, (req, res) => {
         res.status(500).json({
             success: false,
             error: 'Failed to fetch estimates',
+        });
+    }
+});
+/**
+ * GET /api/v1/projects/:projectId/estimates/by-bcis-element
+ * Get all estimates grouped by BCIS element for elemental BoQ output
+ */
+router.get('/:projectId/estimates/by-bcis-element', verifyAuth, (req, res) => {
+    try {
+        const { projectId } = req.params;
+        const projectIdNum = parseInt(projectId, 10);
+        if (isNaN(projectIdNum)) {
+            res.status(400).json({
+                success: false,
+                error: 'Invalid project ID',
+            });
+            return;
+        }
+        // Check if project exists
+        const project = projectsRepository.getById(projectIdNum);
+        if (!project) {
+            res.status(404).json({
+                success: false,
+                error: 'Project not found',
+            });
+            return;
+        }
+        // Check access
+        if (req.user?.role === 'viewer' && project.created_by !== req.user.userId) {
+            res.status(403).json({
+                success: false,
+                error: 'Access denied',
+            });
+            return;
+        }
+        // Get estimates grouped by BCIS element
+        const groupedEstimates = projectEstimatesRepository.getEstimatesByBCISElement(projectIdNum);
+        res.json({
+            success: true,
+            data: groupedEstimates,
+        });
+    }
+    catch (error) {
+        logger.error(`Error fetching estimates by BCIS element: ${error.message}`);
+        res.status(500).json({
+            success: false,
+            error: 'Failed to fetch estimates by BCIS element',
         });
     }
 });
@@ -583,6 +630,231 @@ router.get('/:projectId/estimates/export-pdf', verifyAuth, (req, res) => {
         res.status(500).json({
             success: false,
             error: 'Failed to generate PDF',
+        });
+    }
+});
+/**
+ * POST /api/v1/projects/:projectId/estimates/:estimateId/cost-components
+ * Add a cost component (material, labor, or plant) to an estimate
+ */
+router.post('/:projectId/estimates/:estimateId/cost-components', verifyAuth, authorize('admin', 'estimator'), (req, res) => {
+    try {
+        const { projectId, estimateId } = req.params;
+        const { component_type, unit_rate, waste_factor } = req.body;
+        const projectIdNum = parseInt(projectId, 10);
+        const estimateIdNum = parseInt(estimateId, 10);
+        if (isNaN(projectIdNum) || isNaN(estimateIdNum)) {
+            res.status(400).json({
+                success: false,
+                error: 'Invalid project or estimate ID',
+            });
+            return;
+        }
+        // Validate input
+        if (!['material', 'labor', 'plant'].includes(component_type)) {
+            res.status(400).json({
+                success: false,
+                error: 'Invalid component type. Must be material, labor, or plant',
+            });
+            return;
+        }
+        if (typeof unit_rate !== 'number' || unit_rate < 0) {
+            res.status(400).json({
+                success: false,
+                error: 'Unit rate must be a non-negative number',
+            });
+            return;
+        }
+        if (typeof waste_factor !== 'number' || waste_factor <= 0) {
+            res.status(400).json({
+                success: false,
+                error: 'Waste factor must be a positive number (e.g., 1.05 for 5% waste)',
+            });
+            return;
+        }
+        // Check project exists
+        const project = projectsRepository.getById(projectIdNum);
+        if (!project) {
+            res.status(404).json({
+                success: false,
+                error: 'Project not found',
+            });
+            return;
+        }
+        // Check estimate exists
+        const estimate = projectEstimatesRepository.getById(estimateIdNum);
+        if (!estimate || estimate.project_id !== projectIdNum) {
+            res.status(404).json({
+                success: false,
+                error: 'Estimate not found',
+            });
+            return;
+        }
+        // Create cost component
+        const component = costComponentsRepository.create({
+            estimate_id: estimateIdNum,
+            component_type,
+            unit_rate,
+            waste_factor,
+        });
+        // Recalculate component totals
+        costComponentsRepository.recalculateComponentTotals(estimateIdNum);
+        res.status(201).json({
+            success: true,
+            data: component,
+        });
+    }
+    catch (error) {
+        logger.error(`Error creating cost component: ${error.message}`);
+        res.status(500).json({
+            success: false,
+            error: 'Failed to create cost component',
+        });
+    }
+});
+/**
+ * PATCH /api/v1/projects/:projectId/estimates/:estimateId/cost-components/:componentId
+ * Update a cost component (unit rate and/or waste factor)
+ */
+router.patch('/:projectId/estimates/:estimateId/cost-components/:componentId', verifyAuth, authorize('admin', 'estimator'), (req, res) => {
+    try {
+        const { projectId, estimateId, componentId } = req.params;
+        const { unit_rate, waste_factor } = req.body;
+        const projectIdNum = parseInt(projectId, 10);
+        const estimateIdNum = parseInt(estimateId, 10);
+        const componentIdNum = parseInt(componentId, 10);
+        if (isNaN(projectIdNum) || isNaN(estimateIdNum) || isNaN(componentIdNum)) {
+            res.status(400).json({
+                success: false,
+                error: 'Invalid ID',
+            });
+            return;
+        }
+        // Check project exists
+        const project = projectsRepository.getById(projectIdNum);
+        if (!project) {
+            res.status(404).json({
+                success: false,
+                error: 'Project not found',
+            });
+            return;
+        }
+        // Check estimate exists
+        const estimate = projectEstimatesRepository.getById(estimateIdNum);
+        if (!estimate || estimate.project_id !== projectIdNum) {
+            res.status(404).json({
+                success: false,
+                error: 'Estimate not found',
+            });
+            return;
+        }
+        // Check component exists
+        const component = costComponentsRepository.getById(componentIdNum);
+        if (!component || component.estimate_id !== estimateIdNum) {
+            res.status(404).json({
+                success: false,
+                error: 'Cost component not found',
+            });
+            return;
+        }
+        // Validate input if provided
+        if (unit_rate !== undefined && (typeof unit_rate !== 'number' || unit_rate < 0)) {
+            res.status(400).json({
+                success: false,
+                error: 'Unit rate must be a non-negative number',
+            });
+            return;
+        }
+        if (waste_factor !== undefined && (typeof waste_factor !== 'number' || waste_factor <= 0)) {
+            res.status(400).json({
+                success: false,
+                error: 'Waste factor must be a positive number',
+            });
+            return;
+        }
+        // Update component
+        const updated = costComponentsRepository.update(componentIdNum, {
+            unit_rate,
+            waste_factor,
+        });
+        // Recalculate component totals
+        costComponentsRepository.recalculateComponentTotals(estimateIdNum);
+        res.json({
+            success: true,
+            data: updated,
+        });
+    }
+    catch (error) {
+        logger.error(`Error updating cost component: ${error.message}`);
+        res.status(500).json({
+            success: false,
+            error: 'Failed to update cost component',
+        });
+    }
+});
+/**
+ * DELETE /api/v1/projects/:projectId/estimates/:estimateId/cost-components/:componentId
+ * Remove a cost component from an estimate
+ */
+router.delete('/:projectId/estimates/:estimateId/cost-components/:componentId', verifyAuth, authorize('admin', 'estimator'), (req, res) => {
+    try {
+        const { projectId, estimateId, componentId } = req.params;
+        const projectIdNum = parseInt(projectId, 10);
+        const estimateIdNum = parseInt(estimateId, 10);
+        const componentIdNum = parseInt(componentId, 10);
+        if (isNaN(projectIdNum) || isNaN(estimateIdNum) || isNaN(componentIdNum)) {
+            res.status(400).json({
+                success: false,
+                error: 'Invalid ID',
+            });
+            return;
+        }
+        // Check project exists
+        const project = projectsRepository.getById(projectIdNum);
+        if (!project) {
+            res.status(404).json({
+                success: false,
+                error: 'Project not found',
+            });
+            return;
+        }
+        // Check estimate exists
+        const estimate = projectEstimatesRepository.getById(estimateIdNum);
+        if (!estimate || estimate.project_id !== projectIdNum) {
+            res.status(404).json({
+                success: false,
+                error: 'Estimate not found',
+            });
+            return;
+        }
+        // Check component exists
+        const component = costComponentsRepository.getById(componentIdNum);
+        if (!component || component.estimate_id !== estimateIdNum) {
+            res.status(404).json({
+                success: false,
+                error: 'Cost component not found',
+            });
+            return;
+        }
+        // Delete component
+        const deleted = costComponentsRepository.delete(componentIdNum);
+        if (!deleted) {
+            res.status(500).json({
+                success: false,
+                error: 'Failed to delete cost component',
+            });
+            return;
+        }
+        res.json({
+            success: true,
+            message: 'Cost component deleted successfully',
+        });
+    }
+    catch (error) {
+        logger.error(`Error deleting cost component: ${error.message}`);
+        res.status(500).json({
+            success: false,
+            error: 'Failed to delete cost component',
         });
     }
 });

@@ -52,23 +52,44 @@ export interface ProjectAttachment {
   uploaded_at: string;
 }
 
-// BCIS Element Grouping Types
-export interface BCISElementItem {
+// Cost Component Types (QS-level detail)
+export interface CostComponent {
+  id: number;
+  estimate_id: number;
+  component_type: 'material' | 'labor' | 'plant';
+  unit_rate: number;
+  waste_factor: number;
+  total: number; // calculated: quantity × unit_rate × waste_factor
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+// BCIS Element Grouping Types (with detailed cost components)
+export interface BCISDetailedItem {
   id: number; // estimate id
   description: string;
   quantity: number;
   unit: string;
-  rate: number; // unit_cost_override or custom_unit_rate or material_cost
-  total: number; // line_total or calculated
   nrm2_code?: string;
   notes?: string;
+
+  // Cost components for this item
+  components: {
+    material?: CostComponent;
+    labor?: CostComponent;
+    plant?: CostComponent;
+  };
+
+  // Calculated totals
+  subtotal: number; // sum of all component totals
 }
 
 export interface BCISElementGroup {
   bcis_code: string; // 'BCIS-A', 'BCIS-B', etc.
   bcis_name: string; // 'Substructure', 'Superstructure', etc.
   sort_order: number; // For proper element ordering
-  items: BCISElementItem[];
+  items: BCISDetailedItem[];
   subtotal: number; // Sum of all item totals
   item_count: number;
 }
@@ -554,20 +575,36 @@ export const projectEstimatesRepository = {
         }
 
         const group = groupedMap.get(bcisKey)!;
+
+        // Fetch cost components for this estimate
+        const components: any = {};
+        const costComponents = costComponentsRepository.getByEstimateId(row.id);
+        costComponents.forEach((component) => {
+          if (component.is_active) {
+            components[component.component_type] = component;
+          }
+        });
+
+        // Calculate subtotal from components
+        let itemSubtotal = 0;
+        Object.values(components).forEach((comp: any) => {
+          itemSubtotal += comp.total;
+        });
+
         group.items.push({
           id: row.id,
           description: row.description,
           quantity: row.quantity,
           unit: row.unit,
-          rate: row.rate,
-          total: row.total,
           nrm2_code: row.nrm2_code,
           notes: row.notes,
+          components,
+          subtotal: itemSubtotal,
         });
-        group.subtotal += row.total;
+        group.subtotal += itemSubtotal;
         group.item_count++;
         totalItems++;
-        grandTotal += row.total;
+        grandTotal += itemSubtotal;
       });
 
       // Convert map to sorted array
@@ -583,6 +620,167 @@ export const projectEstimatesRepository = {
       };
     } catch (error) {
       logger.error(`Error fetching estimates by BCIS element for project ${projectId}: ${error}`);
+      throw error;
+    }
+  },
+};
+
+// COST COMPONENTS REPOSITORY (for QS-level detail with material/labor/plant)
+export const costComponentsRepository = {
+  /**
+   * Add a cost component to an estimate (material, labor, or plant)
+   */
+  create: (data: {
+    estimate_id: number;
+    component_type: 'material' | 'labor' | 'plant';
+    unit_rate: number;
+    waste_factor: number;
+  }): CostComponent => {
+    try {
+      const db = getDatabase();
+      const stmt = db.prepare(`
+        INSERT INTO estimate_cost_components (
+          estimate_id, component_type, unit_rate, waste_factor
+        ) VALUES (?, ?, ?, ?)
+      `);
+
+      const result = stmt.run(
+        data.estimate_id,
+        data.component_type,
+        data.unit_rate,
+        data.waste_factor
+      );
+
+      const created = costComponentsRepository.getById(result.lastInsertRowid as number);
+      if (!created) throw new Error('Failed to create cost component');
+      return created;
+    } catch (error) {
+      logger.error(`Error creating cost component: ${error}`);
+      throw error;
+    }
+  },
+
+  /**
+   * Get a cost component by ID
+   */
+  getById: (id: number): CostComponent | null => {
+    try {
+      const db = getDatabase();
+      const stmt = db.prepare('SELECT * FROM estimate_cost_components WHERE id = ?');
+      const result = stmt.get(id) as CostComponent | undefined;
+      return result || null;
+    } catch (error) {
+      logger.error(`Error fetching cost component ${id}: ${error}`);
+      throw error;
+    }
+  },
+
+  /**
+   * Get all cost components for an estimate
+   */
+  getByEstimateId: (estimateId: number): CostComponent[] => {
+    try {
+      const db = getDatabase();
+      const stmt = db.prepare(`
+        SELECT * FROM estimate_cost_components
+        WHERE estimate_id = ? AND is_active = 1
+        ORDER BY component_type ASC
+      `);
+      return stmt.all(estimateId) as CostComponent[];
+    } catch (error) {
+      logger.error(`Error fetching cost components for estimate ${estimateId}: ${error}`);
+      throw error;
+    }
+  },
+
+  /**
+   * Update a cost component (unit rate and/or waste factor)
+   */
+  update: (
+    id: number,
+    data: {
+      unit_rate?: number;
+      waste_factor?: number;
+    }
+  ): CostComponent => {
+    try {
+      const db = getDatabase();
+      const updates: string[] = [];
+      const values: any[] = [];
+
+      if (data.unit_rate !== undefined) {
+        updates.push('unit_rate = ?');
+        values.push(data.unit_rate);
+      }
+      if (data.waste_factor !== undefined) {
+        updates.push('waste_factor = ?');
+        values.push(data.waste_factor);
+      }
+
+      if (updates.length === 0) {
+        const existing = costComponentsRepository.getById(id);
+        if (!existing) throw new Error('Cost component not found');
+        return existing;
+      }
+
+      updates.push('updated_at = CURRENT_TIMESTAMP');
+      values.push(id);
+
+      const stmt = db.prepare(`
+        UPDATE estimate_cost_components
+        SET ${updates.join(', ')}
+        WHERE id = ?
+      `);
+
+      stmt.run(...values);
+
+      const updated = costComponentsRepository.getById(id);
+      if (!updated) throw new Error('Failed to update cost component');
+      return updated;
+    } catch (error) {
+      logger.error(`Error updating cost component ${id}: ${error}`);
+      throw error;
+    }
+  },
+
+  /**
+   * Delete (soft delete) a cost component
+   */
+  delete: (id: number): boolean => {
+    try {
+      const db = getDatabase();
+      const stmt = db.prepare('UPDATE estimate_cost_components SET is_active = 0 WHERE id = ?');
+      const result = stmt.run(id);
+      return (result.changes || 0) > 0;
+    } catch (error) {
+      logger.error(`Error deleting cost component ${id}: ${error}`);
+      throw error;
+    }
+  },
+
+  /**
+   * Calculate totals for all components of an estimate
+   * Updates the total field based on quantity × unit_rate × waste_factor
+   */
+  recalculateComponentTotals: (estimateId: number): void => {
+    try {
+      const db = getDatabase();
+
+      // Get the estimate to get quantity
+      const estimateStmt = db.prepare('SELECT quantity FROM project_estimates WHERE id = ?');
+      const estimate = estimateStmt.get(estimateId) as { quantity: number } | undefined;
+      if (!estimate) throw new Error('Estimate not found');
+
+      // Update all components with calculated totals
+      const updateStmt = db.prepare(`
+        UPDATE estimate_cost_components
+        SET total = ? * unit_rate * waste_factor
+        WHERE estimate_id = ? AND is_active = 1
+      `);
+
+      updateStmt.run(estimate.quantity, estimateId);
+    } catch (error) {
+      logger.error(`Error recalculating component totals for estimate ${estimateId}: ${error}`);
       throw error;
     }
   },

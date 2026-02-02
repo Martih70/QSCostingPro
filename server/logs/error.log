@@ -162,3 +162,11 @@
 2026-02-01 19:57:00:570 error: Login failed: Error: Invalid username or password
 2026-02-01 19:57:08:578 error: Login failed: Error: Invalid username or password
 2026-02-01 19:57:08:578 error: Login failed: Error: Invalid username or password
+2026-02-02 11:25:35:2535 error: Error recalculating component totals for estimate 1: SqliteError: no such column: quantity
+2026-02-02 11:25:35:2535 error: Error creating cost component: no such column: quantity
+2026-02-02 11:27:23:2723 error: Error creating cost component: SqliteError: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
+2026-02-02 11:27:23:2723 error: Error creating cost component: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
+2026-02-02 11:28:00:280 error: Error creating cost component: SqliteError: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
+2026-02-02 11:28:00:280 error: Error creating cost component: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
+2026-02-02 11:28:19:2819 error: Error creating cost component: SqliteError: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
+2026-02-02 11:28:19:2819 error: Error creating cost component: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
