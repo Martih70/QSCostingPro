@@ -52,6 +52,34 @@ export interface ProjectAttachment {
   uploaded_at: string;
 }
 
+// BCIS Element Grouping Types
+export interface BCISElementItem {
+  id: number; // estimate id
+  description: string;
+  quantity: number;
+  unit: string;
+  rate: number; // unit_cost_override or custom_unit_rate or material_cost
+  total: number; // line_total or calculated
+  nrm2_code?: string;
+  notes?: string;
+}
+
+export interface BCISElementGroup {
+  bcis_code: string; // 'BCIS-A', 'BCIS-B', etc.
+  bcis_name: string; // 'Substructure', 'Superstructure', etc.
+  sort_order: number; // For proper element ordering
+  items: BCISElementItem[];
+  subtotal: number; // Sum of all item totals
+  item_count: number;
+}
+
+export interface BCISGroupedEstimates {
+  project_id: number;
+  elements: BCISElementGroup[];
+  total_items: number;
+  grand_total: number;
+}
+
 // PROJECTS REPOSITORY
 export const projectsRepository = {
   getAll: (userId?: number, role?: string): Project[] => {
@@ -459,6 +487,102 @@ export const projectEstimatesRepository = {
       return result || null;
     } catch (error) {
       logger.error(`Error fetching estimate for project ${projectId} and item ${costItemId}: ${error}`);
+      throw error;
+    }
+  },
+
+  /**
+   * Get all estimates grouped by BCIS element
+   * Handles both library items (via cost_items) and custom items (via category_id)
+   */
+  getEstimatesByBCISElement: (projectId: number): BCISGroupedEstimates => {
+    try {
+      const db = getDatabase();
+
+      // Query that joins project_estimates with cost_items and cost_categories for BCIS data
+      // For custom items without cost_item_id, uses the category_id directly
+      const stmt = db.prepare(`
+        SELECT
+          pe.id,
+          pe.quantity,
+          COALESCE(pe.custom_description, ci.description, 'Unknown Item') as description,
+          COALESCE(pe.custom_unit, u.code, 'nr') as unit,
+          COALESCE(pe.unit_cost_override, pe.custom_unit_rate, ci.material_cost, 0) as rate,
+          COALESCE(pe.line_total,
+            CASE
+              WHEN pe.custom_unit_rate IS NOT NULL THEN pe.custom_unit_rate * pe.quantity
+              WHEN pe.unit_cost_override IS NOT NULL THEN pe.unit_cost_override * pe.quantity
+              ELSE (COALESCE(ci.material_cost, 0) * pe.quantity)
+            END, 0) as total,
+          pe.nrm2_code,
+          pe.notes,
+          COALESCE(cc.code, 'OTHER') as bcis_code,
+          COALESCE(cc.name, 'Other Items') as bcis_name,
+          COALESCE(cc.sort_order, 999) as sort_order
+        FROM project_estimates pe
+        LEFT JOIN cost_items ci ON pe.cost_item_id = ci.id
+        LEFT JOIN units u ON ci.unit_id = u.id
+        LEFT JOIN cost_categories cc ON
+          (ci.sub_element_id IS NOT NULL AND cc.id IN (
+            SELECT cse.category_id FROM cost_sub_elements cse WHERE cse.id = ci.sub_element_id
+          ))
+          OR (pe.cost_item_id IS NULL AND pe.category_id IS NOT NULL AND cc.id = pe.category_id)
+        WHERE pe.project_id = ? AND pe.is_active = 1
+        ORDER BY sort_order ASC, bcis_code ASC, pe.created_at ASC
+      `);
+
+      const results = stmt.all(projectId) as any[];
+
+      // Group by BCIS element
+      const groupedMap = new Map<string, BCISElementGroup>();
+      let grandTotal = 0;
+      let totalItems = 0;
+
+      results.forEach((row) => {
+        const bcisCode = row.bcis_code || 'OTHER';
+        const bcisKey = `${bcisCode}`;
+
+        if (!groupedMap.has(bcisKey)) {
+          groupedMap.set(bcisKey, {
+            bcis_code: bcisCode,
+            bcis_name: row.bcis_name,
+            sort_order: row.sort_order,
+            items: [],
+            subtotal: 0,
+            item_count: 0,
+          });
+        }
+
+        const group = groupedMap.get(bcisKey)!;
+        group.items.push({
+          id: row.id,
+          description: row.description,
+          quantity: row.quantity,
+          unit: row.unit,
+          rate: row.rate,
+          total: row.total,
+          nrm2_code: row.nrm2_code,
+          notes: row.notes,
+        });
+        group.subtotal += row.total;
+        group.item_count++;
+        totalItems++;
+        grandTotal += row.total;
+      });
+
+      // Convert map to sorted array
+      const elements = Array.from(groupedMap.values()).sort(
+        (a, b) => a.sort_order - b.sort_order
+      );
+
+      return {
+        project_id: projectId,
+        elements,
+        total_items: totalItems,
+        grand_total: grandTotal,
+      };
+    } catch (error) {
+      logger.error(`Error fetching estimates by BCIS element for project ${projectId}: ${error}`);
       throw error;
     }
   },

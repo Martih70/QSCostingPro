@@ -103,6 +103,58 @@ router.get('/:projectId/estimates', verifyAuth, (req: Request, res: Response) =>
 });
 
 /**
+ * GET /api/v1/projects/:projectId/estimates/by-bcis-element
+ * Get all estimates grouped by BCIS element for elemental BoQ output
+ */
+router.get('/:projectId/estimates/by-bcis-element', verifyAuth, (req: Request, res: Response) => {
+  try {
+    const { projectId } = req.params;
+    const projectIdNum = parseInt(projectId, 10);
+
+    if (isNaN(projectIdNum)) {
+      res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+      return;
+    }
+
+    // Check if project exists
+    const project = projectsRepository.getById(projectIdNum);
+    if (!project) {
+      res.status(404).json({
+        success: false,
+        error: 'Project not found',
+      });
+      return;
+    }
+
+    // Check access
+    if (req.user?.role === 'viewer' && project.created_by !== req.user.userId) {
+      res.status(403).json({
+        success: false,
+        error: 'Access denied',
+      });
+      return;
+    }
+
+    // Get estimates grouped by BCIS element
+    const groupedEstimates = projectEstimatesRepository.getEstimatesByBCISElement(projectIdNum);
+
+    res.json({
+      success: true,
+      data: groupedEstimates,
+    });
+  } catch (error: any) {
+    logger.error(`Error fetching estimates by BCIS element: ${error.message}`);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch estimates by BCIS element',
+    });
+  }
+});
+
+/**
  * GET /api/v1/projects/:projectId/estimates/:id
  * Get specific estimate
  */
