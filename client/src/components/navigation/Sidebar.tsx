@@ -57,6 +57,12 @@ export default function Sidebar({ onClose }: SidebarProps) {
               requiredRoles={['admin', 'estimator']}
               isNested
             />
+            <SidebarNavItem
+              to="/personal-database"
+              icon="📤"
+              label="Cost Uploader"
+              isNested
+            />
           </div>
         </CollapsibleSection>
 
@@ -109,23 +115,9 @@ export default function Sidebar({ onClose }: SidebarProps) {
         <CollapsibleSection title="Admin" icon="⚙️" searchQuery={searchQuery} requiredRoles="admin">
           <div onClick={handleNavClick} className="space-y-1">
             <SidebarNavItem
-              to="/cost-items"
-              icon="💾"
-              label="Cost Database"
-              requiredRoles="admin"
-              isNested
-            />
-            <SidebarNavItem
               to="/admin/users"
               icon="👤"
               label="User Management"
-              requiredRoles="admin"
-              isNested
-            />
-            <SidebarNavItem
-              to="/personal-database"
-              icon="📁"
-              label="Cost Uploader"
               requiredRoles="admin"
               isNested
             />
