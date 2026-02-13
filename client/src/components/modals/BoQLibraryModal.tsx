@@ -75,7 +75,7 @@ export default function BoQLibraryModal({
           item_number: item.item_number,
           description: item.description,
           unit: item.custom_unit || item.unit,
-          quantity: item.quantity || 1,
+          quantity: item.quantity || 0,
           standard_rate: item.custom_unit_rate || item.standard_rate,
         }))
       )
@@ -90,7 +90,7 @@ export default function BoQLibraryModal({
               item_number: item.item_number,
               description: item.description,
               unit: item.custom_unit || item.unit,
-              quantity: item.quantity || 1,
+              quantity: item.quantity || 0,
               standard_rate: item.custom_unit_rate || item.standard_rate,
             })
           }
