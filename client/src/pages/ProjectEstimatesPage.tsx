@@ -10,6 +10,9 @@ import BackButton from '../components/ui/BackButton'
 import UnifiedAddLineItemModal from '../components/modals/UnifiedAddLineItemModal'
 import BoQLibraryModal from '../components/modals/BoQLibraryModal'
 import LineItemsTable from '../components/estimates/LineItemsTable'
+import SectionPageView from '../components/estimates/SectionPageView'
+import CollectionPageView from '../components/estimates/CollectionPageView'
+import SummaryPageView from '../components/estimates/SummaryPageView'
 import ExportPDFButton from '../components/estimates/ExportPDFButton'
 import SaveAsTemplateDialog from '../components/estimates/SaveAsTemplateDialog'
 import TemplateLibraryModal from '../components/estimates/TemplateLibraryModal'
@@ -61,7 +64,6 @@ export default function ProjectEstimatesPage() {
   const [costItems, setCostItems] = useState<CostItem[]>([])
   const [units, setUnits] = useState<Unit[]>([])
   const [categories, setCategories] = useState<Category[]>([])
-  const [costItemsLoading, setCostItemsLoading] = useState(false)
   const [editingId, setEditingId] = useState<number | null>(null)
   const [editQuantity, setEditQuantity] = useState('')
   const [editDescription, setEditDescription] = useState('')
@@ -74,6 +76,8 @@ export default function ProjectEstimatesPage() {
   const [bcisGroupedData, setBcisGroupedData] = useState<BCISGroupedEstimates | null>(null)
   const [bcisLoading, setBcisLoading] = useState(false)
   const [showTemplateMenu, setShowTemplateMenu] = useState(false)
+  const [viewMode, setViewMode] = useState<'bcis' | 'section' | 'collection' | 'summary'>('bcis')
+  const [selectedSection, setSelectedSection] = useState<string | null>(null)
 
   // Fetch project and estimates
   useEffect(() => {
@@ -81,9 +85,7 @@ export default function ProjectEstimatesPage() {
       console.log('ProjectEstimatesPage: Loading data for project', projectId)
       fetchProjectById(projectId)
       fetchEstimates(projectId)
-      fetchCostItems()
       fetchUnits()
-      fetchCategories()
       // BCIS data fetch (don't await, let it complete in background)
       fetchBCISGroupedData()
     }
@@ -127,19 +129,6 @@ export default function ProjectEstimatesPage() {
     }
   }
 
-  // Fetch cost items from backend
-  const fetchCostItems = async () => {
-    setCostItemsLoading(true)
-    try {
-      const response = await costItemsAPI.getAll()
-      setCostItems(response.data.data || [])
-    } catch (err) {
-      console.error('Failed to fetch cost items:', err)
-    } finally {
-      setCostItemsLoading(false)
-    }
-  }
-
   // Fetch units from backend
   const fetchUnits = async () => {
     try {
@@ -147,16 +136,6 @@ export default function ProjectEstimatesPage() {
       setUnits(response.data.data || [])
     } catch (err) {
       console.error('Failed to fetch units:', err)
-    }
-  }
-
-  // Fetch categories from backend
-  const fetchCategories = async () => {
-    try {
-      const response = await costItemsAPI.getCategories()
-      setCategories(response.data.data || [])
-    } catch (err) {
-      console.error('Failed to fetch categories:', err)
     }
   }
 
@@ -193,10 +172,14 @@ export default function ProjectEstimatesPage() {
         try {
           const estimateData: any = {
             custom_description: item.description,
-            quantity: item.quantity || 1,
+            quantity: item.quantity || 0,
             custom_unit: item.unit,
             custom_unit_rate: item.standard_rate,
             notes: `From BoQ Library - ${item.item_number}`,
+            // Elemental estimate fields
+            section_name: item.section_name || 'General',
+            page_number: item.page_number || 1,
+            is_page_complete: false,
           }
           // Only add category_id if a category exists
           if (defaultCategoryId) {
@@ -282,6 +265,10 @@ export default function ProjectEstimatesPage() {
     }
   }
 
+  const handleSectionUpdateQuantity = async (estimateId: number, newQuantity: number) => {
+    await handleUpdateEstimate(estimateId, { quantity: newQuantity })
+  }
+
   const handleDeleteEstimate = async (estimateId: number) => {
     if (window.confirm('Remove this item from the estimate?')) {
       try {
@@ -293,6 +280,32 @@ export default function ProjectEstimatesPage() {
         setSubmitting(false)
       } catch (error) {
         logError(error, 'DeleteEstimate')
+        toast.error(handleApiError(error))
+        setSubmitting(false)
+      }
+    }
+  }
+
+  const handleDeleteAllEstimates = async () => {
+    if (window.confirm(`Delete all ${estimates.length} items from this estimate? This cannot be undone.`)) {
+      try {
+        setSubmitting(true)
+        let deletedCount = 0
+        for (const estimate of estimates) {
+          try {
+            await deleteEstimate(projectId, estimate.id)
+            deletedCount++
+          } catch (err) {
+            console.error(`Failed to delete estimate ${estimate.id}:`, err)
+          }
+        }
+        await fetchEstimates(projectId)
+        await fetchBCISGroupedData()
+        await fetchProjects()
+        toast.success(`Deleted ${deletedCount} item(s) from estimate`)
+        setSubmitting(false)
+      } catch (error) {
+        logError(error, 'DeleteAllEstimates')
         toast.error(handleApiError(error))
         setSubmitting(false)
       }
@@ -489,7 +502,57 @@ export default function ProjectEstimatesPage() {
     }
   }
 
-  const isLoading = projectLoading || estimatesLoading || costItemsLoading
+  const handleMarkPageComplete = async (pageKey: string, isComplete: boolean) => {
+    try {
+      setSubmitting(true)
+      // Parse pageKey format: "section_name-page_number"
+      const lastDashIndex = pageKey.lastIndexOf('-')
+      const sectionName = pageKey.substring(0, lastDashIndex)
+      const pageNumber = parseInt(pageKey.substring(lastDashIndex + 1), 10)
+
+      // Find all estimates with matching section_name and page_number
+      const matchingEstimates = estimates.filter(
+        (est) => est.section_name === sectionName && est.page_number === pageNumber
+      )
+
+      // Update each matching estimate
+      let updatedCount = 0
+      for (const estimate of matchingEstimates) {
+        try {
+          await updateEstimate(projectId, estimate.id, { is_page_complete: isComplete })
+          updatedCount++
+        } catch (err) {
+          console.error(`Failed to update estimate ${estimate.id}:`, err)
+        }
+      }
+
+      // Re-fetch estimates after all updates
+      await fetchEstimates(projectId)
+      await fetchBCISGroupedData()
+      await fetchProjects()
+
+      if (updatedCount > 0) {
+        toast.success(
+          isComplete
+            ? `Page marked as complete (${updatedCount} item${updatedCount !== 1 ? 's' : ''})`
+            : `Page marked as incomplete (${updatedCount} item${updatedCount !== 1 ? 's' : ''})`
+        )
+      }
+      setSubmitting(false)
+    } catch (error) {
+      logError(error, 'MarkPageComplete')
+      toast.error(handleApiError(error))
+      setSubmitting(false)
+    }
+  }
+
+  const handleDrillIntoSection = (sectionName: string) => {
+    setSelectedSection(sectionName)
+    setViewMode('collection')
+    toast.info(`Viewing collection page for ${sectionName}`)
+  }
+
+  const isLoading = projectLoading || estimatesLoading
 
   if (isLoading && !currentProject) {
     return <div className="text-center py-12 text-gray-600">Loading...</div>
@@ -568,6 +631,14 @@ export default function ProjectEstimatesPage() {
                 projectName={currentProject.name}
                 isDisabled={estimates.length === 0}
               />
+              <button
+                onClick={handleDeleteAllEstimates}
+                disabled={submitting || estimates.length === 0}
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                title="Delete all estimates from this project"
+              >
+                🗑️ Delete All
+              </button>
             </>
           )}
         </div>
@@ -585,6 +656,57 @@ export default function ProjectEstimatesPage() {
         </div>
       )}
 
+      {/* View Mode Selector */}
+      {estimates.length > 0 && (
+        <div className="bg-white rounded-lg shadow p-4">
+          <div className="flex flex-col gap-4">
+            <span className="text-sm font-semibold text-gray-700">View Mode:</span>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => setViewMode('bcis')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  viewMode === 'bcis'
+                    ? 'bg-khc-primary text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                📊 NRM 2
+              </button>
+              <button
+                onClick={() => setViewMode('section')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  viewMode === 'section'
+                    ? 'bg-khc-primary text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                📑 Section Pages
+              </button>
+              <button
+                onClick={() => setViewMode('collection')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  viewMode === 'collection'
+                    ? 'bg-khc-primary text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                📋 Collection Pages
+              </button>
+              <button
+                onClick={() => setViewMode('summary')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  viewMode === 'summary'
+                    ? 'bg-khc-primary text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                📈 Summary
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Unified Add Line Item Modal */}
       <UnifiedAddLineItemModal
         isOpen={showAddModal}
@@ -597,7 +719,7 @@ export default function ProjectEstimatesPage() {
         categories={categories}
         units={units}
         isSubmitting={submitting}
-        costItemsLoading={costItemsLoading}
+        costItemsLoading={false}
       />
 
       {/* BoQ Library Modal */}
@@ -624,20 +746,51 @@ export default function ProjectEstimatesPage() {
         showShared={true}
       />
 
-      {/* Line Items Section */}
-      <LineItemsTable
-        data={bcisGroupedData}
-        onUpdateQuantity={handleUpdateEstimate}
-        onDeleteItem={handleDeleteEstimate}
-        onUpdateComponent={handleUpdateComponent}
-        onAddComponent={handleAddComponent}
-        onDeleteComponent={handleDeleteComponent}
-        isLoading={bcisLoading}
-        isEmpty={!bcisGroupedData || bcisGroupedData.elements.length === 0}
-      />
+      {/* Line Items Section - Choose view based on viewMode */}
+      {viewMode === 'bcis' && (
+        <LineItemsTable
+          data={bcisGroupedData}
+          onUpdateQuantity={handleUpdateEstimate}
+          onDeleteItem={handleDeleteEstimate}
+          onUpdateComponent={handleUpdateComponent}
+          onAddComponent={handleAddComponent}
+          onDeleteComponent={handleDeleteComponent}
+          isLoading={bcisLoading}
+          isEmpty={!bcisGroupedData || bcisGroupedData.elements.length === 0}
+        />
+      )}
 
-      {/* Fallback: Show estimates if BCIS data is empty but estimates exist */}
-      {(!bcisGroupedData || bcisGroupedData.elements.length === 0) && estimates.length > 0 && (
+      {viewMode === 'section' && (
+        <SectionPageView
+          estimates={estimates}
+          onUpdateQuantity={handleSectionUpdateQuantity}
+          onDeleteItem={handleDeleteEstimate}
+          onMarkPageComplete={handleMarkPageComplete}
+          isLoading={estimatesLoading}
+          isEmpty={estimates.length === 0}
+        />
+      )}
+
+      {viewMode === 'collection' && (
+        <CollectionPageView
+          estimates={estimates}
+          initialSection={selectedSection || undefined}
+          isLoading={estimatesLoading}
+          isEmpty={estimates.length === 0}
+        />
+      )}
+
+      {viewMode === 'summary' && (
+        <SummaryPageView
+          estimates={estimates}
+          onDrillIntoSection={handleDrillIntoSection}
+          isLoading={estimatesLoading}
+          isEmpty={estimates.length === 0}
+        />
+      )}
+
+      {/* Fallback: Show estimates if BCIS data is empty but estimates exist (only in BCIS view) */}
+      {viewMode === 'bcis' && (!bcisGroupedData || bcisGroupedData.elements.length === 0) && estimates.length > 0 && (
         <div className="mt-8 bg-white border border-gray-300 rounded-lg p-6">
           <h3 className="font-bold text-lg text-gray-900 mb-4">📋 Imported BoQ Items ({estimates.length})</h3>
           <div className="overflow-x-auto border border-gray-300 rounded">
