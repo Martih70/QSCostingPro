@@ -40,6 +40,14 @@ export default function Sidebar({ onClose }: SidebarProps) {
           <SidebarNavItem to="/dashboard" icon="🏠" label="Home" />
         </div>
 
+        {/* Contacts Section */}
+        <CollapsibleSection title="Contacts" icon="👥" searchQuery={searchQuery}>
+          <div onClick={handleNavClick} className="space-y-1">
+            <SidebarNavItem to="/clients" icon="👥" label="Clients" isNested />
+            <SidebarNavItem to="/contractors" icon="🔧" label="Contractors" isNested />
+          </div>
+        </CollapsibleSection>
+
         {/* Estimate Builder Section */}
         <CollapsibleSection title="Estimate Builder" icon="📊" searchQuery={searchQuery}>
           <div onClick={handleNavClick} className="space-y-1">
@@ -82,14 +90,6 @@ export default function Sidebar({ onClose }: SidebarProps) {
               requiredRoles="admin"
               isNested
             />
-          </div>
-        </CollapsibleSection>
-
-        {/* Contacts Section */}
-        <CollapsibleSection title="Contacts" icon="👥" searchQuery={searchQuery}>
-          <div onClick={handleNavClick} className="space-y-1">
-            <SidebarNavItem to="/clients" icon="👥" label="Clients" isNested />
-            <SidebarNavItem to="/contractors" icon="🔧" label="Contractors" isNested />
           </div>
         </CollapsibleSection>
 
