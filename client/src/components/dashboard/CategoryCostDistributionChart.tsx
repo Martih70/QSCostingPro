@@ -118,14 +118,6 @@ export default function CategoryCostDistributionChart({
                 </g>
               ))}
             </svg>
-
-            {/* Center content */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <div className="text-center">
-                <p className="text-3xl font-bold text-khc-primary">{formatCurrency(totalCost)}</p>
-                <p className="text-xs text-gray-500 mt-1">Total Cost</p>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -146,15 +138,23 @@ export default function CategoryCostDistributionChart({
         </div>
       </div>
 
-      {/* Additional stats */}
-      <div className="mt-6 pt-4 border-t grid grid-cols-2 gap-4">
-        <div className="bg-gray-50 rounded p-3">
-          <p className="text-xs text-gray-600 mb-1">Categories</p>
-          <p className="text-lg font-bold text-gray-900">{distribution.length}</p>
+      {/* Summary footer */}
+      <div className="mt-6 pt-4 border-t">
+        <div className="flex items-center justify-between mb-4">
+          <span className="text-sm font-semibold text-gray-700">Total Cost</span>
+          <span className="text-2xl font-bold text-khc-primary">{formatCurrency(totalCost)}</span>
         </div>
-        <div className="bg-gray-50 rounded p-3">
-          <p className="text-xs text-gray-600 mb-1">Avg per Category</p>
-          <p className="text-lg font-bold text-gray-900">{formatCurrency(totalCost / distribution.length)}</p>
+
+        {/* Additional stats */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="bg-gray-50 rounded p-3">
+            <p className="text-xs text-gray-600 mb-1">Categories</p>
+            <p className="text-lg font-bold text-gray-900">{distribution.length}</p>
+          </div>
+          <div className="bg-gray-50 rounded p-3">
+            <p className="text-xs text-gray-600 mb-1">Avg per Category</p>
+            <p className="text-lg font-bold text-gray-900">{formatCurrency(totalCost / distribution.length)}</p>
+          </div>
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ import BulkOperationsToolbar from '../components/projects/BulkOperationsToolbar'
 import DuplicateProjectDialog, { DuplicateOptions } from '../components/projects/DuplicateProjectDialog'
 import { useToast } from '../components/ui/ToastContainer'
 import { handleApiError, logError } from '../utils/errorHandler'
+import { formatCurrency } from '../utils/formatters'
 
 export default function ProjectsListPage() {
   const navigate = useNavigate()
@@ -254,6 +255,7 @@ export default function ProjectsListPage() {
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Progress</th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Status</th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Estimate</th>
+                  <th className="px-6 py-3 text-right text-sm font-semibold text-gray-700">Estimate Value</th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Created</th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Actions</th>
                 </tr>
@@ -310,6 +312,11 @@ export default function ProjectsListPage() {
                           : 'bg-gray-100 text-gray-700'
                       }`}>
                         {project.estimate_status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <span className="text-sm font-medium text-gray-900">
+                        {formatCurrency(project.estimate_totals?.grand_total || 0)}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-600">

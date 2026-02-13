@@ -5,15 +5,16 @@ import { useEstimatesStore } from '../stores/estimatesStore'
 import { useEstimateTemplatesStore } from '../stores/estimateTemplatesStore'
 import { useNRM2Store } from '../stores/nrm2Store'
 import { costItemsAPI, unitsAPI } from '../services/api'
+import { formatCurrency } from '../utils/formatters'
 import BackButton from '../components/ui/BackButton'
 import UnifiedAddLineItemModal from '../components/modals/UnifiedAddLineItemModal'
+import BoQLibraryModal from '../components/modals/BoQLibraryModal'
 import LineItemsTable from '../components/estimates/LineItemsTable'
 import ExportPDFButton from '../components/estimates/ExportPDFButton'
 import SaveAsTemplateDialog from '../components/estimates/SaveAsTemplateDialog'
 import TemplateLibraryModal from '../components/estimates/TemplateLibraryModal'
 import { useToast } from '../components/ui/ToastContainer'
 import { handleApiError, logError } from '../utils/errorHandler'
-import BOQBrowserModal from '../components/boq/BOQBrowserModal'
 import type { EstimateTemplate } from '../types/estimateTemplate'
 import type { BCISGroupedEstimates } from '../types/estimate'
 
@@ -48,13 +49,13 @@ export default function ProjectEstimatesPage() {
   const toast = useToast()
   const projectId = Number(id)
 
-  const { currentProject, fetchProjectById, isLoading: projectLoading } = useProjectsStore()
+  const { currentProject, fetchProjectById, fetchProjects, isLoading: projectLoading } = useProjectsStore()
   const { estimates, estimateTotals, isLoading: estimatesLoading, error, fetchEstimates, addEstimate, updateEstimate, deleteEstimate } = useEstimatesStore()
   const { saveTemplate, applyTemplate } = useEstimateTemplatesStore()
   const { pendingWorkSection, setPendingWorkSection } = useNRM2Store()
 
   const [showAddModal, setShowAddModal] = useState(false)
-  const [showBOQBrowser, setShowBOQBrowser] = useState(false)
+  const [showBoQLibrary, setShowBoQLibrary] = useState(false)
   const [showSaveTemplateDialog, setShowSaveTemplateDialog] = useState(false)
   const [showTemplateLibrary, setShowTemplateLibrary] = useState(false)
   const [costItems, setCostItems] = useState<CostItem[]>([])
@@ -63,11 +64,16 @@ export default function ProjectEstimatesPage() {
   const [costItemsLoading, setCostItemsLoading] = useState(false)
   const [editingId, setEditingId] = useState<number | null>(null)
   const [editQuantity, setEditQuantity] = useState('')
+  const [editDescription, setEditDescription] = useState('')
+  const [editUnit, setEditUnit] = useState('')
+  const [editRate, setEditRate] = useState('')
+  const [editNotes, setEditNotes] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [dismissedError, setDismissedError] = useState(false)
   const [templateLoading, setTemplateLoading] = useState(false)
   const [bcisGroupedData, setBcisGroupedData] = useState<BCISGroupedEstimates | null>(null)
   const [bcisLoading, setBcisLoading] = useState(false)
+  const [showTemplateMenu, setShowTemplateMenu] = useState(false)
 
   // Fetch project and estimates
   useEffect(() => {
@@ -169,7 +175,57 @@ export default function ProjectEstimatesPage() {
         notes: data.notes,
       })
       await fetchBCISGroupedData()
+      await fetchProjects()
       setShowAddModal(false)
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleAddFromBoQ = async (items: any[]) => {
+    try {
+      setSubmitting(true)
+      // Get first category as default (optional for BoQ items)
+      const defaultCategoryId = categories.length > 0 ? categories[0].id : undefined
+
+      let addedCount = 0
+      for (const item of items) {
+        try {
+          const estimateData: any = {
+            custom_description: item.description,
+            quantity: item.quantity || 1,
+            custom_unit: item.unit,
+            custom_unit_rate: item.standard_rate,
+            notes: `From BoQ Library - ${item.item_number}`,
+          }
+          // Only add category_id if a category exists
+          if (defaultCategoryId) {
+            estimateData.category_id = defaultCategoryId
+          }
+
+          await addEstimate(projectId, estimateData)
+          addedCount++
+        } catch (itemError: any) {
+          console.error(`Failed to add item ${item.item_number}:`, itemError)
+          toast.error(`Failed to add "${item.description}": ${itemError.response?.data?.error || itemError.message}`)
+        }
+      }
+
+      if (addedCount > 0) {
+        // Force hard refresh to ensure UI consistency
+        // Wait a moment to allow backend to finalize
+        await new Promise(resolve => setTimeout(resolve, 500))
+        // Hard refresh all data
+        await fetchEstimates(projectId)
+        await fetchBCISGroupedData()
+        await fetchProjects()
+        toast.success(`Added ${addedCount} of ${items.length} item(s) to estimate`)
+        setShowBoQLibrary(false)
+      }
+    } catch (error) {
+      console.error('Error in handleAddFromBoQ:', error)
+      logError(error, 'AddFromBoQ')
+      toast.error(handleApiError(error))
     } finally {
       setSubmitting(false)
     }
@@ -198,54 +254,26 @@ export default function ProjectEstimatesPage() {
         nrm2_code: data.nrm2_code,
       })
       await fetchBCISGroupedData()
+      await fetchProjects()
       setShowAddModal(false)
     } finally {
       setSubmitting(false)
     }
   }
 
-  const handleBOQItemSelected = async (workSections: Array<{
-    id: number
-    code: string
-    title: string
-    description?: string
-    unit?: string
-  }>) => {
-    // Handle multiple items - add each with quantity=1 and no rate
+  const handleUpdateEstimate = async (estimateId: number, updates: any) => {
     try {
       setSubmitting(true)
-      for (const workSection of workSections) {
-        await addEstimate(projectId, {
-          custom_description: workSection.title,
-          quantity: 1,
-          custom_unit: workSection.unit || 'item',
-          custom_unit_rate: 0,
-          category_id: 9, // Default to Substructure
-          nrm2_work_section_id: workSection.id,
-          nrm2_code: workSection.code,
-        })
-      }
+      await updateEstimate(projectId, estimateId, updates)
       await fetchBCISGroupedData()
-      toast.success(`Added ${workSections.length} item${workSections.length !== 1 ? 's' : ''} from BOQ`)
-      setShowBOQBrowser(false)
-    } catch (error) {
-      logError(error, 'AddBOQItems')
-      toast.error(handleApiError(error))
-    } finally {
-      setSubmitting(false)
-    }
-  }
-
-  const handleUpdateEstimate = async (estimateId: number, newQuantity: number) => {
-    try {
-      setSubmitting(true)
-      await updateEstimate(projectId, estimateId, {
-        quantity: newQuantity,
-      })
-      await fetchBCISGroupedData()
-      toast.success('Quantity updated successfully')
+      await fetchProjects()
+      toast.success('Item updated successfully')
       setEditingId(null)
       setEditQuantity('')
+      setEditDescription('')
+      setEditUnit('')
+      setEditRate('')
+      setEditNotes('')
       setSubmitting(false)
     } catch (error) {
       logError(error, 'UpdateEstimate')
@@ -260,6 +288,7 @@ export default function ProjectEstimatesPage() {
         setSubmitting(true)
         await deleteEstimate(projectId, estimateId)
         await fetchBCISGroupedData()
+        await fetchProjects()
         toast.success('Item removed successfully')
         setSubmitting(false)
       } catch (error) {
@@ -315,6 +344,7 @@ export default function ProjectEstimatesPage() {
       }
 
       await fetchBCISGroupedData()
+      await fetchProjects()
       toast.success('Cost component updated')
       setSubmitting(false)
     } catch (error) {
@@ -353,6 +383,7 @@ export default function ProjectEstimatesPage() {
       }
 
       await fetchBCISGroupedData()
+      await fetchProjects()
       toast.success(`${componentType.charAt(0).toUpperCase() + componentType.slice(1)} cost component added`)
       setSubmitting(false)
     } catch (error) {
@@ -390,6 +421,7 @@ export default function ProjectEstimatesPage() {
         }
 
         await fetchBCISGroupedData()
+        await fetchProjects()
         toast.success('Cost component removed')
         setSubmitting(false)
       } catch (error) {
@@ -477,37 +509,60 @@ export default function ProjectEstimatesPage() {
         <div>
           <h1 className="text-3xl font-bold text-khc-primary">Build Estimate</h1>
           <p className="text-gray-600 mt-2">{currentProject.name}</p>
+          <p className="text-xs text-gray-500 mt-1">Project ID: {projectId}</p>
         </div>
-        <div className="flex gap-2 flex-wrap justify-end">
-          <button
-            onClick={() => setShowTemplateLibrary(true)}
-            className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg flex items-center gap-2 text-sm"
-            title="Load a saved estimate template"
-          >
-            📚 Load Template
-          </button>
-          <button
-            onClick={() => setShowBOQBrowser(true)}
-            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg flex items-center gap-2 text-sm"
-            title="Import items from NRM 2 BOQ"
-          >
-            📋 Import from BOQ
-          </button>
-          <button
-            onClick={() => setShowAddModal(true)}
-            className="px-4 py-2 bg-khc-primary hover:bg-khc-secondary text-white rounded-lg flex items-center gap-2"
-          >
-            ➕ Add Line Item
-          </button>
+        <div className="flex gap-2 flex-wrap justify-end relative">
+          {/* Estimate Templates Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setShowTemplateMenu(!showTemplateMenu)}
+              className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg flex items-center gap-2 text-sm"
+              title="Manage estimate templates"
+            >
+              📚 Estimate Templates
+              <span className="text-xs">▼</span>
+            </button>
+            {showTemplateMenu && (
+              <div className="absolute top-full right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-10 min-w-40">
+                <button
+                  onClick={() => {
+                    setShowTemplateLibrary(true)
+                    setShowTemplateMenu(false)
+                  }}
+                  className="block w-full text-left px-4 py-2 hover:bg-blue-50 text-gray-900 text-sm border-b border-gray-100"
+                >
+                  📚 Load Template
+                </button>
+                {estimates.length > 0 && (
+                  <button
+                    onClick={() => {
+                      setShowSaveTemplateDialog(true)
+                      setShowTemplateMenu(false)
+                    }}
+                    className="block w-full text-left px-4 py-2 hover:bg-blue-50 text-gray-900 text-sm"
+                  >
+                    💾 Save Template
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="px-4 py-2 bg-khc-primary hover:bg-khc-secondary text-white rounded-lg flex items-center gap-2"
+            >
+              ➕ Add Line Item
+            </button>
+            <button
+              onClick={() => setShowBoQLibrary(true)}
+              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center gap-2"
+            >
+              📚 Add from BoQ Library
+            </button>
+          </div>
           {estimates.length > 0 && (
             <>
-              <button
-                onClick={() => setShowSaveTemplateDialog(true)}
-                className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg flex items-center gap-2 text-sm"
-                title="Save current estimate as template"
-              >
-                💾 Save Template
-              </button>
               <ExportPDFButton
                 projectId={projectId}
                 projectName={currentProject.name}
@@ -530,13 +585,6 @@ export default function ProjectEstimatesPage() {
         </div>
       )}
 
-      {/* BOQ Browser Modal */}
-      <BOQBrowserModal
-        isOpen={showBOQBrowser}
-        onClose={() => setShowBOQBrowser(false)}
-        onSelectItem={handleBOQItemSelected}
-      />
-
       {/* Unified Add Line Item Modal */}
       <UnifiedAddLineItemModal
         isOpen={showAddModal}
@@ -550,6 +598,14 @@ export default function ProjectEstimatesPage() {
         units={units}
         isSubmitting={submitting}
         costItemsLoading={costItemsLoading}
+      />
+
+      {/* BoQ Library Modal */}
+      <BoQLibraryModal
+        isOpen={showBoQLibrary}
+        onClose={() => setShowBoQLibrary(false)}
+        onSelectItems={handleAddFromBoQ}
+        projectId={projectId}
       />
 
       {/* Save as Template Dialog */}
@@ -568,16 +624,6 @@ export default function ProjectEstimatesPage() {
         showShared={true}
       />
 
-      {/* Debug Info - Remove this later */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="bg-gray-100 p-4 rounded text-xs text-gray-600 mb-4 font-mono">
-          <div>bcisLoading: {bcisLoading ? 'true' : 'false'}</div>
-          <div>bcisGroupedData: {bcisGroupedData ? `${bcisGroupedData.elements.length} elements` : 'null'}</div>
-          <div>isEmpty: {(!bcisGroupedData || bcisGroupedData.elements.length === 0) ? 'true' : 'false'}</div>
-          <div>estimates.length: {estimates.length}</div>
-        </div>
-      )}
-
       {/* Line Items Section */}
       <LineItemsTable
         data={bcisGroupedData}
@@ -590,6 +636,167 @@ export default function ProjectEstimatesPage() {
         isEmpty={!bcisGroupedData || bcisGroupedData.elements.length === 0}
       />
 
+      {/* Fallback: Show estimates if BCIS data is empty but estimates exist */}
+      {(!bcisGroupedData || bcisGroupedData.elements.length === 0) && estimates.length > 0 && (
+        <div className="mt-8 bg-white border border-gray-300 rounded-lg p-6">
+          <h3 className="font-bold text-lg text-gray-900 mb-4">📋 Imported BoQ Items ({estimates.length})</h3>
+          <div className="overflow-x-auto border border-gray-300 rounded">
+            <table className="w-full text-sm border-collapse bg-white">
+              <thead>
+                <tr className="bg-khc-primary text-white sticky top-0">
+                  <th className="px-3 py-3 text-center font-semibold border border-gray-300 w-12">Item No.</th>
+                  <th className="px-4 py-3 text-left font-semibold border border-gray-300 min-w-64">Description</th>
+                  <th className="px-3 py-3 text-center font-semibold border border-gray-300 w-20">Unit</th>
+                  <th className="px-3 py-3 text-right font-semibold border border-gray-300 w-24">Quantity</th>
+                  <th className="px-3 py-3 text-right font-semibold border border-gray-300 w-28">Rate (£)</th>
+                  <th className="px-3 py-3 text-right font-semibold border border-gray-300 w-28">Amount (£)</th>
+                  <th className="px-4 py-3 text-left font-semibold border border-gray-300 min-w-60">Notes</th>
+                  <th className="px-3 py-3 text-center font-semibold border border-gray-300 w-24">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {estimates.map((est, idx) => (
+                  <tr key={est.id || idx} className={`border-b border-gray-300 transition-colors ${editingId === est.id ? 'bg-yellow-50' : 'hover:bg-blue-50'}`}>
+                    <td className="px-3 py-3 text-gray-900 border border-gray-300 font-medium text-center align-top">{idx + 1}</td>
+                    <td className="px-4 py-3 text-gray-900 border border-gray-300 align-top">
+                      {editingId === est.id ? (
+                        <textarea
+                          value={editDescription}
+                          onChange={(e) => setEditDescription(e.target.value)}
+                          className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                          rows={3}
+                        />
+                      ) : (
+                        <span className="break-words whitespace-pre-wrap">{est.custom_description || <span className="text-gray-400">—</span>}</span>
+                      )}
+                    </td>
+                    <td className="px-3 py-3 text-gray-700 border border-gray-300 text-center align-top">
+                      {editingId === est.id ? (
+                        <input
+                          type="text"
+                          value={editUnit}
+                          onChange={(e) => setEditUnit(e.target.value)}
+                          className="w-full px-2 py-1 border border-gray-300 rounded text-center text-sm"
+                        />
+                      ) : (
+                        est.custom_unit || '—'
+                      )}
+                    </td>
+                    <td className="px-3 py-3 text-right text-gray-700 border border-gray-300 align-top font-medium">
+                      {editingId === est.id ? (
+                        <input
+                          type="number"
+                          step="0.01"
+                          value={editQuantity}
+                          onChange={(e) => setEditQuantity(e.target.value)}
+                          className="w-full px-2 py-1 border border-gray-300 rounded text-right text-sm"
+                        />
+                      ) : (
+                        est.quantity
+                      )}
+                    </td>
+                    <td className="px-3 py-3 text-right text-gray-700 border border-gray-300 align-top">
+                      {editingId === est.id ? (
+                        <input
+                          type="number"
+                          step="0.01"
+                          value={editRate}
+                          onChange={(e) => setEditRate(e.target.value)}
+                          className="w-full px-2 py-1 border border-gray-300 rounded text-right text-sm"
+                        />
+                      ) : (
+                        formatCurrency(est.custom_unit_rate || 0)
+                      )}
+                    </td>
+                    <td className="px-3 py-3 text-right font-semibold text-gray-900 border border-gray-300 align-top">{formatCurrency(est.line_total || 0)}</td>
+                    <td className="px-4 py-3 text-gray-600 border border-gray-300 align-top text-sm">
+                      {editingId === est.id ? (
+                        <textarea
+                          value={editNotes}
+                          onChange={(e) => setEditNotes(e.target.value)}
+                          className="w-full px-2 py-1 border border-gray-300 rounded text-xs"
+                          rows={2}
+                        />
+                      ) : (
+                        <span className="break-words whitespace-pre-wrap">{est.notes ? est.notes : <span className="text-gray-400">—</span>}</span>
+                      )}
+                    </td>
+                    <td className="px-3 py-3 border border-gray-300 align-top text-center space-y-1">
+                      {editingId === est.id ? (
+                        <>
+                          <button
+                            onClick={() => {
+                              const updates: any = {}
+                              if (editDescription !== est.custom_description) updates.custom_description = editDescription
+                              if (editUnit !== est.custom_unit) updates.custom_unit = editUnit
+                              if (editQuantity !== est.quantity?.toString()) updates.quantity = parseFloat(editQuantity)
+                              if (editRate !== est.custom_unit_rate?.toString()) updates.custom_unit_rate = parseFloat(editRate)
+                              if (editNotes !== est.notes) updates.notes = editNotes
+                              if (Object.keys(updates).length > 0) {
+                                handleUpdateEstimate(est.id || 0, updates)
+                              } else {
+                                setEditingId(null)
+                              }
+                            }}
+                            disabled={submitting}
+                            className="block w-full px-2 py-1 bg-green-500 hover:bg-green-600 text-white text-xs rounded transition-colors disabled:opacity-50"
+                          >
+                            ✅ Save
+                          </button>
+                          <button
+                            onClick={() => {
+                              setEditingId(null)
+                              setEditQuantity('')
+                              setEditDescription('')
+                              setEditUnit('')
+                              setEditRate('')
+                              setEditNotes('')
+                            }}
+                            className="block w-full px-2 py-1 bg-gray-400 hover:bg-gray-500 text-white text-xs rounded transition-colors"
+                          >
+                            ✕ Cancel
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            onClick={() => {
+                              setEditingId(est.id || null)
+                              setEditDescription(est.custom_description || '')
+                              setEditUnit(est.custom_unit || '')
+                              setEditQuantity(est.quantity?.toString() || '')
+                              setEditRate(est.custom_unit_rate?.toString() || '')
+                              setEditNotes(est.notes || '')
+                            }}
+                            className="block w-full px-2 py-1 bg-blue-500 hover:bg-blue-600 text-white text-xs rounded transition-colors"
+                          >
+                            ✏️ Edit
+                          </button>
+                          <button
+                            onClick={() => handleDeleteEstimate(est.id || 0)}
+                            className="block w-full px-2 py-1 bg-red-500 hover:bg-red-600 text-white text-xs rounded transition-colors"
+                          >
+                            🗑️ Delete
+                          </button>
+                        </>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="mt-4 pt-4 border-t border-gray-200">
+            <div className="flex justify-between text-sm font-semibold text-gray-900">
+              <span>TOTAL:</span>
+              <span>{formatCurrency(
+                estimates.reduce((sum, est) => sum + (est.line_total || 0), 0)
+              )}</span>
+            </div>
+          </div>
+        </div>
+      )}
+
 
       {/* Totals Summary */}
       {estimateTotals && (
@@ -599,24 +806,24 @@ export default function ProjectEstimatesPage() {
             <div className="flex justify-between text-gray-700">
               <span>Subtotal:</span>
               <span className="font-semibold">
-                £{estimateTotals.subtotal.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
+                {formatCurrency(estimateTotals.subtotal)}
               </span>
             </div>
             <div className="flex justify-between text-gray-700">
               <span>Contingency ({estimateTotals.contingency_percentage}%):</span>
               <span className="font-semibold">
-                £{estimateTotals.contingency_amount.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
+                {formatCurrency(estimateTotals.contingency_amount)}
               </span>
             </div>
             <div className="flex justify-between border-t border-khc-primary pt-3">
               <span className="font-bold text-khc-primary">Grand Total:</span>
               <span className="font-bold text-khc-primary text-lg">
-                £{estimateTotals.grand_total.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
+                {formatCurrency(estimateTotals.grand_total)}
               </span>
             </div>
             {estimateTotals.cost_per_m2 && (
               <div className="text-sm text-gray-600 text-right pt-2">
-                £{estimateTotals.cost_per_m2.toLocaleString('en-GB', { maximumFractionDigits: 2 })} per m²
+                {formatCurrency(estimateTotals.cost_per_m2)} per m²
               </div>
             )}
           </div>

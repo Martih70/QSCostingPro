@@ -18,6 +18,12 @@ api.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    // For FormData, don't set Content-Type - let axios handle it automatically
+    if (config.data instanceof FormData) {
+      delete config.headers['Content-Type'];
+    }
+
     return config;
   },
   (error) => Promise.reject(error)
@@ -403,6 +409,35 @@ export const referencesAPI = {
 
   getDownloadUrl: (id: number) =>
     api.get(`/references/${id}/download`),
+};
+
+// BoQ Repository API (Admin - Central Library)
+export const boqRepositoryAPI = {
+  importCSV: (formData: FormData) =>
+    api.post('/boq-repository/import', formData),
+    // Note: DO NOT set Content-Type header for FormData!
+    // axios automatically handles it with the correct boundary
+
+  getSummary: () =>
+    api.get('/boq-repository/summary'),
+
+  getImports: () =>
+    api.get('/boq-repository/imports'),
+};
+
+// BoQ Library Browser API (Users - Browse & Copy Items)
+export const boqLibraryAPI = {
+  getSections: () =>
+    api.get('/boq-library/sections'),
+
+  getSection: (sectionId: number) =>
+    api.get(`/boq-library/sections/${sectionId}`),
+
+  copyItems: (projectId: number, itemIds: number[]) =>
+    api.post(`/boq-library/copy-items/${projectId}`, { item_ids: itemIds }),
+
+  copySection: (projectId: number, sectionId: number) =>
+    api.post(`/boq-library/copy-section/${projectId}`, { section_id: sectionId }),
 };
 
 export { api };

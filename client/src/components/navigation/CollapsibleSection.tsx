@@ -1,4 +1,5 @@
 import { useState, ReactNode } from 'react'
+import { useAuth } from '../../hooks/useAuth'
 
 interface CollapsibleSectionProps {
   title: string
@@ -6,6 +7,7 @@ interface CollapsibleSectionProps {
   children: ReactNode
   defaultOpen?: boolean
   searchQuery?: string
+  requiredRoles?: string | string[]
 }
 
 export default function CollapsibleSection({
@@ -14,8 +16,15 @@ export default function CollapsibleSection({
   children,
   defaultOpen = true,
   searchQuery = '',
+  requiredRoles,
 }: CollapsibleSectionProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen)
+  const { hasPermission } = useAuth()
+
+  // Hide entire section if user doesn't have required role
+  if (requiredRoles && !hasPermission(requiredRoles)) {
+    return null
+  }
 
   // Check if section title matches the search query
   const matches = !searchQuery || title.toLowerCase().includes(searchQuery.toLowerCase())

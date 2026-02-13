@@ -149,6 +149,7 @@ export default function ProjectDetailPage() {
         <div>
           <h1 className="text-3xl font-bold text-khc-primary">{currentProject.name}</h1>
           <p className="text-gray-600 mt-2">{currentProject.project_address || currentProject.description || 'No address provided'}</p>
+          <p className="text-xs text-gray-500 mt-1">Project ID: {projectId}</p>
         </div>
         <div className="flex gap-2">
           {estimateTotals && estimateTotals.grand_total > 0 && (

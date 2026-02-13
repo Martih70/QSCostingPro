@@ -130,6 +130,7 @@ export default function ProjectActualsPage() {
       <div>
         <h1 className="text-3xl font-bold text-khc-primary">Project Actuals</h1>
         <p className="text-gray-600 mt-2">{currentProject?.name}</p>
+        <p className="text-xs text-gray-500 mt-1">Project ID: {projectId}</p>
       </div>
 
       {error && <ErrorAlert message={error} onDismiss={clearError} />}

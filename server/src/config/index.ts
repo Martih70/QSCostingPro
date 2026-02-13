@@ -32,6 +32,12 @@ export const config = {
   // Inflation API (optional)
   inflationApiKey: process.env.INFLATION_API_KEY || '',
 
+  // Email
+  emailUser: process.env.EMAIL_USER || '',
+  emailPassword: process.env.EMAIL_PASSWORD || '',
+  emailFrom: process.env.EMAIL_FROM || 'noreply@qscostingpro.com',
+  frontendEmailUrl: process.env.FRONTEND_URL || 'http://localhost:5173',
+
   // Validation
   isProduction: (process.env.NODE_ENV || 'development') === 'production',
   isDevelopment: (process.env.NODE_ENV || 'development') === 'development',

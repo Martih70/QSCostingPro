@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { z } from 'zod'
+import { formatCurrency } from '../../utils/formatters'
 
 interface Unit {
   id: number
@@ -235,10 +236,7 @@ export default function QuickAddLineItemModal({
             <div className="p-3 bg-khc-light rounded-lg">
               <p className="text-sm text-gray-700">
                 Line Total: <span className="font-bold text-khc-primary">
-                  £{(parseFloat(unitRate) * parseFloat(quantity)).toLocaleString('en-GB', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
+                  {formatCurrency(parseFloat(unitRate) * parseFloat(quantity))}
                 </span>
               </p>
             </div>

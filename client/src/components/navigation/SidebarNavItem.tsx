@@ -6,6 +6,7 @@ interface SidebarNavItemProps {
   icon: string
   label: string
   requiredRoles?: string | string[]
+  isNested?: boolean
 }
 
 export default function SidebarNavItem({
@@ -13,6 +14,7 @@ export default function SidebarNavItem({
   icon,
   label,
   requiredRoles,
+  isNested = false,
 }: SidebarNavItemProps) {
   const { hasPermission } = useAuth()
 
@@ -25,7 +27,7 @@ export default function SidebarNavItem({
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `flex items-center gap-3 px-4 py-3 rounded-md transition-all duration-200 ${
+        `flex items-center gap-3 ${isNested ? 'pl-8 pr-4' : 'px-4'} py-3 rounded-md transition-all duration-200 ${
           isActive
             ? 'bg-khc-light border-l-4 border-khc-primary text-khc-primary font-medium scale-[1.02]'
             : 'text-gray-700 hover:bg-gray-50 hover:scale-[1.01]'

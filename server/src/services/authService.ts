@@ -302,6 +302,196 @@ export function logoutUser(userId: number): void {
 }
 
 /**
+ * Verify email with token
+ */
+export function verifyUserEmail(token: string): boolean {
+  try {
+    const db = getDatabase();
+    const stmt = db.prepare(`
+      UPDATE users
+      SET email_verified = 1, email_verification_token = NULL, email_verification_expires = NULL
+      WHERE email_verification_token = ?
+      AND email_verification_expires > datetime('now')
+    `);
+
+    const result = stmt.run(token);
+    return (result.changes ?? 0) > 0;
+  } catch (error) {
+    logger.error(`Email verification failed: ${error}`);
+    return false;
+  }
+}
+
+/**
+ * Send password reset token
+ */
+export async function sendPasswordReset(email: string): Promise<boolean> {
+  try {
+    const db = getDatabase();
+    const stmt = db.prepare('SELECT id, username FROM users WHERE email = ?');
+    const user = stmt.get(email) as { id: number; username: string } | undefined;
+
+    if (!user) {
+      // Don't reveal if email exists
+      return true;
+    }
+
+    // Generate reset token (24-char random string)
+    const resetToken = require('crypto').randomBytes(12).toString('hex');
+    const expiresAt = new Date(Date.now() + 1 * 60 * 60 * 1000).toISOString(); // 1 hour
+
+    const updateStmt = db.prepare(`
+      UPDATE users
+      SET password_reset_token = ?, password_reset_expires = ?
+      WHERE id = ?
+    `);
+    updateStmt.run(resetToken, expiresAt, user.id);
+
+    // Send email
+    const { emailService } = await import('./emailService.js');
+    await emailService.sendPasswordResetEmail(email, user.username, resetToken);
+
+    logger.info(`Password reset email sent to ${email}`);
+    return true;
+  } catch (error) {
+    logger.error(`Password reset request failed: ${error}`);
+    throw error;
+  }
+}
+
+/**
+ * Reset password with token
+ */
+export async function resetPassword(token: string, newPassword: string): Promise<boolean> {
+  try {
+    if (newPassword.length < 8) {
+      throw new Error('Password must be at least 8 characters');
+    }
+
+    const db = getDatabase();
+
+    // Verify token exists and hasn't expired
+    const stmt = db.prepare(`
+      SELECT id FROM users
+      WHERE password_reset_token = ?
+      AND password_reset_expires > datetime('now')
+    `);
+    const user = stmt.get(token) as { id: number } | undefined;
+
+    if (!user) {
+      return false;
+    }
+
+    // Hash new password
+    const passwordHash = await hashPassword(newPassword);
+
+    // Update password and clear token
+    const updateStmt = db.prepare(`
+      UPDATE users
+      SET password_hash = ?, password_reset_token = NULL, password_reset_expires = NULL
+      WHERE id = ?
+    `);
+    updateStmt.run(passwordHash, user.id);
+
+    logger.info(`Password reset for user ID ${user.id}`);
+    return true;
+  } catch (error) {
+    logger.error(`Password reset failed: ${error}`);
+    throw error;
+  }
+}
+
+/**
+ * Get all users (admin only)
+ */
+export function getAllUsers(): UserPublic[] {
+  try {
+    const db = getDatabase();
+    const stmt = db.prepare(`
+      SELECT id, username, email, email_verified, role, is_active, created_at, last_login
+      FROM users
+      ORDER BY created_at DESC
+    `);
+
+    const users = stmt.all() as UserPublic[];
+    return users;
+  } catch (error) {
+    logger.error(`Failed to fetch users: ${error}`);
+    throw error;
+  }
+}
+
+/**
+ * Update user (admin only)
+ */
+export function updateUser(userId: number, updates: { role?: string; is_active?: boolean }): UserPublic {
+  try {
+    const db = getDatabase();
+
+    // Validate role if provided
+    const validRoles = ['admin', 'estimator', 'user'];
+    if (updates.role && !validRoles.includes(updates.role)) {
+      throw new Error('Invalid role');
+    }
+
+    // Build update query dynamically
+    const setClauses: string[] = [];
+    const params: any[] = [];
+
+    if (updates.role !== undefined) {
+      setClauses.push('role = ?');
+      params.push(updates.role);
+    }
+    if (updates.is_active !== undefined) {
+      setClauses.push('is_active = ?');
+      params.push(updates.is_active ? 1 : 0);
+    }
+
+    if (setClauses.length === 0) {
+      throw new Error('No updates provided');
+    }
+
+    params.push(userId);
+
+    const stmt = db.prepare(`
+      UPDATE users
+      SET ${setClauses.join(', ')}, updated_at = CURRENT_TIMESTAMP
+      WHERE id = ?
+    `);
+
+    stmt.run(...params);
+
+    // Return updated user
+    const getStmt = db.prepare(`
+      SELECT id, username, email, email_verified, role, is_active, created_at, last_login
+      FROM users WHERE id = ?
+    `);
+
+    const user = getStmt.get(userId) as UserPublic;
+    logger.info(`User ${userId} updated: ${JSON.stringify(updates)}`);
+    return user;
+  } catch (error) {
+    logger.error(`Failed to update user: ${error}`);
+    throw error;
+  }
+}
+
+/**
+ * Delete user (admin only)
+ */
+export function deleteUser(userId: number): void {
+  try {
+    const db = getDatabase();
+    const stmt = db.prepare('DELETE FROM users WHERE id = ?');
+    stmt.run(userId);
+    logger.info(`User ${userId} deleted`);
+  } catch (error) {
+    logger.error(`Failed to delete user: ${error}`);
+    throw error;
+  }
+}
+
+/**
  * Validate email format
  */
 function isValidEmail(email: string): boolean {

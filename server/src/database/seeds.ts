@@ -1,8 +1,6 @@
 import { Database } from 'better-sqlite3';
 import { hashPassword } from '../services/authService.js';
 import logger from '../utils/logger.js';
-import { seedBCISDatabase } from './seedBCIS.js';
-import { seedSponsDatabase } from './seedSpons.js';
 import { seedNRM2 } from './seedNRM2.js';
 
 /**
@@ -36,8 +34,12 @@ function seedUnits(db: Database): void {
 
 /**
  * Seed default cost categories
+ * @deprecated - Cost database removed, using BoQ Library instead
  */
-function seedCategories(db: Database): void {
+export function seedCategories(db: Database): void {
+  // Deprecated - Cost database removed
+  return;
+  // eslint-disable-next-line @typescript-eslint/no-unreachable
   try {
     const categories = [
       {
@@ -97,8 +99,12 @@ function seedCategories(db: Database): void {
 
 /**
  * Seed default cost sub-elements
+ * @deprecated - Cost database removed, using BoQ Library instead
  */
-function seedSubElements(db: Database): void {
+export function seedSubElements(db: Database): void {
+  // Deprecated - Cost database removed
+  return;
+  // eslint-disable-next-line @typescript-eslint/no-unreachable
   try {
     // Get category IDs
     const getCatStmt = db.prepare('SELECT id, code FROM cost_categories');
@@ -215,8 +221,12 @@ function seedSubElements(db: Database): void {
 
 /**
  * Seed default cost items (mock data)
+ * @deprecated - Cost database removed, using BoQ Library instead
  */
-function seedCostItems(db: Database): void {
+export function seedCostItems(db: Database): void {
+  // Deprecated - Cost database removed
+  return;
+  // eslint-disable-next-line @typescript-eslint/no-unreachable
   try {
     const checkStmt = db.prepare('SELECT COUNT(*) as count FROM cost_items');
     const { count } = checkStmt.get() as { count: number };
@@ -452,8 +462,12 @@ async function seedAdminUser(db: Database): Promise<void> {
 /**
  * Seed Standard UK cost database
  * This provides a pre-populated cost database for non-witness users
+ * @deprecated - Cost database removed, using BoQ Library instead
  */
-function seedStandardUKCosts(db: Database): void {
+export function seedStandardUKCosts(db: Database): void {
+  // Deprecated - Cost database removed
+  return;
+  // eslint-disable-next-line @typescript-eslint/no-unreachable
   try {
     // Check if Standard UK costs already exist
     const checkStmt = db.prepare(
@@ -692,12 +706,13 @@ export async function runSeeds(db: Database): Promise<void> {
   try {
     logger.info('Starting database seeding...');
     seedUnits(db);
-    seedCategories(db);
-    seedSubElements(db);
-    seedCostItems(db);
-    seedStandardUKCosts(db);
-    seedBCISDatabase(db);
-    seedSponsDatabase(db);
+    // Cost database removed - using BoQ Library instead
+    // seedCategories(db);
+    // seedSubElements(db);
+    // seedCostItems(db);
+    // seedStandardUKCosts(db);
+    // seedBCISDatabase(db);
+    // seedSponsDatabase(db);
     seedNRM2(db);
     await seedAdminUser(db);
     logger.info('✓ Database seeding completed');

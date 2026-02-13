@@ -1,3 +1,5 @@
+import { formatCurrency } from '../../utils/formatters'
+
 interface BudgetTrackerProps {
   budgetCost: number | null
   actualCost: number
@@ -31,14 +33,14 @@ export default function BudgetTracker({
         <div className="bg-blue-50 rounded-lg p-4">
           <p className="text-xs text-gray-600 uppercase font-semibold">Budget</p>
           <p className="text-2xl font-bold text-blue-600 mt-1">
-            £{budgetCost.toLocaleString('en-GB', { maximumFractionDigits: 0 })}
+            {formatCurrency(budgetCost)}
           </p>
         </div>
 
         <div className="bg-green-50 rounded-lg p-4">
           <p className="text-xs text-gray-600 uppercase font-semibold">Actual Cost</p>
           <p className="text-2xl font-bold text-green-600 mt-1">
-            £{totalCost.toLocaleString('en-GB', { maximumFractionDigits: 0 })}
+            {formatCurrency(totalCost)}
           </p>
         </div>
 
@@ -51,7 +53,7 @@ export default function BudgetTracker({
               isOverBudget ? 'text-red-600' : 'text-emerald-600'
             }`}
           >
-            £{Math.abs(variance).toLocaleString('en-GB', { maximumFractionDigits: 0 })}
+            {formatCurrency(Math.abs(variance))}
           </p>
         </div>
       </div>
@@ -85,16 +87,12 @@ export default function BudgetTracker({
         <p className={`text-sm font-medium ${isOverBudget ? 'text-red-800' : 'text-green-800'}`}>
           {isOverBudget ? (
             <>
-              ⚠️ <strong>Over Budget:</strong> £{Math.abs(variance).toLocaleString('en-GB', {
-                maximumFractionDigits: 2,
-              })}{' '}
+              ⚠️ <strong>Over Budget:</strong> {formatCurrency(Math.abs(variance))}{' '}
               over budget
             </>
           ) : (
             <>
-              ✅ <strong>Within Budget:</strong> £{variance.toLocaleString('en-GB', {
-                maximumFractionDigits: 2,
-              })}{' '}
+              ✅ <strong>Within Budget:</strong> {formatCurrency(variance)}{' '}
               remaining
             </>
           )}
@@ -107,13 +105,13 @@ export default function BudgetTracker({
           <div className="flex justify-between items-center mb-2">
             <span className="text-gray-700">Estimate Total:</span>
             <span className="font-semibold">
-              £{actualCost.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
+              {formatCurrency(actualCost)}
             </span>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-gray-700">Contingency ({((contingencyAmount / actualCost) * 100).toFixed(1)}%):</span>
             <span className="font-semibold">
-              £{contingencyAmount.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
+              {formatCurrency(contingencyAmount)}
             </span>
           </div>
         </div>

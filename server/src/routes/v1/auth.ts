@@ -6,6 +6,10 @@ import {
   refreshAccessToken,
   logoutUser,
   userToPublic,
+  verifyUserEmail,
+  sendPasswordReset,
+  resetPassword,
+  deleteUser,
 } from '../../services/authService.js';
 import { verifyAuth } from '../../middleware/auth.js';
 import { authLimiter } from '../../middleware/rateLimiter.js';
@@ -72,7 +76,7 @@ router.post('/register', authLimiter, async (req: Request, res: Response) => {
  * POST /api/v1/auth/login
  * Authenticate user and return tokens
  */
-router.post('/login', authLimiter, async (req: Request, res: Response) => {
+router.post('/login', async (req: Request, res: Response) => {
   try {
     // Validate input
     const validatedData = loginSchema.parse(req.body);
@@ -337,6 +341,221 @@ router.put('/users/:id', verifyAuth, async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       error: 'Failed to update user',
+    });
+  }
+});
+
+/**
+ * DELETE /api/v1/auth/users/:id
+ * Delete user (admin only)
+ * Requires authentication
+ */
+router.delete('/users/:id', verifyAuth, async (req: Request, res: Response) => {
+  try {
+    if (!req.user || req.user.role !== 'admin') {
+      res.status(403).json({
+        success: false,
+        error: 'Admin access required',
+      });
+      return;
+    }
+
+    const userId = parseInt(req.params.id, 10);
+
+    // Prevent admin from deleting themselves
+    if (userId === req.user.userId) {
+      res.status(400).json({
+        success: false,
+        error: 'Cannot delete your own account',
+      });
+      return;
+    }
+
+    deleteUser(userId);
+
+    logger.info(`User deleted: ${userId}`);
+    res.json({
+      success: true,
+      message: 'User deleted successfully',
+    });
+  } catch (error: any) {
+    logger.error(`Delete user error: ${error.message}`);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to delete user',
+    });
+  }
+});
+
+/**
+ * POST /api/v1/auth/verify-email
+ * Verify user email with verification token
+ */
+const verifyEmailSchema = z.object({
+  token: z.string().min(1),
+});
+
+router.post('/verify-email', async (req: Request, res: Response) => {
+  try {
+    const validatedData = verifyEmailSchema.parse(req.body);
+
+    const verified = verifyUserEmail(validatedData.token);
+
+    if (!verified) {
+      res.status(400).json({
+        success: false,
+        error: 'Invalid or expired verification token',
+      });
+      return;
+    }
+
+    logger.info('Email verified successfully');
+    res.json({
+      success: true,
+      message: 'Email verified successfully',
+    });
+  } catch (error: any) {
+    logger.error(`Email verification error: ${error.message}`);
+
+    if (error instanceof z.ZodError) {
+      res.status(400).json({
+        success: false,
+        error: 'Validation failed',
+        details: error.errors,
+      });
+      return;
+    }
+
+    res.status(400).json({
+      success: false,
+      error: error.message || 'Email verification failed',
+    });
+  }
+});
+
+/**
+ * POST /api/v1/auth/send-verification-email
+ * Send verification email to authenticated user
+ */
+router.post('/send-verification-email', verifyAuth, async (req: Request, res: Response) => {
+  try {
+    if (!req.user) {
+      res.status(401).json({
+        success: false,
+        error: 'User not authenticated',
+      });
+      return;
+    }
+
+    // Generate verification token
+    const crypto = await import('crypto');
+    const verificationToken = crypto.randomBytes(32).toString('hex');
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(); // 24 hours
+
+    const { getDatabase } = await import('../../database/connection.js');
+    const db = getDatabase();
+
+    const stmt = db.prepare(`
+      UPDATE users
+      SET email_verification_token = ?, email_verification_expires = ?
+      WHERE id = ?
+    `);
+    stmt.run(verificationToken, expiresAt, req.user.userId);
+
+    // Send verification email
+    const { emailService } = await import('../../services/emailService.js');
+    await emailService.sendVerificationEmail(req.user.email, req.user.username, verificationToken);
+
+    logger.info(`Verification email sent to ${req.user.email}`);
+    res.json({
+      success: true,
+      message: 'Verification email sent',
+    });
+  } catch (error: any) {
+    logger.error(`Send verification email error: ${error.message}`);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to send verification email',
+    });
+  }
+});
+
+/**
+ * POST /api/v1/auth/request-password-reset
+ * Request password reset (sends email with reset token)
+ */
+const requestPasswordResetSchema = z.object({
+  email: z.string().email(),
+});
+
+router.post('/request-password-reset', authLimiter, async (req: Request, res: Response) => {
+  try {
+    const validatedData = requestPasswordResetSchema.parse(req.body);
+
+    await sendPasswordReset(validatedData.email);
+
+    logger.info(`Password reset requested for ${validatedData.email}`);
+
+    // Always return success to prevent email enumeration
+    res.json({
+      success: true,
+      message: 'If an account exists with this email, you will receive a password reset link',
+    });
+  } catch (error: any) {
+    logger.error(`Request password reset error: ${error.message}`);
+
+    if (error instanceof z.ZodError) {
+      res.status(400).json({
+        success: false,
+        error: 'Validation failed',
+        details: error.errors,
+      });
+      return;
+    }
+
+    // Always return success for security
+    res.json({
+      success: true,
+      message: 'If an account exists with this email, you will receive a password reset link',
+    });
+  }
+});
+
+/**
+ * POST /api/v1/auth/reset-password
+ * Reset password with reset token
+ */
+const resetPasswordEndpointSchema = z.object({
+  token: z.string().min(1),
+  newPassword: z.string().min(8).max(100),
+});
+
+router.post('/reset-password', async (req: Request, res: Response) => {
+  try {
+    const validatedData = resetPasswordEndpointSchema.parse(req.body);
+
+    await resetPassword(validatedData.token, validatedData.newPassword);
+
+    logger.info('Password reset successfully');
+    res.json({
+      success: true,
+      message: 'Password reset successfully',
+    });
+  } catch (error: any) {
+    logger.error(`Reset password error: ${error.message}`);
+
+    if (error instanceof z.ZodError) {
+      res.status(400).json({
+        success: false,
+        error: 'Validation failed',
+        details: error.errors,
+      });
+      return;
+    }
+
+    res.status(400).json({
+      success: false,
+      error: error.message || 'Password reset failed',
     });
   }
 });

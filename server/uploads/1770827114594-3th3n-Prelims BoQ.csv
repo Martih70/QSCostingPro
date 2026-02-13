@@ -1,0 +1,82 @@
+﻿Item No.,Description,Unit,Quantity,Rate (£),Amount (£),Notes
+1.1.1,"Contract preliminaries: Provide all preliminaries necessary for the proper execution of the works including management, supervision, temporary works, welfare, services, security, insurances, and statutory compliance for a 24‑week programme.",item,1,8500,8500,"* Based on mid‑market UK preliminaries norms for small residential projects
+* Includes fixed and time‑related preliminaries
+* Assumes 24‑week programme
+* Includes insurances, H&S compliance, and statutory notifications
+* NRM2 compliant description"
+1.2.1,"Site establishment: Mobilisation to site including delivery, installation, and commissioning of temporary accommodation, storage, and welfare facilities.",item,1,2200,2200,"* Includes delivery and setup of welfare cabin and storage
+* Based on typical hire and delivery rates
+* Includes initial power connection
+* NRM2 1.2.1 measurement basis"
+1.2.2,"Temporary accommodation: Welfare cabin (canteen, drying room, WC) for duration of works.",week,24,95,2280,"* Based on weekly hire of standard welfare cabin
+* Includes cleaning and consumables
+* Assumes 24‑week programme
+* Mid‑market UK hire rates"
+1.2.3,Temporary storage: Secure lockable container for tools and materials.,week,24,35,840,"* Standard 20ft container hire
+* Includes delivery and collection
+* Assumes 24‑week programme
+* Mid‑market UK rates"
+1.3.1,"Temporary services: Provide temporary electrical supply including distribution boards, cabling, and testing.",item,1,750,750,"* Includes temporary power setup
+* Excludes utility provider charges
+* Includes testing and certification
+* NRM2 compliant"
+1.3.2,"Temporary water supply including standpipe, hose runs, and isolation.",item,1,350,350,"* Includes temporary water connection
+* Excludes water authority fees
+* Includes fittings and hoses
+* Mid‑market UK rates"
+1.3.3,Temporary lighting to work areas and access routes.,item,1,420,420,"* Includes LED task lighting
+* Includes installation and removal
+* Assumes 24‑week programme
+* NRM2 1.3.3"
+1.4.1,Site security: Temporary fencing to site perimeter (Heritage mesh or Heras panels).,m,60,12,720,"* Includes delivery, erection, and removal
+* 60m assumed perimeter for 3‑bed detached plot
+* Includes stabilisers and feet
+* Mid‑market UK rates"
+1.4.2,Site access gate including lockable panel.,item,1,180,180,"* Includes lockable gate panel
+* Includes installation and removal
+* NRM2 compliant"
+1.4.3,Weekly security inspections.,week,24,18,432,"* Weekly site checks
+* Assumes unoccupied site outside working hours
+* Mid‑market UK rates"
+1.5.1,"Health & Safety: Provide all H&S documentation including CPP, RAMS, inductions, and ongoing compliance.",item,1,650,650,"* Includes preparation and maintenance of H&S documentation
+* Includes site inductions
+* Includes statutory compliance
+* NRM2 1.5.1"
+1.5.2,First aid equipment and maintenance.,item,1,120,120,"* Includes first aid kits and replenishment
+* Assumes 24‑week programme
+* Mid‑market UK rates"
+1.6.1,Site management: Full‑time working foreman/site manager for duration of works.,week,24,275,6600,"* Based on mid‑market UK foreman rate
+* Assumes full‑time presence
+* 24‑week programme
+* Labour only"
+1.6.2,Weekly site meetings including minute preparation.,week,24,22,528,"* Includes preparation of minutes
+* Includes attendance and reporting
+* Mid‑market UK rates"
+1.7.1,Scaffolding: Independent scaffold to front and rear elevations for brickwork and roof works.,m²,120,18,2160,"* Includes erection, hire, and dismantling
+* 120m² assumed for two elevations
+* Includes handrails and toe boards
+* Mid‑market UK scaffold rates"
+1.7.2,Access tower for internal works.,week,6,25,150,"* Includes hire and delivery
+* Assumes 6‑week usage
+* Mid‑market UK rates"
+1.8.1,"Temporary protection: Protect existing surfaces, pavements, and adjacent properties.",item,1,180,180,"* Includes sheeting and barriers
+* Includes installation and removal
+* NRM2 compliant"
+1.9.1,Temporary signage including safety boards and directional signage.,item,1,95,95,"* Includes statutory signage
+* Includes installation and removal
+* Mid‑market UK rates"
+1.10.1,Skip hire: 8‑yard skips for mixed construction waste.,skip,10,260,2600,"* Assumes 10 skips over 24 weeks
+* Includes delivery and collection
+* Includes landfill charges
+* Mid‑market UK rates"
+1.10.2,General waste management including segregation and recycling.,week,24,18,432,"* Includes labour for segregation
+* Includes recycling compliance
+* Assumes 24‑week programme
+* NRM2 compliant"
+1.11.1,"Final demobilisation: Removal of temporary works, welfare, fencing, and services.",item,1,650,650,"* Includes removal and site clearance
+* Includes reinstatement of disturbed areas
+* Mid‑market UK rates
+* NRM2 compliant"
+1.12.1,Preliminaries total (calculated).,sum,1,—,—,"* Total will be calculated automatically in QSCostingPro
+* Sum of all preliminaries above
+* NRM2 compliant"

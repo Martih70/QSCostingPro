@@ -180,3 +180,515 @@
 2026-02-02 14:40:36:4036 error: Error creating cost component: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
 2026-02-02 14:44:12:4412 error: Error creating cost component: SqliteError: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
 2026-02-02 14:44:12:4412 error: Error creating cost component: UNIQUE constraint failed: estimate_cost_components.estimate_id, estimate_cost_components.component_type
+2026-02-10 14:06:20:620 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:06:20:620 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:06:20:620 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:06:20:620 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:06:44:644 error: Error creating estimate: SqliteError: table project_estimates has no column named nrm2_work_section_id
+2026-02-10 14:06:44:644 error: Error creating estimate: table project_estimates has no column named nrm2_work_section_id
+2026-02-10 14:12:07:127 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:12:07:127 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:12:07:127 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:12:07:127 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:12:31:1231 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:12:31:1231 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:12:55:1255 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:12:55:1255 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:12:55:1255 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:12:55:1255 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:19:39:1939 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:19:39:1939 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:19:39:1939 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:19:39:1939 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:20:00:200 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:20:00:200 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:20:07:207 error: Error fetching templates: RangeError: Too many parameter values were provided
+2026-02-10 14:20:07:207 error: Error fetching templates: Too many parameter values were provided
+2026-02-10 14:23:17:2317 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:23:17:2317 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:23:17:2317 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:23:17:2317 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:23:48:2348 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:23:48:2348 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:25:43:2543 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:25:43:2543 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:25:43:2543 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:25:43:2543 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:30:29:3029 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:30:29:3029 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:30:29:3029 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:30:29:3029 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:32:49:3249 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:32:49:3249 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:35:42:3542 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:35:42:3542 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:35:42:3542 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:35:42:3542 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:36:02:362 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:36:02:362 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:36:02:362 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:36:02:362 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:40:29:4029 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:40:29:4029 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:47:31:4731 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:47:31:4731 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:47:43:4743 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:47:43:4743 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:50:09:509 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:50:09:509 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:50:09:509 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:50:09:509 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:50:43:5043 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:50:43:5043 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:50:43:5043 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:50:43:5043 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:50:48:5048 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:50:48:5048 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:50:51:5051 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:50:51:5051 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:50:57:5057 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:50:57:5057 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:51:00:510 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:51:00:510 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:51:13:5113 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:51:13:5113 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:53:58:5358 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:53:58:5358 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:54:34:5434 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:54:34:5434 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:54:34:5434 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:54:34:5434 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:54:48:5448 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:54:48:5448 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:54:48:5448 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:54:48:5448 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:56:30:5630 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:56:30:5630 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:56:30:5630 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:56:30:5630 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:56:36:5636 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:56:36:5636 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:56:51:5651 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:56:51:5651 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:58:49:5849 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:58:49:5849 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:58:49:5849 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:58:49:5849 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:58:54:5854 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:58:54:5854 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:58:59:5859 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:58:59:5859 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 14:59:07:597 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 14:59:07:597 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:01:20:120 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:01:20:120 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:01:52:152 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:01:52:152 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:03:22:322 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:03:22:322 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:03:27:327 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:03:27:327 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:03:32:332 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:03:32:332 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:03:37:337 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:03:37:337 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:03:42:342 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:03:42:342 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:03:55:355 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:03:55:355 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:03:58:358 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:03:58:358 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:04:01:41 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:04:01:41 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:04:05:45 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:04:05:45 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:04:08:48 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:04:08:48 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:04:11:411 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:04:11:411 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:04:18:418 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:04:18:418 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:04:21:421 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:04:21:421 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:04:27:427 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:04:27:427 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:04:30:430 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:04:30:430 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:04:35:435 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:04:35:435 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:04:41:441 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:04:41:441 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:04:45:445 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:04:45:445 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:04:49:449 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:04:49:449 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:05:05:55 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:05:05:55 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:05:16:516 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:05:16:516 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:05:19:519 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:05:19:519 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:05:23:523 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:05:23:523 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:05:27:527 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:05:27:527 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:05:31:531 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:05:31:531 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:05:36:536 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:05:36:536 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:05:40:540 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:05:40:540 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:05:44:544 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:05:44:544 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:05:49:549 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:05:49:549 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:05:56:556 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:05:56:556 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:06:00:60 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:06:00:60 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:06:04:64 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:06:04:64 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:06:09:69 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:06:09:69 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:06:13:613 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:06:13:613 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:06:17:617 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:06:17:617 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:06:20:620 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:06:20:620 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:06:25:625 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:06:25:625 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:06:29:629 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:06:29:629 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:06:41:641 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:06:41:641 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:06:46:646 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:06:46:646 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:06:50:650 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:06:50:650 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:06:54:654 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:06:54:654 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:06:57:657 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:06:57:657 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:07:02:72 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:07:02:72 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:07:05:75 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:07:05:75 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:07:10:710 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:07:10:710 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:07:19:719 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:07:19:719 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:07:23:723 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:07:23:723 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:07:27:727 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:07:27:727 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:07:33:733 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:07:33:733 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:07:37:737 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:07:37:737 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:07:51:751 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:07:51:751 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:07:56:756 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:07:56:756 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:08:01:81 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:08:01:81 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:08:06:86 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:08:06:86 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:08:09:89 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:08:09:89 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:08:13:813 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:08:13:813 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:08:20:820 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:08:20:820 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:08:23:823 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:08:23:823 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:08:26:826 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:08:26:826 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:08:32:832 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:08:32:832 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:08:36:836 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:08:36:836 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:08:41:841 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:08:41:841 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:08:45:845 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:08:45:845 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:08:49:849 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:08:49:849 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:08:52:852 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:08:52:852 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:08:56:856 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:08:56:856 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:08:59:859 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:08:59:859 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:09:10:910 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:09:10:910 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:09:15:915 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:09:15:915 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:09:18:918 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:09:18:918 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:09:22:922 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:09:22:922 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:09:36:936 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:09:36:936 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:09:39:939 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:09:39:939 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:09:49:949 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:09:49:949 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:09:52:952 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:09:52:952 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:09:56:956 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:09:56:956 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:10:02:102 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:10:02:102 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:10:05:105 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:10:05:105 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:10:09:109 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:10:09:109 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:10:13:1013 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:10:13:1013 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:10:17:1017 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:10:17:1017 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:10:21:1021 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:10:21:1021 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:10:30:1030 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:10:30:1030 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:10:34:1034 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:10:34:1034 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:10:38:1038 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:10:38:1038 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:13:24:1324 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:13:24:1324 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:14:01:141 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:14:01:141 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:14:27:1427 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:14:27:1427 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:14:42:1442 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:14:42:1442 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:15:02:152 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:15:02:152 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:16:22:1622 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:16:22:1622 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:18:15:1815 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:18:15:1815 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:18:15:1815 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:18:15:1815 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:18:55:1855 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:18:55:1855 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:18:55:1855 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:18:55:1855 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:19:06:196 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:19:06:196 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:19:24:1924 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:19:24:1924 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:20:40:2040 error: Error fetching templates: RangeError: Too many parameter values were provided
+2026-02-10 15:20:40:2040 error: Error fetching templates: Too many parameter values were provided
+2026-02-10 15:22:46:2246 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:22:46:2246 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:28:42:2842 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:28:42:2842 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:28:42:2842 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:28:42:2842 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:29:07:297 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:29:07:297 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:29:07:297 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:29:07:297 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:31:09:319 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:31:09:319 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:31:09:319 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:31:09:319 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:33:02:332 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:33:02:332 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:33:02:332 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:33:02:332 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:33:09:339 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:33:09:339 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:33:58:3358 error: Error fetching templates: RangeError: Too many parameter values were provided
+2026-02-10 15:33:58:3358 error: Error fetching templates: Too many parameter values were provided
+2026-02-10 15:38:24:3824 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:38:24:3824 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:42:03:423 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:42:03:423 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 15:42:03:423 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 15:42:03:423 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 16:05:27:527 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 16:05:27:527 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 16:05:27:527 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 16:05:27:527 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 16:11:56:1156 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 16:11:56:1156 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 16:11:56:1156 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 16:11:56:1156 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 16:13:52:1352 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 16:13:52:1352 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 16:13:52:1352 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 16:13:52:1352 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 16:20:47:2047 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 16:20:47:2047 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 16:20:47:2047 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 16:20:47:2047 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 18:36:11:3611 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 18:36:11:3611 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 18:36:11:3611 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 18:36:11:3611 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 18:38:15:3815 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 18:38:15:3815 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 18:38:49:3849 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 18:38:49:3849 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 18:38:49:3849 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 18:38:49:3849 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 18:39:18:3918 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 18:39:18:3918 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 18:39:18:3918 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 18:39:18:3918 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 23:15:34:1534 error: Error deleting cost item 1: SqliteError: FOREIGN KEY constraint failed
+2026-02-10 23:15:34:1534 error: Error deleting cost item: FOREIGN KEY constraint failed
+2026-02-10 23:15:37:1537 error: Error deleting cost item 1: SqliteError: FOREIGN KEY constraint failed
+2026-02-10 23:15:37:1537 error: Error deleting cost item: FOREIGN KEY constraint failed
+2026-02-10 23:15:40:1540 error: Error deleting cost item 1: SqliteError: FOREIGN KEY constraint failed
+2026-02-10 23:15:40:1540 error: Error deleting cost item: FOREIGN KEY constraint failed
+2026-02-10 23:15:43:1543 error: Error deleting cost item 1: SqliteError: FOREIGN KEY constraint failed
+2026-02-10 23:15:43:1543 error: Error deleting cost item: FOREIGN KEY constraint failed
+2026-02-10 23:15:47:1547 error: Error deleting cost item 1: SqliteError: FOREIGN KEY constraint failed
+2026-02-10 23:15:47:1547 error: Error deleting cost item: FOREIGN KEY constraint failed
+2026-02-10 23:15:51:1551 error: Error deleting cost item 1: SqliteError: FOREIGN KEY constraint failed
+2026-02-10 23:15:51:1551 error: Error deleting cost item: FOREIGN KEY constraint failed
+2026-02-10 23:17:07:177 error: Error fetching estimates by BCIS element for project 2: SqliteError: no such column: pe.nrm2_code
+2026-02-10 23:17:07:177 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 23:17:07:177 error: Error fetching estimates by BCIS element for project 2: SqliteError: no such column: pe.nrm2_code
+2026-02-10 23:17:07:177 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 23:18:12:1812 error: Error fetching estimates by BCIS element for project 1: SqliteError: no such column: pe.nrm2_code
+2026-02-10 23:18:12:1812 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 23:18:12:1812 error: Error fetching estimates by BCIS element for project 1: SqliteError: no such column: pe.nrm2_code
+2026-02-10 23:18:12:1812 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 23:19:23:1923 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 23:19:23:1923 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 23:19:23:1923 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 23:19:23:1923 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 23:20:04:204 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 23:20:04:204 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 23:20:04:204 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 23:20:04:204 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 23:55:50:5550 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 23:55:50:5550 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 23:55:50:5550 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 23:55:50:5550 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 23:57:37:5737 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 23:57:37:5737 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-10 23:57:37:5737 error: Error fetching estimates by BCIS element for project 3: SqliteError: no such column: pe.nrm2_code
+2026-02-10 23:57:37:5737 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 00:12:29:1229 error: Error importing BoQ to library: FOREIGN KEY constraint failed
+2026-02-11 00:17:48:1748 error: Error importing BoQ to library: UNIQUE constraint failed: boq_library_items.section_id, boq_library_items.item_number
+2026-02-11 00:20:08:208 error: Login failed: Error: Invalid username or password
+2026-02-11 12:21:30:2130 error: Error fetching estimates by BCIS element for project 1: SqliteError: no such column: pe.nrm2_code
+2026-02-11 12:21:30:2130 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 12:21:30:2130 error: Error fetching estimates by BCIS element for project 1: SqliteError: no such column: pe.nrm2_code
+2026-02-11 12:21:30:2130 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 12:22:23:2223 error: Error fetching estimates by BCIS element for project 1: SqliteError: no such column: pe.nrm2_code
+2026-02-11 12:22:23:2223 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 12:22:23:2223 error: Error fetching estimates by BCIS element for project 1: SqliteError: no such column: pe.nrm2_code
+2026-02-11 12:22:23:2223 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 12:24:37:2437 error: Error fetching estimates by BCIS element for project 1: SqliteError: no such column: pe.nrm2_code
+2026-02-11 12:24:37:2437 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 12:24:37:2437 error: Error fetching estimates by BCIS element for project 1: SqliteError: no such column: pe.nrm2_code
+2026-02-11 12:24:37:2437 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 14:53:17:5317 error: Login failed: Error: Invalid username or password
+2026-02-11 14:53:30:5330 error: Login failed: Error: Invalid username or password
+2026-02-11 14:53:54:5354 error: Login failed: Error: Invalid username or password
+2026-02-11 15:58:07:587 error: Password reset request failed: ReferenceError: require is not defined
+2026-02-11 15:58:07:587 error: Request password reset error: require is not defined
+2026-02-11 16:04:44:444 error: Error fetching estimates by BCIS element for project 4: SqliteError: no such column: pe.nrm2_code
+2026-02-11 16:04:44:444 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 16:04:44:444 error: Error fetching estimates by BCIS element for project 4: SqliteError: no such column: pe.nrm2_code
+2026-02-11 16:04:44:444 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 16:25:14:2514 error: Error importing BoQ to library: [
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "undefined",
+    "path": [
+      "importName"
+    ],
+    "message": "Required"
+  }
+]
+2026-02-11 16:42:23:4223 error: Error fetching estimates by BCIS element for project 4: SqliteError: no such column: pe.nrm2_code
+2026-02-11 16:42:23:4223 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 16:42:23:4223 error: Error fetching estimates by BCIS element for project 4: SqliteError: no such column: pe.nrm2_code
+2026-02-11 16:42:23:4223 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 16:59:54:5954 error: Error fetching estimates by BCIS element for project 4: SqliteError: no such column: pe.nrm2_code
+2026-02-11 16:59:54:5954 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 16:59:54:5954 error: Error fetching estimates by BCIS element for project 4: SqliteError: no such column: pe.nrm2_code
+2026-02-11 16:59:54:5954 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 17:01:09:19 error: Error fetching estimates by BCIS element for project 4: SqliteError: no such column: pe.nrm2_code
+2026-02-11 17:01:09:19 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 17:01:58:158 error: Error creating estimate: SqliteError: table project_estimates has no column named nrm2_work_section_id
+2026-02-11 17:01:58:158 error: Error creating estimate: table project_estimates has no column named nrm2_work_section_id
+2026-02-11 17:02:10:210 error: Error fetching estimates by BCIS element for project 4: SqliteError: no such column: pe.nrm2_code
+2026-02-11 17:02:10:210 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 17:02:10:210 error: Error fetching estimates by BCIS element for project 4: SqliteError: no such column: pe.nrm2_code
+2026-02-11 17:02:10:210 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 17:02:29:229 error: Error fetching estimates by BCIS element for project 4: SqliteError: no such column: pe.nrm2_code
+2026-02-11 17:02:29:229 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 17:02:29:229 error: Error fetching estimates by BCIS element for project 4: SqliteError: no such column: pe.nrm2_code
+2026-02-11 17:02:29:229 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 17:02:36:236 error: Error creating estimate: SqliteError: table project_estimates has no column named nrm2_work_section_id
+2026-02-11 17:02:36:236 error: Error creating estimate: table project_estimates has no column named nrm2_work_section_id
+2026-02-11 17:03:03:33 error: Error fetching estimates by BCIS element for project 4: SqliteError: no such column: pe.nrm2_code
+2026-02-11 17:03:03:33 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 17:07:06:76 error: Error creating estimate: SqliteError: table project_estimates has no column named nrm2_work_section_id
+2026-02-11 17:07:06:76 error: Error creating estimate: table project_estimates has no column named nrm2_work_section_id
+2026-02-11 17:07:06:76 error: Error creating estimate: SqliteError: table project_estimates has no column named nrm2_work_section_id
+2026-02-11 17:07:06:76 error: Error creating estimate: table project_estimates has no column named nrm2_work_section_id
+2026-02-11 17:10:53:1053 error: Error fetching estimates by BCIS element for project 4: SqliteError: no such column: pe.nrm2_code
+2026-02-11 17:10:53:1053 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 17:10:53:1053 error: Error fetching estimates by BCIS element for project 4: SqliteError: no such column: pe.nrm2_code
+2026-02-11 17:10:53:1053 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 17:11:34:1134 error: Error fetching estimates by BCIS element for project 4: SqliteError: no such column: pe.nrm2_code
+2026-02-11 17:11:34:1134 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 17:11:34:1134 error: Error fetching estimates by BCIS element for project 4: SqliteError: no such column: pe.nrm2_code
+2026-02-11 17:11:34:1134 error: Error fetching estimates by BCIS element: no such column: pe.nrm2_code
+2026-02-11 17:11:51:1151 error: Error creating estimate: SqliteError: table project_estimates has no column named nrm2_work_section_id
+2026-02-11 17:11:51:1151 error: Error creating estimate: table project_estimates has no column named nrm2_work_section_id
+2026-02-12 11:32:21:3221 error: Error: Unexpected token '1', "15" is not valid JSON
+2026-02-12 11:32:21:3221 error: SyntaxError: Unexpected token '1', "15" is not valid JSON
+    at JSON.parse (<anonymous>)
+    at createStrictSyntaxError (/Users/martinhamp/Herd/QSCostingPro/node_modules/body-parser/lib/types/json.js:169:10)
+    at parse (/Users/martinhamp/Herd/QSCostingPro/node_modules/body-parser/lib/types/json.js:86:15)
+    at /Users/martinhamp/Herd/QSCostingPro/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+    at invokeCallback (/Users/martinhamp/Herd/QSCostingPro/node_modules/raw-body/index.js:238:16)
+    at done (/Users/martinhamp/Herd/QSCostingPro/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/Users/martinhamp/Herd/QSCostingPro/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:519:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+2026-02-12 11:33:11:3311 error: Error: Unexpected token '1', "1" is not valid JSON
+2026-02-12 11:33:11:3311 error: SyntaxError: Unexpected token '1', "1" is not valid JSON
+    at JSON.parse (<anonymous>)
+    at createStrictSyntaxError (/Users/martinhamp/Herd/QSCostingPro/node_modules/body-parser/lib/types/json.js:169:10)
+    at parse (/Users/martinhamp/Herd/QSCostingPro/node_modules/body-parser/lib/types/json.js:86:15)
+    at /Users/martinhamp/Herd/QSCostingPro/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+    at invokeCallback (/Users/martinhamp/Herd/QSCostingPro/node_modules/raw-body/index.js:238:16)
+    at done (/Users/martinhamp/Herd/QSCostingPro/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/Users/martinhamp/Herd/QSCostingPro/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:519:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+2026-02-13 13:46:25:4625 error: Login failed: Error: Invalid username or password
+2026-02-13 13:53:07:537 error: Error: Unexpected token '1', "1" is not valid JSON
+2026-02-13 13:53:07:537 error: SyntaxError: Unexpected token '1', "1" is not valid JSON
+    at JSON.parse (<anonymous>)
+    at createStrictSyntaxError (/Users/martinhamp/Herd/QSCostingPro/node_modules/body-parser/lib/types/json.js:169:10)
+    at parse (/Users/martinhamp/Herd/QSCostingPro/node_modules/body-parser/lib/types/json.js:86:15)
+    at /Users/martinhamp/Herd/QSCostingPro/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+    at invokeCallback (/Users/martinhamp/Herd/QSCostingPro/node_modules/raw-body/index.js:238:16)
+    at done (/Users/martinhamp/Herd/QSCostingPro/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/Users/martinhamp/Herd/QSCostingPro/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:519:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+2026-02-13 14:15:23:1523 error: Error seeding categories: SqliteError: no such table: cost_categories
+2026-02-13 14:15:23:1523 error: Error seeding sub-elements: SqliteError: no such table: cost_categories
+2026-02-13 14:15:23:1523 error: Error seeding cost items: SqliteError: no such table: cost_items
+2026-02-13 14:15:23:1523 error: Error seeding Standard UK costs: SqliteError: no such table: cost_items
+2026-02-13 14:15:23:1523 error: Error seeding BCIS database: SqliteError: no such table: cost_items
+2026-02-13 14:15:23:1523 error: Database seeding failed: SqliteError: no such table: cost_items

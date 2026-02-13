@@ -40,6 +40,12 @@ export interface ProjectEstimate {
   category_id?: number | null;
   nrm2_work_section_id?: number | null;
   nrm2_code?: string | null;
+  // BoQ import fields
+  item_number?: string | null;
+  section_id?: number | null;
+  section_title?: string | null;
+  boq_import_id?: number | null;
+  page_number?: number | null;
 }
 
 export interface ProjectAttachment {
@@ -388,6 +394,11 @@ export const projectEstimatesRepository = {
     category_id?: number;
     nrm2_work_section_id?: number;
     nrm2_code?: string;
+    item_number?: string;
+    section_id?: number;
+    section_title?: string;
+    boq_import_id?: number;
+    page_number?: number;
   }): ProjectEstimate => {
     try {
       const db = getDatabase();
@@ -396,8 +407,8 @@ export const projectEstimatesRepository = {
           project_id, cost_item_id, quantity, unit_cost_override,
           notes, line_total, created_by, version_number, is_active,
           custom_description, custom_unit_rate, custom_unit, category_id,
-          nrm2_work_section_id, nrm2_code
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          nrm2_work_section_id, nrm2_code, item_number, section_id, section_title, boq_import_id, page_number
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `);
 
       const result = stmt.run(
@@ -415,7 +426,12 @@ export const projectEstimatesRepository = {
         data.custom_unit || null,
         data.category_id || null,
         data.nrm2_work_section_id || null,
-        data.nrm2_code || null
+        data.nrm2_code || null,
+        data.item_number || null,
+        data.section_id || null,
+        data.section_title || null,
+        data.boq_import_id || null,
+        data.page_number || null
       );
 
       const created = projectEstimatesRepository.getById(result.lastInsertRowid as number);
@@ -434,6 +450,9 @@ export const projectEstimatesRepository = {
       unit_cost_override?: number;
       notes?: string;
       line_total?: number;
+      custom_description?: string;
+      custom_unit?: string;
+      custom_unit_rate?: number;
     }
   ): ProjectEstimate => {
     try {
@@ -456,6 +475,18 @@ export const projectEstimatesRepository = {
       if (data.line_total !== undefined) {
         updates.push('line_total = ?');
         values.push(data.line_total);
+      }
+      if (data.custom_description !== undefined) {
+        updates.push('custom_description = ?');
+        values.push(data.custom_description);
+      }
+      if (data.custom_unit !== undefined) {
+        updates.push('custom_unit = ?');
+        values.push(data.custom_unit);
+      }
+      if (data.custom_unit_rate !== undefined) {
+        updates.push('custom_unit_rate = ?');
+        values.push(data.custom_unit_rate);
       }
 
       if (updates.length === 0) {

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useCostItemsStore } from '../stores/costItemsStore'
 import { useAuth } from '../hooks/useAuth'
 import BackButton from '../components/ui/BackButton'
+import { formatCurrency } from '../utils/formatters'
 import {
   CostCategory,
   CostSubElement,
@@ -805,13 +806,13 @@ export default function CostItemsPage() {
                           <td className="px-6 py-4 text-sm text-gray-900">{item.description}</td>
                           <td className="px-6 py-4 text-sm text-gray-600">{subElem?.name || '-'}</td>
                           <td className="px-6 py-4 text-sm text-right font-mono text-gray-900">
-                            £{item.material_cost.toFixed(2)}
+                            {formatCurrency(item.material_cost)}
                           </td>
                           <td className="px-6 py-4 text-sm text-right font-mono text-gray-900">
-                            £{item.management_cost.toFixed(2)}
+                            {formatCurrency(item.management_cost)}
                           </td>
                           <td className="px-6 py-4 text-sm text-right font-mono text-gray-900">
-                            £{item.contractor_cost.toFixed(2)}
+                            {formatCurrency(item.contractor_cost)}
                           </td>
                           <td className="px-6 py-4 text-center text-sm">
                             <div className="flex gap-2 justify-center">

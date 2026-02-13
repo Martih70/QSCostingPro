@@ -144,7 +144,7 @@ export default function LoginPage() {
 
           {/* Forgot Password Link */}
           <div className="mt-3 text-center text-sm text-khc-neutral">
-            <Link to="/password-reset" className="text-khc-primary hover:underline font-medium">
+            <Link to="/forgot-password" className="text-khc-primary hover:underline font-medium">
               Forgot password?
             </Link>
           </div>

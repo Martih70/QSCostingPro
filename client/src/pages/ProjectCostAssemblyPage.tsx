@@ -327,6 +327,7 @@ export default function ProjectCostAssemblyPage() {
       <div>
         <h1 className="text-3xl font-bold text-khc-primary">Project Cost Assembly</h1>
         <p className="text-gray-600 mt-2">Build cost estimates from rates or custom line items</p>
+        {selectedProjectId && <p className="text-xs text-gray-500 mt-1">Project ID: {selectedProjectId}</p>}
       </div>
 
       {error && <ErrorAlert message={error} onDismiss={() => setError(null)} />}

@@ -6,7 +6,6 @@ import StatCard from '../components/dashboard/StatCard'
 import BudgetVarianceSummaryCard from '../components/dashboard/BudgetVarianceSummaryCard'
 import BudgetPerformanceChart from '../components/dashboard/BudgetPerformanceChart'
 import CategoryCostDistributionChart from '../components/dashboard/CategoryCostDistributionChart'
-import CategoryCostBreakdownTable from '../components/dashboard/CategoryCostBreakdownTable'
 import {
   calculateTotalProjectValue,
   calculateAvgCostPerM2,
@@ -35,6 +34,36 @@ export default function DashboardPage() {
     <div className="space-y-6">
       {canViewFinancials && (
         <>
+          {/* Quick Actions Grid - 3 columns */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Link
+              to="/projects/new"
+              className="group block bg-khc-primary hover:bg-khc-neutral text-white rounded-lg p-6 transition-all text-center hover:scale-105 transform"
+              style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}>
+              <div className="text-4xl mb-3">🚀</div>
+              <h3 className="font-semibold">Create Project</h3>
+              <p className="text-xs text-gray-200 mt-2">Start a new project</p>
+            </Link>
+
+            <Link
+              to="/projects"
+              className="group block bg-khc-secondary hover:bg-khc-primary text-white rounded-lg p-6 transition-all text-center hover:scale-105 transform"
+              style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}>
+              <div className="text-4xl mb-3">📋</div>
+              <h3 className="font-semibold">All Projects</h3>
+              <p className="text-xs text-gray-200 mt-2">View {projects.length} projects</p>
+            </Link>
+
+            <Link
+              to="/projects"
+              className="group block bg-gradient-to-br from-emerald-500 to-green-600 text-white rounded-lg p-6 transition-all text-center hover:scale-105 transform"
+              style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}>
+              <div className="text-4xl mb-3">✓</div>
+              <h3 className="font-semibold">Completed</h3>
+              <p className="text-xs text-gray-200 mt-2">{projects.filter(p => p.status === 'completed').length} finished</p>
+            </Link>
+          </div>
+
           {/* VARIED CARD LAYOUT - Dynamic Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
             {/* Large Featured Card - Project Value (2x2 span) */}
@@ -180,41 +209,6 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* SECONDARY SECTION - Full width tables */}
-          <div className="space-y-6">
-            {/* Category breakdown table */}
-            <CategoryCostBreakdownTable projects={projects} isLoading={isLoading} />
-
-            {/* Quick Actions Grid - 3 columns */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Link
-                to="/projects/new"
-                className="group block bg-khc-primary hover:bg-khc-neutral text-white rounded-lg p-6 transition-all text-center hover:scale-105 transform"
-                style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}>
-                <div className="text-4xl mb-3">🚀</div>
-                <h3 className="font-semibold">Create Project</h3>
-                <p className="text-xs text-gray-200 mt-2">Start a new project</p>
-              </Link>
-
-              <Link
-                to="/projects"
-                className="group block bg-khc-secondary hover:bg-khc-primary text-white rounded-lg p-6 transition-all text-center hover:scale-105 transform"
-                style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}>
-                <div className="text-4xl mb-3">📋</div>
-                <h3 className="font-semibold">All Projects</h3>
-                <p className="text-xs text-gray-200 mt-2">View {projects.length} projects</p>
-              </Link>
-
-              <Link
-                to="/projects"
-                className="group block bg-gradient-to-br from-emerald-500 to-green-600 text-white rounded-lg p-6 transition-all text-center hover:scale-105 transform"
-                style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)' }}>
-                <div className="text-4xl mb-3">✓</div>
-                <h3 className="font-semibold">Completed</h3>
-                <p className="text-xs text-gray-200 mt-2">{projects.filter(p => p.status === 'completed').length} finished</p>
-              </Link>
-            </div>
-          </div>
         </>
       )}
 

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import DuplicateProjectDialog, { DuplicateOptions } from './DuplicateProjectDialog'
+import { formatCurrency } from '../../utils/formatters'
 
 interface ProjectCardProps {
   id: number
@@ -125,7 +126,7 @@ export default function ProjectCard({
         {budgetCost && (
           <div className="text-sm text-gray-700">
             <span className="font-medium">Budget:</span>{' '}
-            <span>£{budgetCost.toLocaleString('en-GB')}</span>
+            <span>{formatCurrency(budgetCost)}</span>
           </div>
         )}
 

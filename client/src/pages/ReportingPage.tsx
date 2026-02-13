@@ -104,6 +104,7 @@ export default function ReportingPage() {
       <div>
         <h1 className="text-3xl font-bold text-khc-primary">{reportData.project_name}</h1>
         <p className="text-gray-600 mt-2">Project Report</p>
+        <p className="text-xs text-gray-500 mt-1">Project ID: {projectId}</p>
       </div>
 
       {error && <ErrorAlert message={error} onDismiss={clearError} />}

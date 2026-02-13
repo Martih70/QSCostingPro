@@ -40,16 +40,6 @@ export default function Sidebar({ onClose }: SidebarProps) {
           <SidebarNavItem to="/dashboard" icon="🏠" label="Home" />
         </div>
 
-        {/* Projects Section */}
-        <CollapsibleSection title="Projects" icon="📋" searchQuery={searchQuery}>
-          <div onClick={handleNavClick} className="space-y-1">
-            <SidebarNavItem to="/projects" icon="📋" label="All Projects" />
-            <SidebarNavItem to="/projects/new" icon="➕" label="New" />
-            <SidebarNavItem to="/projects?status=current" icon="⏳" label="Current" />
-            <SidebarNavItem to="/projects?status=completed" icon="✅" label="Completed" />
-          </div>
-        </CollapsibleSection>
-
         {/* Estimate Builder Section */}
         <CollapsibleSection title="Estimate Builder" icon="📊" searchQuery={searchQuery}>
           <div onClick={handleNavClick} className="space-y-1">
@@ -58,12 +48,33 @@ export default function Sidebar({ onClose }: SidebarProps) {
               icon="📊"
               label="Build Estimate"
               requiredRoles={['admin', 'estimator']}
+              isNested
             />
             <SidebarNavItem
               to="/internal-rates"
               icon="⚙️"
               label="Build Rates"
               requiredRoles={['admin', 'estimator']}
+              isNested
+            />
+          </div>
+        </CollapsibleSection>
+
+        {/* BoQ Library Section */}
+        <CollapsibleSection title="BoQ Library" icon="📦" searchQuery={searchQuery}>
+          <div onClick={handleNavClick} className="space-y-1">
+            <SidebarNavItem
+              to="/boq-repository"
+              icon="🔍"
+              label="Browse & Copy Items"
+              isNested
+            />
+            <SidebarNavItem
+              to="/admin/boq-import"
+              icon="📤"
+              label="Setup/Import"
+              requiredRoles="admin"
+              isNested
             />
           </div>
         </CollapsibleSection>
@@ -71,8 +82,8 @@ export default function Sidebar({ onClose }: SidebarProps) {
         {/* Contacts Section */}
         <CollapsibleSection title="Contacts" icon="👥" searchQuery={searchQuery}>
           <div onClick={handleNavClick} className="space-y-1">
-            <SidebarNavItem to="/clients" icon="👥" label="Clients" />
-            <SidebarNavItem to="/contractors" icon="🔧" label="Contractors" />
+            <SidebarNavItem to="/clients" icon="👥" label="Clients" isNested />
+            <SidebarNavItem to="/contractors" icon="🔧" label="Contractors" isNested />
           </div>
         </CollapsibleSection>
 
@@ -83,35 +94,40 @@ export default function Sidebar({ onClose }: SidebarProps) {
               to="/nrm2"
               icon="📖"
               label="NRM 2 Codes"
+              isNested
             />
             <SidebarNavItem
               to="/references/documents"
               icon="📄"
               label="Documents"
+              isNested
             />
           </div>
         </CollapsibleSection>
 
         {/* Admin Section */}
-        <CollapsibleSection title="Admin" icon="⚙️" searchQuery={searchQuery}>
+        <CollapsibleSection title="Admin" icon="⚙️" searchQuery={searchQuery} requiredRoles="admin">
           <div onClick={handleNavClick} className="space-y-1">
             <SidebarNavItem
               to="/cost-items"
               icon="💾"
               label="Cost Database"
               requiredRoles="admin"
+              isNested
             />
             <SidebarNavItem
-              to="/users"
+              to="/admin/users"
               icon="👤"
               label="User Management"
               requiredRoles="admin"
+              isNested
             />
             <SidebarNavItem
               to="/personal-database"
               icon="📁"
               label="Cost Uploader"
               requiredRoles="admin"
+              isNested
             />
           </div>
         </CollapsibleSection>
@@ -119,7 +135,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
         {/* Account Section */}
         <CollapsibleSection title="Account" icon="👤" searchQuery={searchQuery}>
           <div onClick={handleNavClick} className="space-y-1">
-            <SidebarNavItem to="/referrals" icon="🎁" label="Referrals" />
+            <SidebarNavItem to="/referrals" icon="🎁" label="Referrals" isNested />
           </div>
         </CollapsibleSection>
       </nav>

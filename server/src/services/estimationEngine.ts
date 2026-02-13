@@ -108,9 +108,11 @@ export function calculateProjectEstimates(projectId: number): LineItemCalculatio
     const componentStmt = db.prepare(`
       SELECT estimate_id, component_type, total
       FROM estimate_cost_components
-      WHERE is_active = 1
+      WHERE is_active = 1 AND estimate_id IN (
+        SELECT id FROM project_estimates WHERE project_id = ?
+      )
     `);
-    const componentRows = componentStmt.all() as any[];
+    const componentRows = componentStmt.all(projectId) as any[];
     const componentsByEstimate = new Map<number, number>();
     componentRows.forEach((comp) => {
       const current = componentsByEstimate.get(comp.estimate_id) || 0;
