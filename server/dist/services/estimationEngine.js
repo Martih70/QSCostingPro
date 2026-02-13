@@ -23,23 +23,21 @@ function calculateLineTotal(quantity, materialCost, managementCost, contractorCo
 export function calculateProjectEstimates(projectId) {
     try {
         const db = getDatabase();
-        // Query that handles both cost_item_id and custom items
+        // Query project estimates - cost database has been removed, using only BoQ Library
         const stmt = db.prepare(`
       SELECT
         pe.id as estimate_id,
-        COALESCE(ci.id, pe.id) as item_id,
-        COALESCE(ci.description, pe.custom_description) as description,
+        pe.id as item_id,
+        COALESCE(pe.custom_description, 'Custom Item') as description,
         pe.quantity,
-        COALESCE(u.code, pe.custom_unit) as unit_code,
-        COALESCE(pe.unit_cost_override, ci.material_cost, pe.custom_unit_rate) as material_cost,
-        COALESCE(ci.management_cost, 0) as management_cost,
-        COALESCE(ci.contractor_cost, 0) as contractor_cost,
-        COALESCE(ci.waste_factor, 1.0) as waste_factor,
-        COALESCE(ci.is_contractor_required, 0) as is_contractor_required,
+        pe.custom_unit as unit_code,
+        pe.custom_unit_rate as material_cost,
+        0 as management_cost,
+        0 as contractor_cost,
+        0 as waste_factor,
+        0 as is_contractor_required,
         pe.line_total
       FROM project_estimates pe
-      LEFT JOIN cost_items ci ON pe.cost_item_id = ci.id
-      LEFT JOIN units u ON ci.unit_id = u.id
       WHERE pe.project_id = ? AND pe.is_active = 1
       ORDER BY pe.created_at ASC
     `);
@@ -105,66 +103,21 @@ export function calculateProjectEstimates(projectId) {
  */
 export function calculateCategoryTotals(projectId, lineItems) {
     try {
-        const db = getDatabase();
-        // Get categories from both cost_items and custom items
-        const categoryStmt = db.prepare(`
-      SELECT DISTINCT
-        cc.id,
-        cc.code,
-        cc.name
-      FROM cost_categories cc
-      WHERE cc.id IN (
-        SELECT DISTINCT cse.category_id
-        FROM project_estimates pe
-        JOIN cost_items ci ON pe.cost_item_id = ci.id
-        JOIN cost_sub_elements cse ON ci.sub_element_id = cse.id
-        WHERE pe.project_id = ? AND pe.is_active = 1
-        UNION
-        SELECT DISTINCT pe.category_id
-        FROM project_estimates pe
-        WHERE pe.project_id = ? AND pe.is_active = 1 AND pe.cost_item_id IS NULL AND pe.category_id IS NOT NULL
-      )
-      ORDER BY cc.code ASC
-    `);
-        const categories = categoryStmt.all(projectId, projectId);
-        // Batch-load all category mappings instead of querying per-item
-        const costItemCategoriesStmt = db.prepare(`
-      SELECT DISTINCT ci.id, cse.category_id
-      FROM cost_items ci
-      JOIN cost_sub_elements cse ON ci.sub_element_id = cse.id
-    `);
-        const costItemCategories = costItemCategoriesStmt.all();
-        const costItemCategoryMap = new Map(costItemCategories.map(row => [row.id, row.category_id]));
-        const customItemCategoriesStmt = db.prepare(`
-      SELECT id, category_id
-      FROM project_estimates
-      WHERE project_id = ? AND is_active = 1 AND cost_item_id IS NULL AND category_id IS NOT NULL
-    `);
-        const customItemCategories = customItemCategoriesStmt.all(projectId);
-        const customItemCategoryMap = new Map(customItemCategories.map(row => [row.id, row.category_id]));
-        return categories.map((category) => {
-            const categoryItems = lineItems.filter((item) => {
-                // Check cost_item-based items
-                const costItemCategoryId = costItemCategoryMap.get(item.item_id);
-                if (costItemCategoryId === category.id) {
-                    return true;
-                }
-                // Check custom items
-                const customItemCategoryId = customItemCategoryMap.get(item.estimate_id);
-                return customItemCategoryId === category.id;
-            });
-            const subtotal = categoryItems.reduce((sum, item) => sum + item.line_total, 0);
-            const contractorSubtotal = categoryItems.reduce((sum, item) => sum + item.contractor_total, 0);
-            return {
-                category_id: category.id,
-                category_code: category.code,
-                category_name: category.name,
-                line_count: categoryItems.length,
-                line_items: categoryItems,
+        // Cost database has been removed - using BoQ Library instead
+        // Return all items in a single default category
+        const subtotal = lineItems.reduce((sum, item) => sum + item.line_total, 0);
+        const contractorSubtotal = lineItems.reduce((sum, item) => sum + item.contractor_total, 0);
+        return [
+            {
+                category_id: 1,
+                category_code: 'BOQ',
+                category_name: 'BoQ Library Items',
+                line_count: lineItems.length,
+                line_items: lineItems,
                 subtotal,
                 contractor_items_subtotal: contractorSubtotal,
-            };
-        });
+            },
+        ];
     }
     catch (error) {
         logger.error(`Error calculating category totals for project ${projectId}: ${error}`);
