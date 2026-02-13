@@ -238,10 +238,10 @@ export const projectEstimatesRepository = {
           project_id, cost_item_id, quantity, unit_cost_override,
           notes, line_total, created_by, version_number, is_active,
           custom_description, custom_unit_rate, custom_unit, category_id,
-          nrm2_work_section_id, nrm2_code
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          nrm2_work_section_id, nrm2_code, item_number, section_id, section_title, boq_import_id, page_number
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `);
-            const result = stmt.run(data.project_id, data.cost_item_id || null, data.quantity, data.unit_cost_override || null, data.notes || null, data.line_total || null, data.created_by, 1, 1, data.custom_description || null, data.custom_unit_rate || null, data.custom_unit || null, data.category_id || null, data.nrm2_work_section_id || null, data.nrm2_code || null);
+            const result = stmt.run(data.project_id, data.cost_item_id || null, data.quantity, data.unit_cost_override || null, data.notes || null, data.line_total || null, data.created_by, 1, 1, data.custom_description || null, data.custom_unit_rate || null, data.custom_unit || null, data.category_id || null, data.nrm2_work_section_id || null, data.nrm2_code || null, data.item_number || null, data.section_id || null, data.section_title || null, data.boq_import_id || null, data.page_number || null);
             const created = projectEstimatesRepository.getById(result.lastInsertRowid);
             if (!created)
                 throw new Error('Failed to create estimate');
@@ -272,6 +272,18 @@ export const projectEstimatesRepository = {
             if (data.line_total !== undefined) {
                 updates.push('line_total = ?');
                 values.push(data.line_total);
+            }
+            if (data.custom_description !== undefined) {
+                updates.push('custom_description = ?');
+                values.push(data.custom_description);
+            }
+            if (data.custom_unit !== undefined) {
+                updates.push('custom_unit = ?');
+                values.push(data.custom_unit);
+            }
+            if (data.custom_unit_rate !== undefined) {
+                updates.push('custom_unit_rate = ?');
+                values.push(data.custom_unit_rate);
             }
             if (updates.length === 0) {
                 const existing = projectEstimatesRepository.getById(id);

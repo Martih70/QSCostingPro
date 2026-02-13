@@ -11,6 +11,10 @@ export declare const config: {
     frontendUrl: string;
     defaultCurrency: string;
     inflationApiKey: string;
+    emailUser: string;
+    emailPassword: string;
+    emailFrom: string;
+    frontendEmailUrl: string;
     isProduction: boolean;
     isDevelopment: boolean;
 };

@@ -53,4 +53,31 @@ export declare function refreshAccessToken(refreshToken: string): Promise<{
  * Logout user (invalidate refresh token)
  */
 export declare function logoutUser(userId: number): void;
+/**
+ * Verify email with token
+ */
+export declare function verifyUserEmail(token: string): boolean;
+/**
+ * Send password reset token
+ */
+export declare function sendPasswordReset(email: string): Promise<boolean>;
+/**
+ * Reset password with token
+ */
+export declare function resetPassword(token: string, newPassword: string): Promise<boolean>;
+/**
+ * Get all users (admin only)
+ */
+export declare function getAllUsers(): UserPublic[];
+/**
+ * Update user (admin only)
+ */
+export declare function updateUser(userId: number, updates: {
+    role?: string;
+    is_active?: boolean;
+}): UserPublic;
+/**
+ * Delete user (admin only)
+ */
+export declare function deleteUser(userId: number): void;
 //# sourceMappingURL=authService.d.ts.map

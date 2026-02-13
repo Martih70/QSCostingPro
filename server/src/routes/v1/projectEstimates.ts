@@ -7,6 +7,7 @@ import { validate } from '../../middleware/validate.js';
 import { projectEstimatesRepository, projectsRepository, costComponentsRepository } from '../../repositories/projectRepository.js';
 import { costItemsRepository } from '../../repositories/costRepository.js';
 import { calculateProjectTotal } from '../../services/estimationEngine.js';
+import { generateBoQPDF } from '../../services/boqPdfGenerator.js';
 import logger from '../../utils/logger.js';
 
 const router = Router();
@@ -22,19 +23,22 @@ const createEstimateSchema = z.object({
   custom_description: z.string().min(3).max(255).optional(),
   custom_unit_rate: z.number().nonnegative().optional(),
   custom_unit: z.string().min(1).max(50).optional(),
-  category_id: z.number().int().positive().optional(),
+  category_id: z.number().int().positive().optional().nullable(),
   // NRM 2 fields (optional, link to NRM 2 work sections)
   nrm2_work_section_id: z.number().int().positive().optional(),
   nrm2_code: z.string().max(50).optional(),
 }).refine(
-  (data) => data.cost_item_id || (data.custom_description && data.custom_unit_rate !== undefined && data.custom_unit && data.category_id),
-  { message: 'Either cost_item_id or all custom fields (description, unit, rate, category) must be provided' }
+  (data) => data.cost_item_id || (data.custom_description && data.custom_unit_rate !== undefined && data.custom_unit),
+  { message: 'Either cost_item_id or all custom fields (description, unit, rate) must be provided' }
 );
 
 const updateEstimateSchema = z.object({
   quantity: z.number().positive().optional(),
   unit_cost_override: z.number().nonnegative().optional().nullable(),
   notes: z.string().max(500).optional(),
+  custom_description: z.string().min(3).max(255).optional(),
+  custom_unit: z.string().min(1).max(50).optional(),
+  custom_unit_rate: z.number().nonnegative().optional(),
 });
 
 /**
@@ -316,7 +320,7 @@ router.post(
       logger.error(`Error creating estimate: ${error.message}`);
       res.status(500).json({
         success: false,
-        error: 'Failed to add estimate',
+        error: error.message || 'Failed to add estimate',
       });
     }
   }
@@ -375,21 +379,30 @@ router.put(
         return;
       }
 
-      const { quantity, unit_cost_override, notes } = req.body;
+      const { quantity, unit_cost_override, notes, custom_description, custom_unit, custom_unit_rate } = req.body;
 
-      // Recalculate line total if quantity changed
+      // Recalculate line total if needed
       let lineTotal = existing.line_total ?? 0;
-      if (quantity !== undefined || unit_cost_override !== undefined) {
-        const costItem = costItemsRepository.getById(existing.cost_item_id);
-        if (costItem) {
-          const qty = quantity || existing.quantity;
-          const unitCost = unit_cost_override !== undefined ? unit_cost_override : costItem.material_cost;
-          const materialTotal = unitCost * qty * costItem.waste_factor;
-          const managementTotal = costItem.management_cost * qty;
-          const contractorTotal = costItem.is_contractor_required
-            ? costItem.contractor_cost * qty
-            : 0;
-          lineTotal = materialTotal + managementTotal + contractorTotal;
+
+      // For custom items (no cost_item_id), calculate based on quantity * rate
+      if (!existing.cost_item_id) {
+        const qty = quantity !== undefined ? quantity : existing.quantity;
+        const rate = custom_unit_rate !== undefined ? custom_unit_rate : (existing.custom_unit_rate || 0);
+        lineTotal = qty * rate;
+      } else {
+        // For BCIS items, use existing cost item logic
+        if (quantity !== undefined || unit_cost_override !== undefined) {
+          const costItem = costItemsRepository.getById(existing.cost_item_id);
+          if (costItem) {
+            const qty = quantity || existing.quantity;
+            const unitCost = unit_cost_override !== undefined ? unit_cost_override : costItem.material_cost;
+            const materialTotal = unitCost * qty * costItem.waste_factor;
+            const managementTotal = costItem.management_cost * qty;
+            const contractorTotal = costItem.is_contractor_required
+              ? costItem.contractor_cost * qty
+              : 0;
+            lineTotal = materialTotal + managementTotal + contractorTotal;
+          }
         }
       }
 
@@ -397,6 +410,9 @@ router.put(
         quantity,
         unit_cost_override,
         notes,
+        custom_description,
+        custom_unit,
+        custom_unit_rate,
         line_total: lineTotal,
       });
 
@@ -825,7 +841,7 @@ router.post(
       }
 
       // Create cost component
-      const component = costComponentsRepository.create({
+      costComponentsRepository.create({
         estimate_id: estimateIdNum,
         component_type,
         unit_rate,
@@ -835,9 +851,14 @@ router.post(
       // Recalculate component totals
       costComponentsRepository.recalculateComponentTotals(estimateIdNum);
 
+      // Fetch the updated component with recalculated total
+      const updatedComponent = costComponentsRepository.getByEstimateId(estimateIdNum).find(
+        c => c.component_type === component_type && c.is_active
+      );
+
       res.status(201).json({
         success: true,
-        data: component,
+        data: updatedComponent,
       });
     } catch (error: any) {
       logger.error(`Error creating cost component: ${error.message}`);
@@ -921,7 +942,7 @@ router.patch(
       }
 
       // Update component
-      const updated = costComponentsRepository.update(componentIdNum, {
+      costComponentsRepository.update(componentIdNum, {
         unit_rate,
         waste_factor,
       });
@@ -929,9 +950,12 @@ router.patch(
       // Recalculate component totals
       costComponentsRepository.recalculateComponentTotals(estimateIdNum);
 
+      // Fetch the updated component with recalculated total
+      const updatedComponent = costComponentsRepository.getById(componentIdNum);
+
       res.json({
         success: true,
-        data: updated,
+        data: updatedComponent,
       });
     } catch (error: any) {
       logger.error(`Error updating cost component: ${error.message}`);
@@ -1020,5 +1044,138 @@ router.delete(
     }
   }
 );
+
+/**
+ * GET /api/v1/projects/:projectId/estimates/export-boq-pdf
+ * Generate and download BoQ PDF with multi-page sections and pagination
+ */
+router.get('/:projectId/estimates/export-boq-pdf', verifyAuth, async (req: Request, res: Response) => {
+  try {
+    const { projectId } = req.params;
+    const projectIdNum = parseInt(projectId, 10);
+    const { boqImportId } = req.query;
+
+    if (isNaN(projectIdNum)) {
+      res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+      return;
+    }
+
+    // Check if project exists
+    const project = projectsRepository.getById(projectIdNum);
+    if (!project) {
+      res.status(404).json({
+        success: false,
+        error: 'Project not found',
+      });
+      return;
+    }
+
+    // Check access
+    if (req.user?.role === 'viewer' && project.created_by !== req.user.userId) {
+      res.status(403).json({
+        success: false,
+        error: 'Access denied',
+      });
+      return;
+    }
+
+    // Get estimates - filtered by BoQ import if specified
+    let estimates = projectEstimatesRepository.getAll(projectIdNum);
+
+    if (boqImportId) {
+      const boqImportIdNum = parseInt(boqImportId as string, 10);
+      estimates = estimates.filter(e => e.boq_import_id === boqImportIdNum);
+    }
+
+    if (estimates.length === 0) {
+      res.status(400).json({
+        success: false,
+        error: 'No line items to export',
+      });
+      return;
+    }
+
+    // Group by section
+    const sections = new Map<number, any>();
+
+    for (const estimate of estimates) {
+      if (!estimate.section_id) continue;
+
+      const sectionId = estimate.section_id;
+      if (!sections.has(sectionId)) {
+        sections.set(sectionId, {
+          sectionId: estimate.section_id,
+          sectionNumber: estimate.item_number?.split('.')[0] || sectionId.toString(),
+          sectionTitle: estimate.section_title || `Section ${sectionId}`,
+          items: [],
+          sectionTotal: 0,
+          itemCount: 0,
+        });
+      }
+
+      const section = sections.get(sectionId)!;
+      const amount = estimate.line_total || 0;
+
+      section.items.push({
+        itemNumber: estimate.item_number || '',
+        description: estimate.custom_description || '',
+        unit: estimate.custom_unit || 'nr',
+        quantity: estimate.quantity,
+        rate: estimate.custom_unit_rate || 0,
+        amount,
+        notes: estimate.notes || '',
+      });
+
+      section.sectionTotal += amount;
+      section.itemCount++;
+    }
+
+    const boqSections = Array.from(sections.values()).sort(
+      (a, b) => parseInt(a.sectionNumber) - parseInt(b.sectionNumber)
+    );
+
+    if (boqSections.length === 0) {
+      res.status(400).json({
+        success: false,
+        error: 'No valid sections found in estimates',
+      });
+      return;
+    }
+
+    // Generate PDF
+    const doc = generateBoQPDF(boqSections, {
+      projectName: project.name,
+      projectClient: project.client_id?.toString(),
+      projectAddress: project.project_address || undefined,
+      projectStartDate: project.start_date,
+      generatedDate: new Date(),
+    });
+
+    // Set response headers
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename="BoQ_${project.name.replace(/[^a-z0-9]/gi, '_')}_${new Date()
+        .toISOString()
+        .split('T')[0]}.pdf"`
+    );
+
+    // Pipe to response
+    doc.pipe(res);
+
+    logger.info(`BoQ PDF exported for project ${projectIdNum} by user ${req.user?.username}`);
+
+    doc.end();
+  } catch (error: any) {
+    logger.error(`Error exporting BoQ PDF: ${error.message}`);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to generate BoQ PDF',
+    });
+  }
+});
 
 export default router;

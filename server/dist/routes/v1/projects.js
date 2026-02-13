@@ -31,15 +31,29 @@ const updateProjectSchema = z.object({
 });
 /**
  * GET /api/v1/projects
- * Get all projects (filtered by role)
+ * Get all projects (filtered by role) with estimate totals
  */
 router.get('/', verifyAuth, (req, res) => {
     try {
         const projects = projectsRepository.getAll(req.user?.userId, req.user?.role);
+        // Calculate estimate totals for each project
+        const projectsWithTotals = projects.map((project) => {
+            let estimateTotals = null;
+            try {
+                estimateTotals = calculateProjectTotal(project.id);
+            }
+            catch (error) {
+                logger.warn(`Could not calculate estimate for project ${project.id}: ${error}`);
+            }
+            return {
+                ...project,
+                estimate_totals: estimateTotals,
+            };
+        });
         res.json({
             success: true,
-            data: projects,
-            count: projects.length,
+            data: projectsWithTotals,
+            count: projectsWithTotals.length,
         });
     }
     catch (error) {

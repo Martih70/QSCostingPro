@@ -35,6 +35,11 @@ export interface ProjectEstimate {
     category_id?: number | null;
     nrm2_work_section_id?: number | null;
     nrm2_code?: string | null;
+    item_number?: string | null;
+    section_id?: number | null;
+    section_title?: string | null;
+    boq_import_id?: number | null;
+    page_number?: number | null;
 }
 export interface ProjectAttachment {
     id: number;
@@ -132,12 +137,20 @@ export declare const projectEstimatesRepository: {
         category_id?: number;
         nrm2_work_section_id?: number;
         nrm2_code?: string;
+        item_number?: string;
+        section_id?: number;
+        section_title?: string;
+        boq_import_id?: number;
+        page_number?: number;
     }) => ProjectEstimate;
     update: (id: number, data: {
         quantity?: number;
         unit_cost_override?: number;
         notes?: string;
         line_total?: number;
+        custom_description?: string;
+        custom_unit?: string;
+        custom_unit_rate?: number;
     }) => ProjectEstimate;
     delete: (id: number) => boolean;
     getByProjectAndCostItem: (projectId: number, costItemId: number) => ProjectEstimate | null;

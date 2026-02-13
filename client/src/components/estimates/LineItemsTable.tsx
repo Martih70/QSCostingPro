@@ -2,6 +2,7 @@ import { useState } from 'react'
 import React from 'react'
 
 import { BCISGroupedEstimates, CostComponent } from '../../types/estimate'
+import { formatCurrency, formatNumber } from '../../utils/formatters'
 
 interface LineItemsTableProps {
   data: BCISGroupedEstimates | null
@@ -118,7 +119,7 @@ export default function LineItemsTable({
       <div className="bg-white rounded-lg shadow p-12 text-center">
         <div className="text-gray-500">
           <p className="text-lg font-semibold mb-2">📋 Build Your Estimate</p>
-          <p className="text-sm">No line items yet. Click "Add Line Item" or "Import from BOQ" to start building your estimate.</p>
+          <p className="text-sm">Import Standard BoQ or Add Line Item to start estimate build</p>
         </div>
       </div>
     )
@@ -193,10 +194,10 @@ export default function LineItemsTable({
                         </td>
                         <td className="px-4 py-3 text-center text-gray-600">{item.unit}</td>
                         <td className="px-4 py-3 text-right font-semibold text-gray-700">
-                          £{(item.quantity > 0 ? item.subtotal / item.quantity : 0).toLocaleString('en-GB', { maximumFractionDigits: 2 })}
+                          {formatCurrency(item.quantity > 0 ? item.subtotal / item.quantity : 0)}
                         </td>
                         <td className="px-4 py-3 text-right font-bold text-khc-primary">
-                          £{item.subtotal.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
+                          {formatCurrency(item.subtotal)}
                         </td>
                         <td className="px-4 py-3 text-center">
                           <div className="flex gap-1 justify-center">
@@ -293,7 +294,7 @@ export default function LineItemsTable({
                                     />
                                   </div>
                                 ) : (
-                                  <span className="text-sm font-medium">£{component.unit_rate.toFixed(2)}</span>
+                                  <span className="text-sm font-medium">{formatCurrency(component.unit_rate)}</span>
                                 )}
                               </td>
                               <td className="px-4 py-2 text-right">
@@ -311,11 +312,11 @@ export default function LineItemsTable({
                                     <span className="text-xs text-gray-600">%</span>
                                   </div>
                                 ) : (
-                                  <span className="text-sm">{component.waste_factor.toFixed(0)}%</span>
+                                  <span className="text-sm">{formatNumber(component.waste_factor, 0)}%</span>
                                 )}
                               </td>
                               <td className="px-4 py-2 text-right font-semibold text-purple-600">
-                                £{component.total.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
+                                {formatCurrency(component.total)}
                               </td>
                               <td className="px-4 py-2 text-center">
                                 <div className="flex gap-1 justify-center">
@@ -373,7 +374,7 @@ export default function LineItemsTable({
                                   {!item.components.material && (
                                     <button
                                       onClick={() =>
-                                        onAddComponent(item.id, 'material', 0, 1.0).catch((err) =>
+                                        onAddComponent(item.id, 'material', 0, 0).catch((err) =>
                                           alert('Error adding component: ' + err.message)
                                         )
                                       }
@@ -386,7 +387,7 @@ export default function LineItemsTable({
                                   {!item.components.labor && (
                                     <button
                                       onClick={() =>
-                                        onAddComponent(item.id, 'labor', 0, 1.0).catch((err) =>
+                                        onAddComponent(item.id, 'labor', 0, 0).catch((err) =>
                                           alert('Error adding component: ' + err.message)
                                         )
                                       }
@@ -399,7 +400,7 @@ export default function LineItemsTable({
                                   {!item.components.plant && (
                                     <button
                                       onClick={() =>
-                                        onAddComponent(item.id, 'plant', 0, 1.0).catch((err) =>
+                                        onAddComponent(item.id, 'plant', 0, 0).catch((err) =>
                                           alert('Error adding component: ' + err.message)
                                         )
                                       }
@@ -425,7 +426,7 @@ export default function LineItemsTable({
                     {element.bcis_name} SUBTOTAL:
                   </td>
                   <td className="px-4 py-3 text-right font-bold text-khc-primary">
-                    £{element.subtotal.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
+                    {formatCurrency(element.subtotal)}
                   </td>
                   <td></td>
                 </tr>

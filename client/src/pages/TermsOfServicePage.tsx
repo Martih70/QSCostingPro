@@ -9,9 +9,9 @@ export default function TermsOfServicePage() {
           <div className="flex justify-between items-center h-16">
             <Link to="/" className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-khc-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold">K</span>
+                <span className="text-white font-bold">Q</span>
               </div>
-              <span className="text-xl font-bold text-khc-primary hidden sm:inline">KHConstruct</span>
+              <span className="text-xl font-bold text-khc-primary hidden sm:inline">QSCostingPro</span>
             </Link>
             <div className="space-x-4">
               <Link to="/login" className="px-4 py-2 text-khc-primary font-medium hover:text-khc-secondary transition">
@@ -189,8 +189,8 @@ export default function TermsOfServicePage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-4">15. Contact Information</h2>
               <p>If you have any questions about these Terms of Service, please contact us at:</p>
               <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-                <p className="font-semibold">KHConstruct Support</p>
-                <p>Email: support@khconstruct.com</p>
+                <p className="font-semibold">QSCostingPro Support</p>
+                <p>Email: support@qscostingpro.com</p>
                 <p>Address: [Your Company Address]</p>
               </div>
             </section>
@@ -201,7 +201,7 @@ export default function TermsOfServicePage() {
       {/* Footer */}
       <footer className="bg-khc-neutral text-khc-light py-8 mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-400">
-          <p>&copy; 2024 KHConstruct. All rights reserved.</p>
+          <p>&copy; 2024 QSCostingPro. All rights reserved.</p>
           <div className="mt-4 space-x-4">
             <Link to="/privacy" className="hover:text-white transition">
               Privacy Policy
